@@ -72,7 +72,7 @@ void Cuenta::setCuentaIniciada(){
 }
 
 ostream & operator << (ostream & salida, Cuenta & cuenta){
-    salida << cuenta.getIdCuenta() <<" "<< cuenta.getSaldo()<<endl;
+    salida << cuenta.getIdCuenta() <<","<< cuenta.getSaldo();
     return salida;
 }
 
@@ -89,10 +89,71 @@ istream & operator >> (istream & entrada, Cuenta & cuenta){
     return entrada;
 }
 
+Cliente::Cliente(string n,string a,int id){
+    setNombre(n);
+    setApellido(a);
+    setDni(id);
+}
+
+void Cliente::setNombre(string n){
+    if(n.size() > 20)
+        n.resize(20);
+    else
+        nombre = n;
+}
+
+void Cliente::setApellido(string a){
+    if(a.size() > 20)
+        a.resize(20);
+    else
+        apellido = a;
+}
+
+void Cliente::setDni(int id){
+    dni = id >= 1000000? id : 0;
+}
+
+int Cliente::getDni() const{
+    return dni;
+}
+
+string Cliente::getNombre() const{
+    return nombre;
+}
+
+string Cliente::getApellido() const{
+    return apellido;
+}
+
+void Cliente::agregarCuenta(float){
+    string id = to_string(dni);
+    Cuenta nueva(id);
+    cartera.push_back(nueva);
+}
+
+ostream & operator << (ostream & salida, Cliente & instanciaCliente){
+    salida << instanciaCliente.getDni();
+    salida << ",";
+    salida << instanciaCliente.getNombre();
+    salida << ",";
+    salida << instanciaCliente.getApellido();
+    return salida;
+}
+
+istream & operator >> (istream & entrada, Cliente & instanciaCliente){
+    int numero;
+    string cadena1, cadena2;
+    char colon;
+    entrada >> numero >> colon >> cadena1 >> colon >> cadena2 >> colon;
+    instanciaCliente.setDni(numero);
+    instanciaCliente.setApellido(cadena2);
+    instanciaCliente.setApellido(cadena1);
+}
+
 Banco::Banco(){
-    clientes.open("clientes.txt", fstream::out | fstream::in | fstream::app);
-    cuentas.open("cuentas.txt", fstream::out | fstream::in | fstream::app);
-    movimientos.open("movimientos.txt", fstream::out | fstream::in | fstream::app);
+    clientes.open("clientes.txt", fstream::out | fstream::in);
+    cuentas.open("cuentas.txt", fstream::out | fstream::in );
+    movimientos.open("movimientos.txt", fstream::out | fstream::in);
 }
 
 Banco::~Banco(){
@@ -101,31 +162,21 @@ Banco::~Banco(){
     movimientos.close();
 }
 
-void Banco::escribirArchivo(string registro,int archivo){
-    int tamanioRegistro = registro.size() + 1;
-    char * buffer = new char[tamanioRegistro];
-    for(int i = 0;i < registro.size();i ++)
-        buffer[i] = registro[i];
-    buffer[tamanioRegistro - 1] = '\n';
-    switch(archivo){
-        case 1:
-            clientes.write(buffer,tamanioRegistro);
-            break;
-        case 2:
-            cuentas.write(buffer,tamanioRegistro);
-            break;
-        case 3:
-            movimientos.write(buffer,tamanioRegistro);
-    }
-    delete[] buffer;
+
+
+void Banco::escribirCliente(Cliente instanciaCliente){
+    clientes << instanciaCliente << endl;
 }
 
+void Banco::escribirCuenta(Cuenta instanciaCuenta){
+    cuentas << instanciaCuenta << endl;
+}
 
 void Banco::leerArchivos(){
     if(clientes){
         clientes.seekg(0,clientes.end);//desplaza el cabezal al final del archivo.
         int largoarchivo = clientes.tellg();//da la posicion del final.
-        clientes.seekg(0,clientes.beg);//desplaza el cabezal al principio del archivo nuevamente.
+        clientes.seekg(0,clientes.beg);// desplaza el cabezal al principio del archivo nuevamente.
         char * bufferClientes = new char[largoarchivo];//genera un buffer para guardar el contenido "entero" del archivo
         cout<<"Se leeran: "<<largoarchivo<<" bytes."<<endl;
         clientes.read(bufferClientes,largoarchivo);

@@ -18,7 +18,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-enum {FALSE,TRUE};
+enum value {FALSE,TRUE};
 
 class Cuenta{
 public:
@@ -53,11 +53,20 @@ private:
 
 class Cliente{
 public:
-    Cliente(string,string,string);
+    Cliente(string,string,int);
+    void setNombre(string);
+    void setApellido(string);
+    void setDni(int);
+    string getNombre() const;
+    string getApellido() const;
+    int getDni() const;
+    void agregarCuenta(float);
+    friend ostream & operator <<(ostream &, Cliente &);
+    friend istream & operator >>(istream &, Cliente &);
 private:
     string nombre;
     string apellido;
-    string dni;
+    int dni;
     vector<Cuenta> cartera;
 };
 
@@ -65,8 +74,10 @@ class Banco{
 public:
     Banco();//inicia los archivos o append si ya estan creados.
     ~Banco();//solo cierra los archivos
-    void escribirArchivo(string,int);//escribe registros en archivos, sirve para todos los archivos del programa
     void leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
+    void escribirCliente(const Cliente );
+    void escribirCuenta(const Cuenta );
+    void escribirMovimiento(Cliente ,Cuenta ,const float);
 private:
     fstream clientes;//puntero a file donde se guardan los clientes.
     fstream cuentas;//puntero a file donde se guardan las cuentas.

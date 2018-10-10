@@ -19,10 +19,14 @@ using namespace std;
 
 int main(int argc, char** argv) {
     Banco A;
-    A.leerArchivos();
-    A.escribirArchivo("Carlos Maceira",1);
-    A.escribirArchivo("Caja de Ahorro",2);
-    A.escribirArchivo("Debito $500",3);
+    Cuenta prueba1("132956544",100.00);
+    Cuenta prueba2("232956544",150.00);
+    A.escribirCuenta(prueba1);
+    A.escribirCuenta(prueba2);
+    Cliente persona1("Carlos","Maceira",32956544);
+    Cliente persona2("Analia","Saavedra",27014855);
+    A.escribirCliente(persona1);
+    A.escribirCliente(persona2);
     return 0;
 }
 
