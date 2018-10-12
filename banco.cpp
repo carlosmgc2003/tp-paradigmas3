@@ -148,6 +148,7 @@ istream & operator >> (istream & entrada, Cliente & instanciaCliente){
     instanciaCliente.setDni(numero);
     instanciaCliente.setApellido(cadena2);
     instanciaCliente.setApellido(cadena1);
+    return entrada;
 }
 
 Banco::Banco(){
