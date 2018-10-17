@@ -4,20 +4,24 @@
  * and open the template in the editor.
  */
 #include "cuenta.hpp"
+#include <iomanip>
+
+
 using namespace std;
 
 
-int Cuenta::numeroDeOrden = 0;
 
-Cuenta::Cuenta(string id,float s){
+Cuenta::Cuenta(int id,float s){
+    cout<<numeroDeOrden<<endl;
     nuevaCuenta = TRUE;
-    saldo = s >= 0? s : 0.0;
+    saldo = s >= 0.0? s : 0.0;
     setIdCuenta(id);
     setCuentaIniciada();
     numeroDeOrden ++;
+
 }
 
-Cuenta::Cuenta(string id){
+Cuenta::Cuenta(int id){
     setIdCuenta(id);
     saldo = 0.0;
     nuevaCuenta = TRUE;
@@ -30,32 +34,43 @@ Cuenta::Cuenta(){
 }
 
 Cuenta::~Cuenta(){
-    numeroDeOrden --;
+    return;
 }
 float Cuenta::getSaldo() const{
     return saldo;
 }
 
-string Cuenta::getIdCuenta() const{
+int Cuenta::getIdCuenta() const{
     return idCuenta;
 }
 
 void Cuenta::operator +=(float credito){
-    if(credito >= 0)
+    saldo += credito;
+}
+
+void Cuenta::acreditar(float credito){
+    if(credito >= 0.0)
         saldo += credito;
 }
 
+void Cuenta::debitar(float debito){
+    if(debito >= 0.0)
+        saldo -= debito;
+}
+
 void Cuenta::operator -=(float debito){
-    if(debito >= 0 && saldo - debito >= 0)//Corregir!!!
+    if(debito >= 0.0 && saldo - debito >= 0.0)//Corregir!!!
         saldo -= debito;
     else
         cout<<"Saldo insuficiente"<<endl;
 }
 
-void Cuenta::setIdCuenta(string id){
+void Cuenta::setIdCuenta(int id){
     if(nuevaCuenta == TRUE){
-        idCuenta = to_string(numeroDeOrden);
-        idCuenta.append(id);
+        string aux;
+        aux = to_string(id);
+        aux.append(to_string(numeroDeOrden));
+        idCuenta = stoi(aux);
         setCuentaIniciada();
     }
 }
@@ -71,12 +86,12 @@ void Cuenta::setCuentaIniciada(){
 }
 
 ostream & operator << (ostream & salida, Cuenta & cuenta){
-    salida << cuenta.getIdCuenta() <<","<< cuenta.getSaldo();
+    salida << cuenta.getIdCuenta() <<","<<fixed<<setprecision(2)<< cuenta.getSaldo();
     return salida;
 }
 
 istream & operator >> (istream & entrada, Cuenta & cuenta){
-    string id;
+    int id;
     float s;
     entrada >> id;
     entrada >> s;

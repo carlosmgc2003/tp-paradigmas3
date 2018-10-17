@@ -17,16 +17,21 @@
 
 using namespace std;
 
-int main(int argc, char** argv) {
+int Cuenta::numeroDeOrden = 1;
+
+int main() {
     Banco A;
-    Cuenta prueba1("132956544",100.00);
-    Cuenta prueba2("232956544",150.00);
-    A.escribirCuenta(prueba1);
-    A.escribirCuenta(prueba2);
-    Cliente persona1("Carlos","Maceira",32956544);
-    Cliente persona2("Analia","Saavedra",27014855);
-    A.escribirCliente(persona1);
-    A.escribirCliente(persona2);
+    A.leerArchivos();
+    Cliente carlos("Carlos","Maceira",32956544);
+    Cliente analia("Analia","Saavedra",27014855);
+    carlos.agregarCuenta(15000.00);
+    carlos.agregarCuenta(1999.01);
+    analia.agregarCuenta(12000.00);
+    analia.agregarCuenta(3000.00);
+    carlos[0].acreditar(1234.0);
+    analia[0].debitar(1234.0);
+    A.escribirCliente(carlos);
+    A.escribirCliente(analia);
     return 0;
 }
 

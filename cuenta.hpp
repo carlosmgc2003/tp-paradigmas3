@@ -14,25 +14,28 @@
 #ifndef CUENTA_HPP
 #define CUENTA_HPP
 #include <string>
+#include <iostream>
+
 using namespace std;
+enum value {FALSE,TRUE};
 
 class Cuenta{
 public:
     //Constructores
-    Cuenta(string,float);//Constructor con id y saldo, deja nuevaCuenta en False.
-    Cuenta(string);/** Constructor solo con id. Deja nuevaCuenta en false, por lo cual
+    Cuenta(int,float);//Constructor con id y saldo, deja nuevaCuenta en False.
+    Cuenta(int);/** Constructor solo con id. Deja nuevaCuenta en false, por lo cual
                  * cualquier modificacion futura del saldo debe ser usado creditos y
                  * debitos o los operadores sobrecargados.***/
     Cuenta();/** Constructor sin parametros. Usar con precaucion solo cuando se realice
               * carga de archivos. Esta a prueba**/
-    //Destructores
+    //
     ~Cuenta();
     //Getters comunes... nada que aclarar
     float getSaldo() const;
-    string getIdCuenta() const;
+    int getIdCuenta() const;
     //Setters
     void setSaldo(float);//Setter del saldo, se puede usar solo cuando nuevaCuenta == TRUE OJO!!!
-    void setIdCuenta(string);//Setter de ID se puede usar solo cuando nuevaCuenta == TRUE. Pasa nuevaCuenta a FALSE
+    void setIdCuenta(int);//Setter de ID se puede usar solo cuando nuevaCuenta == TRUE. Pasa nuevaCuenta a FALSE
     void setCuentaIniciada();//Sirve como gatillo para bajar la cuenta del modo "promiscuo" nuevaCuenta
     //Sobrecarga de operadores
     friend ostream & operator<<(ostream &,Cuenta &);//Sobrecarga de salida; se usara para escribir en archivo.
@@ -40,11 +43,14 @@ public:
     //TODO: estos operadores deben escribir ESTOS movimientos en el archivo movimientos.txt
     void operator += (float);//Sobrecarga de incremento se usara para creditos. Todavia con pocas reglas.
     void operator -= (float);//Sobrecarga de desincrementar se usara para dbitos. Todavia solo valida signo del saldo.
-    static int numeroDeOrden;
+    void acreditar(float);//El saldo ingresado se suma al existente.
+    void debitar(float);//El saldo ingresado se resta al existente.
+    
 private:
     float saldo;//Saldo en pesos de la cuenta
-    string idCuenta;// ENTRA DNI Cliente Se implementara como un numero de cuenta + numero de cliente duenio de la cuent
+    int idCuenta;// ENTRA DNI Cliente Se implementara como un numero de cuenta + numero de cliente duenio de la cuent
     bool nuevaCuenta;//Booleano cuanto esta en TRUE la cuenta esta en modo PROMISCUO se puede modificar a gusto.
+    static int numeroDeOrden;
 };
 
 

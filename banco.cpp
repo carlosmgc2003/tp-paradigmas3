@@ -4,12 +4,24 @@
  * and open the template in the editor.
  */
 
-#include "banco.h"
+#include "banco.hpp"
 
 Banco::Banco(){
-    clientes.open("clientes.txt", fstream::out | fstream::in);
-    cuentas.open("cuentas.txt", fstream::out | fstream::in );
-    movimientos.open("movimientos.txt", fstream::out | fstream::in);
+    clientes.open("clientes.dat", fstream::out |fstream::in);
+    if(clientes.is_open())
+        cout<<"Archivo clientes abierto"<<endl;
+    clientesindex.open("clientes.idx", fstream::out |fstream::in);
+    if(clientesindex.is_open())
+        cout<<"Archivo de indices abierto"<<endl;
+    cuentas.open("cuentas.dat", fstream::out |fstream::in);
+    if(cuentas.is_open())
+        cout<<"Archivo cuentas abierto"<<endl;
+    cuentasindex.open("cuentas.idx", fstream::out |fstream::in);
+    if(cuentasindex.is_open())
+        cout<<"Archivo de indices de cuentas abierto"<<endl;
+    movimientos.open("movimientos.txt", fstream::out |fstream::in);
+    if(movimientos.is_open())
+        cout<<"Archivo movimientos abierto"<<endl;
 }
 
 Banco::~Banco(){
@@ -22,6 +34,12 @@ Banco::~Banco(){
 
 void Banco::escribirCliente(Cliente instanciaCliente){
     clientes << instanciaCliente << endl;
+    clientesindex << clientes.tellp() << endl;
+    for(int i = 0; i < instanciaCliente.contarCuentas(); i ++){
+        Cuenta aux = instanciaCliente[i];
+        cuentas << aux << endl;
+        cuentasindex << cuentas.tellp() << endl;
+    }
 }
 
 void Banco::escribirCuenta(Cuenta instanciaCuenta){
@@ -29,35 +47,13 @@ void Banco::escribirCuenta(Cuenta instanciaCuenta){
 }
 
 void Banco::leerArchivos(){
-    if(clientes){
-        clientes.seekg(0,clientes.end);//desplaza el cabezal al final del archivo.
-        int largoarchivo = clientes.tellg();//da la posicion del final.
-        clientes.seekg(0,clientes.beg);// desplaza el cabezal al principio del archivo nuevamente.
-        char * bufferClientes = new char[largoarchivo];//genera un buffer para guardar el contenido "entero" del archivo
-        cout<<"Se leeran: "<<largoarchivo<<" bytes."<<endl;
-        clientes.read(bufferClientes,largoarchivo);
-        if(clientes)
-            cout<<"El archivo ha sido leido correctamente"<<endl;
-        else
-            cout<<"error: solo"<<clientes.gcount()<<" han sido leidos!"<<endl;
-        //aca debe agregarse la creacion de las instancias de cliente.
-        string contenidoClientes(bufferClientes);
-        cout<<"Lo leido fue: "<<contenidoClientes<<endl;
-        delete[] bufferClientes;//se libera la memora asignada para el buffer.
-        cuentas.seekg(0,cuentas.end);
-        largoarchivo = cuentas.tellg();
-        cuentas.seekg(0,cuentas.beg);
-        char * bufferCuentas = new char[largoarchivo];
-        cout<<"Se leeran: "<<largoarchivo<<" bytes."<<endl;
-        cuentas.read(bufferCuentas,largoarchivo);
-        if(cuentas)
-            cout<<"El archivo ha sido leido correctamente"<<endl;
-        else
-            cout<<"error: solo"<<cuentas.gcount()<<" han sido leidos!"<<endl;
-        //aca debe agregarse la creacion de las instancias de cuenta.
-        string contenidoCuentas(bufferCuentas);
-        cout<<"Lo leido fue: "<<contenidoCuentas<<endl;
-        delete[] bufferCuentas;
+    int cantidadRegistros;
+    int dato, i = 0;
+    while(!clientesindex.eof()){
+        clientesindex >> dato;
+        cout<<i<<". "<<dato<<endl;
+        i++;
+        clientesindex >> dato;
     }
-
+    return;
 }

@@ -13,22 +13,32 @@
 
 #ifndef CLIENTE_HPP
 #define CLIENTE_HPP
+#include <iostream>
 #include <string>
 #include <vector>
+#include "cuenta.hpp"
 using namespace std;
+
 
 class Cliente{
 public:
-    Cliente(string,string,int);
+    Cliente(string,string,int);//Constructor de cliente
+    //Setters
     void setNombre(string);
     void setApellido(string);
     void setDni(int);
+    //getters
     string getNombre() const;
     string getApellido() const;
     int getDni() const;
-    void agregarCuenta(float);
-    friend ostream & operator <<(ostream &, Cliente &);
-    friend istream & operator >>(istream &, Cliente &);
+    //Metodos propios
+    void agregarCuenta(float);//Crea una cuenta nueva
+    void eliminarCuenta(int);//Elimina una cuenta y devuelve por pantall el saldo que tenia (extraccion en efectivo)
+    friend ostream & operator <<(ostream &, Cliente &);//Sobrecarga de salida para escribir archivos
+    friend istream & operator >>(istream &, Cliente &);//Sobrecarga de entrada para leer archivos
+    Cuenta & operator [] (const int);//Sobrecarga de los corchetes sirve para acceder a cada cuenta del cliente de forma directa
+    int contarCuentas() const;
+    
 private:
     string nombre;
     string apellido;

@@ -1,3 +1,7 @@
-build/Debug/GNU-MacOSX/main.o: main.cpp banco.h
+build/Debug/GNU-MacOSX/main.o: main.cpp banco.hpp cliente.hpp cuenta.hpp
 
-banco.h:
+banco.hpp:
+
+cliente.hpp:
+
+cuenta.hpp:
