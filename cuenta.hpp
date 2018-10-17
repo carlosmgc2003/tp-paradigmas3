@@ -5,20 +5,16 @@
  */
 
 /* 
- * File:   banco.h
- * Author: carlos
+ * File:   cuenta.hpp
+ * Author: cmaceira
  *
- * Created on 3 de octubre de 2018, 04:34
+ * Created on 16 de octubre de 2018, 12:41
  */
 
-#ifndef BANCO_H
-#define BANCO_H
+#ifndef CUENTA_HPP
+#define CUENTA_HPP
 #include <string>
-#include <fstream>
-#include <iostream>
-#include <vector>
 using namespace std;
-enum value {FALSE,TRUE};
 
 class Cuenta{
 public:
@@ -51,38 +47,6 @@ private:
     bool nuevaCuenta;//Booleano cuanto esta en TRUE la cuenta esta en modo PROMISCUO se puede modificar a gusto.
 };
 
-class Cliente{
-public:
-    Cliente(string,string,int);
-    void setNombre(string);
-    void setApellido(string);
-    void setDni(int);
-    string getNombre() const;
-    string getApellido() const;
-    int getDni() const;
-    void agregarCuenta(float);
-    friend ostream & operator <<(ostream &, Cliente &);
-    friend istream & operator >>(istream &, Cliente &);
-private:
-    string nombre;
-    string apellido;
-    int dni;
-    vector<Cuenta> cartera;
-};
 
-class Banco{
-public:
-    Banco();//inicia los archivos o append si ya estan creados.
-    ~Banco();//solo cierra los archivos
-    void leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
-    void escribirCliente(const Cliente );
-    void escribirCuenta(const Cuenta );
-    void escribirMovimiento(Cliente ,Cuenta ,const float);
-private:
-    fstream clientes;//puntero a file donde se guardan los clientes.
-    fstream cuentas;//puntero a file donde se guardan las cuentas.
-    fstream movimientos;//puntero a file donde se llevan los movimientos del banco
-};
-
-#endif /* BANCO_H */
+#endif /* CUENTA_HPP */
 
