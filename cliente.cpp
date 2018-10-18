@@ -6,6 +6,10 @@
 #include "cliente.hpp"
 
 //Constructor de cliente recibe un string n y otro a los pasa a los set de apellido y nombre y un entero dni
+Cliente::Cliente(){
+    return;
+}
+
 Cliente::Cliente(string n,string a,int id){
     setNombre(n);
     setApellido(a);
@@ -78,12 +82,16 @@ ostream & operator << (ostream & salida, Cliente & instanciaCliente){
 
 istream & operator >> (istream & entrada, Cliente & instanciaCliente){
     int numero;
-    string cadena1, cadena2;
-    char colon;
-    entrada >> numero >> colon >> cadena1 >> colon >> cadena2 >> colon;
+    string aux, nombre, apellido;
+    entrada >> aux;
+    size_t pos1 = aux.find(',');
+    numero = stoi(aux.substr(0,pos1));
+    size_t pos2 = aux.find_last_of(',');
+    nombre = aux.substr(pos1 + 1,(pos2 - pos1) - 1);
+    apellido = aux.substr(pos2 + 1,aux.size());
     instanciaCliente.setDni(numero);
-    instanciaCliente.setApellido(cadena2);
-    instanciaCliente.setApellido(cadena1);
+    instanciaCliente.setNombre(nombre);
+    instanciaCliente.setApellido(apellido);
     return entrada;
 }
 

@@ -22,6 +22,7 @@ using namespace std;
 
 class Cliente{
 public:
+    Cliente();//Constructor vacio que sirve para el new[]
     Cliente(string,string,int);//Constructor de cliente
     //Setters
     void setNombre(string);

@@ -25,8 +25,9 @@ class Banco{
 public:
     Banco();//inicia los archivos o append si ya estan creados.
     ~Banco();//solo cierra los archivos
-    void leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
-    void escribirCliente(Cliente);
+    Cliente * leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
+    int contarClientes();
+    void escribirCliente(Cliente &);
     void escribirCuenta(Cuenta );//Legacy no debe usarse;
     void escribirMovimiento(Cliente ,Cuenta ,const float);
 private:

@@ -32,7 +32,7 @@ Banco::~Banco(){
 
 
 
-void Banco::escribirCliente(Cliente instanciaCliente){
+void Banco::escribirCliente(Cliente & instanciaCliente){
     clientes << instanciaCliente << endl;
     clientesindex << clientes.tellp() << endl;
     for(int i = 0; i < instanciaCliente.contarCuentas(); i ++){
@@ -46,14 +46,31 @@ void Banco::escribirCuenta(Cuenta instanciaCuenta){
     cuentas << instanciaCuenta << endl;
 }
 
-void Banco::leerArchivos(){
-    int cantidadRegistros;
-    int dato, i = 0;
-    while(!clientesindex.eof()){
-        clientesindex >> dato;
-        cout<<i<<". "<<dato<<endl;
-        i++;
-        clientesindex >> dato;
+Cliente * Banco::leerArchivos(){
+    int cantClientes = contarClientes();
+    Cliente * datos; 
+    datos = new Cliente[cantClientes];
+    int j = 0;
+    string prueba;
+    while(!clientes.eof()){
+        clientes >> datos[j];
+        j ++;
+        if(clientes.eof())
+            break;
     }
-    return;
+    return datos;
+}
+
+int Banco::contarClientes(){
+    cout << "Contando clientes" <<endl;
+    int i = 0, aux;
+    clientesindex.seekg(0,clientesindex.beg);
+    while(!clientesindex.eof()){
+        i++;
+        clientesindex >> aux;
+        if(clientesindex.eof())
+            break;
+    }
+    cout <<"Clientes: "<< i<< endl;
+    return i;
 }

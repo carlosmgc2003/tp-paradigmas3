@@ -21,17 +21,19 @@ int Cuenta::numeroDeOrden = 1;
 
 int main() {
     Banco A;
-    A.leerArchivos();
-    Cliente carlos("Carlos","Maceira",32956544);
-    Cliente analia("Analia","Saavedra",27014855);
-    carlos.agregarCuenta(15000.00);
-    carlos.agregarCuenta(1999.01);
-    analia.agregarCuenta(12000.00);
-    analia.agregarCuenta(3000.00);
-    carlos[0].acreditar(1234.0);
-    analia[0].debitar(1234.0);
-    A.escribirCliente(carlos);
-    A.escribirCliente(analia);
+    Cliente * CLIENTES = A.leerArchivos();
+    int cantClientes = A.contarClientes();
+    for(int i = 0; i < cantClientes; i ++){
+        cout << CLIENTES[i] << endl;
+    }
+    delete [] CLIENTES;
+//    Cliente carlos("Carlos","Maceira",32956544);
+//    Cliente analia("Analia","Saavedra",27014855);
+//    Cliente soraya("Soraya","Garcia Coni",17587002);
+//    A.escribirCliente(carlos);
+//    A.escribirCliente(analia);
+//    A.escribirCliente(soraya);
+    
     return 0;
 }
 
