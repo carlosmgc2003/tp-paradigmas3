@@ -22,9 +22,9 @@ int Cuenta::numeroDeOrden = 1;
 int main() {
     Banco A;
     Cliente * CLIENTES = A.leerArchivos();
-    int cantClientes = A.contarClientes();
-    for(int i = 0; i < cantClientes; i ++){
+    for(int i = 0; i < A.contarClientes(); i ++){
         cout << CLIENTES[i] << endl;
+        A.escribirCliente(CLIENTES[i]);
     }
     delete [] CLIENTES;
 //    Cliente carlos("Carlos","Maceira",32956544);

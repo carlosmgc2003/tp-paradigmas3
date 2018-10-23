@@ -7,18 +7,12 @@
 #include "banco.hpp"
 
 Banco::Banco(){
-    clientes.open("clientes.dat", fstream::out |fstream::in);
+    clientes.open("clientes.txt", fstream::out |fstream::in);
     if(clientes.is_open())
         cout<<"Archivo clientes abierto"<<endl;
-    clientesindex.open("clientes.idx", fstream::out |fstream::in);
-    if(clientesindex.is_open())
-        cout<<"Archivo de indices abierto"<<endl;
-    cuentas.open("cuentas.dat", fstream::out |fstream::in);
+    cuentas.open("cuentas.txt", fstream::out |fstream::in);
     if(cuentas.is_open())
         cout<<"Archivo cuentas abierto"<<endl;
-    cuentasindex.open("cuentas.idx", fstream::out |fstream::in);
-    if(cuentasindex.is_open())
-        cout<<"Archivo de indices de cuentas abierto"<<endl;
     movimientos.open("movimientos.txt", fstream::out |fstream::in);
     if(movimientos.is_open())
         cout<<"Archivo movimientos abierto"<<endl;
@@ -34,11 +28,9 @@ Banco::~Banco(){
 
 void Banco::escribirCliente(Cliente & instanciaCliente){
     clientes << instanciaCliente << endl;
-    clientesindex << clientes.tellp() << endl;
     for(int i = 0; i < instanciaCliente.contarCuentas(); i ++){
         Cuenta aux = instanciaCliente[i];
         cuentas << aux << endl;
-        cuentasindex << cuentas.tellp() << endl;
     }
 }
 
@@ -51,26 +43,27 @@ Cliente * Banco::leerArchivos(){
     Cliente * datos; 
     datos = new Cliente[cantClientes];
     int j = 0;
-    string prueba;
+    clientes.seekg(clientes.beg);
     while(!clientes.eof()){
         clientes >> datos[j];
         j ++;
         if(clientes.eof())
             break;
     }
+    clientes.flush();
+    clientes.seekp(clientes.beg);
     return datos;
 }
 
 int Banco::contarClientes(){
-    cout << "Contando clientes" <<endl;
-    int i = 0, aux;
-    clientesindex.seekg(0,clientesindex.beg);
-    while(!clientesindex.eof()){
+    int i = 0;
+    string aux;
+    clientes.seekg(clientes.beg);
+    while(!clientes.eof()){
         i++;
-        clientesindex >> aux;
-        if(clientesindex.eof())
+        clientes >> aux;
+        if(clientes.eof())
             break;
     }
-    cout <<"Clientes: "<< i<< endl;
     return i;
 }
