@@ -18,16 +18,24 @@
 using namespace std;
 
 int Cuenta::numeroDeOrden = 1;
+void mostrarClientesBanco(Banco &);
 
 int main() {
     Banco A;
     A.leerArchivos();
-    for(int i = 0; i < A.clientesActivos.size(); i ++){
-        cout << A.clientesActivos[i] << endl;
-    }
-    Cliente NUEVO("Cosme","Fulanito",10000000);
-    A.clientesActivos.push_back(NUEVO);
+    cout << "Clientes antes"<< endl;
+    mostrarClientesBanco(A);
+    //Aqui hacer las operaciones de ABM de clientes
+    
+    
+    //Fin de las operaciones de ABM de clientes
+    cout << "Clientes despues:"<< endl;
+    mostrarClientesBanco(A);
     A.escribirClientes();    
     return 0;
 }
 
+void mostrarClientesBanco (Banco & banco){
+    for(int i = 0; i < banco.clientesActivos.size(); i++)
+        cout << i + 1 <<". "<< banco.clientesActivos[i] << endl;
+}
