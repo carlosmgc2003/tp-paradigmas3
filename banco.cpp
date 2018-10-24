@@ -26,12 +26,12 @@ Banco::~Banco(){
 
 
 
-void Banco::escribirClientes(Cliente * arrayClientes,int cantClientes){
+void Banco::escribirClientes(){
     clientes.close();
     clientes.open("clientes.txt", fstream::out | fstream::trunc);
-    for(int i = 0; i < cantClientes; i ++){
-        clientes << arrayClientes[i];
-        if(i < cantClientes - 1)
+    for(int i = 0; i < clientesActivos.size(); i ++){
+        clientes << clientesActivos[i];
+        if(i < clientesActivos.size() - 1)
             clientes << endl;
     }
     clientes.close();
@@ -46,22 +46,21 @@ void Banco::escribirCuenta(Cuenta instanciaCuenta){
     cuentas << instanciaCuenta << endl;
 }
 
-Cliente * Banco::leerArchivos(){
+void Banco::leerArchivos(){
     int cantClientes = contarClientes();
     cout << "Contados: " << cantClientes << endl;
-    Cliente * datos; 
-    datos = new Cliente[cantClientes];
     int j = 0;
+    Cliente aux;
     clientes.seekg(clientes.beg);
     while(!clientes.eof()){
-        clientes >> datos[j];
+        clientes >> aux;
+        clientesActivos.push_back(aux);
         j ++;
         if(clientes.eof())
             break;
     }
     clientes.flush();
     clientes.seekp(clientes.beg);
-    return datos;
 }
 
 int Banco::contarClientes(){

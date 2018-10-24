@@ -25,15 +25,17 @@ class Banco{
 public:
     Banco();//inicia los archivos o append si ya estan creados.
     ~Banco();//solo cierra los archivos
-    Cliente * leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
+    void leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
     int contarClientes();
-    void escribirClientes(Cliente *,int);
+    void escribirClientes();
     void escribirCuenta(Cuenta );//Legacy no debe usarse;
     void escribirMovimiento(Cliente ,Cuenta ,const float);
+    vector<Cliente> clientesActivos;
 private:
     fstream clientes;//puntero a file donde se guardan los clientes.
     fstream cuentas;//puntero a file donde se guardan las cuentas.
     fstream movimientos;//puntero a file donde se llevan los movimientos del banco
+
 };
 
 
