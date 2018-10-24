@@ -7,13 +7,13 @@
 #include "banco.hpp"
 
 Banco::Banco(){
-    clientes.open("clientes.txt", fstream::out |fstream::in);
+    clientes.open("clientes.txt", fstream::in);
     if(clientes.is_open())
         cout<<"Archivo clientes abierto"<<endl;
-    cuentas.open("cuentas.txt", fstream::out |fstream::in);
+    cuentas.open("cuentas.txt", fstream::in);
     if(cuentas.is_open())
         cout<<"Archivo cuentas abierto"<<endl;
-    movimientos.open("movimientos.txt", fstream::out |fstream::in);
+    movimientos.open("movimientos.txt", fstream::in);
     if(movimientos.is_open())
         cout<<"Archivo movimientos abierto"<<endl;
 }
@@ -26,12 +26,20 @@ Banco::~Banco(){
 
 
 
-void Banco::escribirCliente(Cliente & instanciaCliente){
-    clientes << instanciaCliente << endl;
-    for(int i = 0; i < instanciaCliente.contarCuentas(); i ++){
-        Cuenta aux = instanciaCliente[i];
-        cuentas << aux << endl;
+void Banco::escribirClientes(Cliente * arrayClientes,int cantClientes){
+    clientes.close();
+    clientes.open("clientes.txt", fstream::out | fstream::trunc);
+    for(int i = 0; i < cantClientes; i ++){
+        clientes << arrayClientes[i];
+        if(i < cantClientes - 1)
+            clientes << endl;
     }
+    clientes.close();
+    clientes.open("clientes.txt",fstream::in);
+//    for(int i = 0; i < instanciaCliente.contarCuentas(); i ++){
+//        Cuenta aux = instanciaCliente[i];
+//        cuentas << aux << endl;
+//    }
 }
 
 void Banco::escribirCuenta(Cuenta instanciaCuenta){
@@ -40,6 +48,7 @@ void Banco::escribirCuenta(Cuenta instanciaCuenta){
 
 Cliente * Banco::leerArchivos(){
     int cantClientes = contarClientes();
+    cout << "Contados: " << cantClientes << endl;
     Cliente * datos; 
     datos = new Cliente[cantClientes];
     int j = 0;

@@ -7,21 +7,21 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=GNU-MacOSX
-CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-MacOSX
+CND_PLATFORM_Debug=MinGW_TDM-Windows
+CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW_TDM-Windows
 CND_ARTIFACT_NAME_Debug=tp-paradigmas3
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-MacOSX/tp-paradigmas3
-CND_PACKAGE_DIR_Debug=dist/Debug/GNU-MacOSX/package
+CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW_TDM-Windows/tp-paradigmas3
+CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_TDM-Windows/package
 CND_PACKAGE_NAME_Debug=tp-paradigmas3.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-MacOSX/package/tp-paradigmas3.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_TDM-Windows/package/tp-paradigmas3.tar
 # Release configuration
-CND_PLATFORM_Release=GNU-MacOSX
-CND_ARTIFACT_DIR_Release=dist/Release/GNU-MacOSX
+CND_PLATFORM_Release=Cygwin-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
 CND_ARTIFACT_NAME_Release=tp-paradigmas3
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/tp-paradigmas3
-CND_PACKAGE_DIR_Release=dist/Release/GNU-MacOSX/package
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/tp-paradigmas3
+CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
 CND_PACKAGE_NAME_Release=tp-paradigmas3.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/tp-paradigmas3.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/tp-paradigmas3.tar
 #
 # include compiler specific variables
 #

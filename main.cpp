@@ -24,8 +24,8 @@ int main() {
     Cliente * CLIENTES = A.leerArchivos();
     for(int i = 0; i < A.contarClientes(); i ++){
         cout << CLIENTES[i] << endl;
-        A.escribirCliente(CLIENTES[i]);
     }
+    A.escribirClientes(CLIENTES,A.contarClientes());
     delete [] CLIENTES;
 //    Cliente carlos("Carlos","Maceira",32956544);
 //    Cliente analia("Analia","Saavedra",27014855);

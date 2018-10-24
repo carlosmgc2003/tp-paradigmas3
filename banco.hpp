@@ -27,14 +27,12 @@ public:
     ~Banco();//solo cierra los archivos
     Cliente * leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
     int contarClientes();
-    void escribirCliente(Cliente &);
+    void escribirClientes(Cliente *,int);
     void escribirCuenta(Cuenta );//Legacy no debe usarse;
     void escribirMovimiento(Cliente ,Cuenta ,const float);
 private:
     fstream clientes;//puntero a file donde se guardan los clientes.
-    fstream clientesindex;
     fstream cuentas;//puntero a file donde se guardan las cuentas.
-    fstream cuentasindex;
     fstream movimientos;//puntero a file donde se llevan los movimientos del banco
 };
 
