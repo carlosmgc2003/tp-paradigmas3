@@ -12,25 +12,20 @@ using namespace std;
 
 
 Cuenta::Cuenta(int id,float s){
-    cout<<numeroDeOrden<<endl;
     nuevaCuenta = TRUE;
     saldo = s >= 0.0? s : 0.0;
-    setIdCuenta(id);
+    setdniDuenio(id);
     setCuentaIniciada();
-    numeroDeOrden ++;
 
 }
 
 Cuenta::Cuenta(int id){
-    setIdCuenta(id);
+    setdniDuenio(id);
     saldo = 0.0;
     nuevaCuenta = TRUE;
-    numeroDeOrden ++;
 }
 Cuenta::Cuenta(){
-    saldo = 0.0;
     nuevaCuenta = TRUE;
-    numeroDeOrden ++;
 }
 
 Cuenta::~Cuenta(){
@@ -40,8 +35,8 @@ float Cuenta::getSaldo() const{
     return saldo;
 }
 
-int Cuenta::getIdCuenta() const{
-    return idCuenta;
+int Cuenta::getdniDuenio() const{
+    return dniDuenio;
 }
 
 void Cuenta::operator +=(float credito){
@@ -65,13 +60,9 @@ void Cuenta::operator -=(float debito){
         cout<<"Saldo insuficiente"<<endl;
 }
 
-void Cuenta::setIdCuenta(int id){
+void Cuenta::setdniDuenio(int id){
     if(nuevaCuenta == TRUE){
-        string aux;
-        aux = to_string(id);
-        aux.append(to_string(numeroDeOrden));
-        idCuenta = stoi(aux);
-        setCuentaIniciada();
+        dniDuenio = id;
     }
 }
 
@@ -86,19 +77,21 @@ void Cuenta::setCuentaIniciada(){
 }
 
 ostream & operator << (ostream & salida, Cuenta & cuenta){
-    salida << cuenta.getIdCuenta() <<","<<fixed<<setprecision(2)<< cuenta.getSaldo();
+    salida << cuenta.getdniDuenio() <<","<<fixed<<setprecision(2)<< cuenta.getSaldo();
     return salida;
 }
 
 istream & operator >> (istream & entrada, Cuenta & cuenta){
-    int id;
-    float s;
-    entrada >> id;
-    entrada >> s;
-    if(cuenta.nuevaCuenta == TRUE){
-        cuenta.setIdCuenta(id);
-        cuenta.setSaldo(s);
-        cuenta.setCuentaIniciada();
-    }
+    int numeroParadniDuenio;
+    float numeroParaSaldo;
+    string aux;
+    entrada >> aux;
+    size_t pos = aux.find(',');
+    numeroParadniDuenio = stoi(aux.substr(0,pos));
+    cuenta.setdniDuenio(numeroParadniDuenio);
+    numeroParaSaldo = stof(aux.substr(pos + 1,aux.size() - (pos + 1)));
+    cout << fixed << setprecision(2) << numeroParaSaldo << endl;
+    cuenta.setSaldo(numeroParaSaldo);
+    cuenta.setCuentaIniciada();
     return entrada;
 }

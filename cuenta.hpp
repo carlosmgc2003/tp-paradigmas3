@@ -32,10 +32,10 @@ public:
     ~Cuenta();
     //Getters comunes... nada que aclarar
     float getSaldo() const;
-    int getIdCuenta() const;
+    int getdniDuenio() const;
     //Setters
     void setSaldo(float);//Setter del saldo, se puede usar solo cuando nuevaCuenta == TRUE OJO!!!
-    void setIdCuenta(int);//Setter de ID se puede usar solo cuando nuevaCuenta == TRUE. Pasa nuevaCuenta a FALSE
+    void setdniDuenio(int);//Setter de ID se puede usar solo cuando nuevaCuenta == TRUE. Pasa nuevaCuenta a FALSE
     void setCuentaIniciada();//Sirve como gatillo para bajar la cuenta del modo "promiscuo" nuevaCuenta
     //Sobrecarga de operadores
     friend ostream & operator<<(ostream &,Cuenta &);//Sobrecarga de salida; se usara para escribir en archivo.
@@ -48,9 +48,8 @@ public:
     
 private:
     float saldo;//Saldo en pesos de la cuenta
-    int idCuenta;// ENTRA DNI Cliente Se implementara como un numero de cuenta + numero de cliente duenio de la cuent
+    int dniDuenio;//DNI del dueño de la cuenta
     bool nuevaCuenta;//Booleano cuanto esta en TRUE la cuenta esta en modo PROMISCUO se puede modificar a gusto.
-    static int numeroDeOrden;
 };
 
 

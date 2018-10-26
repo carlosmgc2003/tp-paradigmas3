@@ -64,7 +64,7 @@ void Cliente::eliminarCuenta(int id){
     if(id < dni)
         cout<<"Dato incorrecto, no se puede buscar cuenta"<<endl;
     for(int i = 0; i < cartera.size(); i ++){
-        if(cartera[i].getIdCuenta() == id){
+        if(cartera[i].getdniDuenio() == id){
             cartera.erase(cartera.begin() + i);
             cout<<"Cuenta "<<id<<" eliminada."<<endl;
         }
