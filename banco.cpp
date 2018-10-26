@@ -36,18 +36,18 @@ void Banco::escribirClientes(){
     }
     clientes.close();
     clientes.open("clientes.txt",fstream::in);
-    cuentas.close();
-    cuentas.open("cuentas.txt", fstream::out | fstream::trunc);
-    for(int i = 0; i < clientesActivos.size(); i ++){
-        for(int j = 0;j < clientesActivos[i].contarCuentas(); j++){
-            cuentas << clientesActivos[i][j];
-            if(j < clientesActivos[i].contarCuentas() - 1)
-                cuentas << endl;
-        }
-        cuentas << endl;
-    }
-    cuentas.close();
-    cuentas.open("cuentas.txt", fstream::in);
+//    cuentas.close();
+//    cuentas.open("cuentas.txt", fstream::out | fstream::trunc);
+//    for(int i = 0; i < clientesActivos.size(); i ++){
+//        for(int j = 0;j < clientesActivos[i].contarCuentas(); j++){
+//            cuentas << clientesActivos[i][j];
+//            if(j < clientesActivos[i].contarCuentas() - 1)
+//                cuentas << endl;
+//        }
+//        cuentas << endl;
+//    }
+//    cuentas.close();
+//    cuentas.open("cuentas.txt", fstream::in);
 }
 
 void Banco::escribirCuenta(Cuenta instanciaCuenta){

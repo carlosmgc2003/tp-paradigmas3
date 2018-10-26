@@ -49,9 +49,14 @@
       <toolsSet>
         <compilerSet>MinGW_TDM|MinGW_TDM</compilerSet>
         <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
+        <rebuildPropChanged>true</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <standard>10</standard>
+          <warningLevel>2</warningLevel>
+        </cTool>
         <linkerTool>
           <linkerDynSerch>
             <pElem>.</pElem>
@@ -76,11 +81,12 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
-    <conf name="Release" type="1">
+    <conf name="Release" type="1" platformSpecific="true">
       <toolsSet>
-        <compilerSet>GNU|GNU</compilerSet>
+        <compilerSet>Cygwin|Cygwin</compilerSet>
+        <platform>3</platform>
         <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
+        <rebuildPropChanged>true</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>

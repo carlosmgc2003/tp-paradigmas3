@@ -17,6 +17,8 @@
 
 using namespace std;
 
+int Cuenta::generadorNumeros = 1;
+
 void mostrarClientesBanco(Banco &);
 
 int main() {
@@ -25,10 +27,7 @@ int main() {
     cout << "Clientes antes"<< endl;
     mostrarClientesBanco(A);
     //Aqui hacer las operaciones de ABM de clientes
-    Cuenta prueba;
-    A.cuentas >> prueba;
-    cout << prueba << endl;
-    
+
     //Fin de las operaciones de ABM de clientes
     cout << "Clientes despues:"<< endl;
     mostrarClientesBanco(A);

@@ -18,12 +18,13 @@
 
 using namespace std;
 enum value {FALSE,TRUE};
+enum TIPO {CA,CC};
 
 class Cuenta{
 public:
     //Constructores
-    Cuenta(int,float);//Constructor con id y saldo, deja nuevaCuenta en False.
-    Cuenta(int);/** Constructor solo con id. Deja nuevaCuenta en false, por lo cual
+    Cuenta(int,int,float);//Constructor con id y saldo, deja nuevaCuenta en False.
+    Cuenta(int,int);/** Constructor solo con id. Deja nuevaCuenta en false, por lo cual
                  * cualquier modificacion futura del saldo debe ser usado creditos y
                  * debitos o los operadores sobrecargados.***/
     Cuenta();/** Constructor sin parametros. Usar con precaucion solo cuando se realice
@@ -33,10 +34,14 @@ public:
     //Getters comunes... nada que aclarar
     float getSaldo() const;
     int getdniDuenio() const;
+    int gettipoCuenta() const;
+    int getnumeroUnico() const;
     //Setters
     void setSaldo(float);//Setter del saldo, se puede usar solo cuando nuevaCuenta == TRUE OJO!!!
     void setdniDuenio(int);//Setter de ID se puede usar solo cuando nuevaCuenta == TRUE. Pasa nuevaCuenta a FALSE
     void setCuentaIniciada();//Sirve como gatillo para bajar la cuenta del modo "promiscuo" nuevaCuenta
+    void setnumeroUnico(int);
+    void settipoCuenta(int);
     //Sobrecarga de operadores
     friend ostream & operator<<(ostream &,Cuenta &);//Sobrecarga de salida; se usara para escribir en archivo.
     friend istream & operator>>(istream &,Cuenta &);//Sobrecarga de entrada; se usara para leer archivo
@@ -50,6 +55,11 @@ private:
     float saldo;//Saldo en pesos de la cuenta
     int dniDuenio;//DNI del dueño de la cuenta
     bool nuevaCuenta;//Booleano cuanto esta en TRUE la cuenta esta en modo PROMISCUO se puede modificar a gusto.
+    int tipoCuenta;// Si es CA (False) o CC (True)
+    int numeroUnico;
+    static int generadorNumeros;
+    
+    
 };
 
 
