@@ -5,7 +5,6 @@
  */
 
 #include "banco.hpp"
-
 Banco::Banco(){
     clientes.open("clientes.txt", fstream::in);
     if(clientes.is_open())
@@ -27,6 +26,7 @@ Banco::~Banco(){
 
 
 void Banco::escribirClientes(){
+    //Escribimos todos los clientes
     clientes.close();
     clientes.open("clientes.txt", fstream::out | fstream::trunc);
     for(int i = 0; i < clientesActivos.size(); i ++){
@@ -36,18 +36,27 @@ void Banco::escribirClientes(){
     }
     clientes.close();
     clientes.open("clientes.txt",fstream::in);
-//    cuentas.close();
-//    cuentas.open("cuentas.txt", fstream::out | fstream::trunc);
-//    for(int i = 0; i < clientesActivos.size(); i ++){
-//        for(int j = 0;j < clientesActivos[i].contarCuentas(); j++){
-//            cuentas << clientesActivos[i][j];
-//            if(j < clientesActivos[i].contarCuentas() - 1)
-//                cuentas << endl;
-//        }
-//        cuentas << endl;
-//    }
-//    cuentas.close();
-//    cuentas.open("cuentas.txt", fstream::in);
+    //Ahora vamos a escribir las cuentas
+    cuentas.close();
+    cuentas.open("cuentas.txt", fstream::out | fstream::trunc);
+    //Para cada cliente:
+    for(int i = 0; i < clientesActivos.size(); i ++){
+        //Si el cliente tiene cuentas:
+        cout << "Escribiendo cuentas para: " << clientesActivos[i] << endl;
+        if(clientesActivos[i].contarCuentas() != 0){
+            //Recorremos cada cuenta
+            cout << "Tiene cuentas activas: " << clientesActivos[i].contarCuentas() << endl;
+            for(int j = 0;j < clientesActivos[i].contarCuentas(); j++){
+                //La escribimos en el disco
+                cout << "Escribimos la cuenta:" << clientesActivos[i][j] << endl;
+                cuentas << clientesActivos[i][j];
+                if(j < clientesActivos[i].contarCuentas())
+                    cuentas << endl;
+            }
+        }
+    }
+    cuentas.close();
+    cuentas.open("cuentas.txt", fstream::in);
 }
 
 void Banco::escribirCuenta(Cuenta instanciaCuenta){
@@ -56,19 +65,32 @@ void Banco::escribirCuenta(Cuenta instanciaCuenta){
 
 void Banco::leerArchivos(){
     int cantClientes = contarClientes();
-    cout << "Contados: " << cantClientes << endl;
-    int j = 0;
-    Cliente aux;
+    cout << "Clientes contados: " << cantClientes << endl;
+    Cliente auxCliente;
     clientes.seekg(clientes.beg);
     while(!clientes.eof()){
-        clientes >> aux;
-        clientesActivos.push_back(aux);
-        j ++;
+        clientes >> auxCliente;
+        clientesActivos.push_back(auxCliente);
         if(clientes.eof())
             break;
     }
-    clientes.flush();
-    clientes.seekp(clientes.beg);
+    int cantCuentas = contarCuentas();
+    cout << "Cuentas contadas: " << cantCuentas << endl;
+    cuentas.seekg(cuentas.beg);
+    while(!cuentas.eof()){
+        Cuenta auxCuenta;
+        cuentas >> auxCuenta;
+        cout << "Leida la cuenta: " << auxCuenta << " en posicion: " << cuentas.tellg() <<endl;
+        for(int i = 0; i < clientesActivos.size();i ++){
+            if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio()){
+                clientesActivos[i].agregarCuenta(auxCuenta);
+                cout <<"Se agrego cuenta: " << auxCuenta << " a " << clientesActivos[i] << " en posicion " << i << endl;
+                break;
+            }
+        }
+        if(cuentas.eof())
+            break;
+    }
 }
 
 int Banco::contarClientes(){
@@ -79,6 +101,22 @@ int Banco::contarClientes(){
         i++;
         clientes >> aux;
         if(clientes.eof())
+            break;
+    }
+    return i;
+}
+
+
+//FIX: que hacer con los benditos saltos de linea al final del archivo
+int Banco::contarCuentas(){
+    int i = 0;
+    string aux;
+    cuentas.seekg(cuentas.beg);
+    while(!cuentas.eof()){
+        cuentas >> aux;
+        cout << aux;
+        i++;
+        if(cuentas.eof())
             break;
     }
     return i;

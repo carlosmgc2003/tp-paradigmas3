@@ -27,6 +27,7 @@ public:
     ~Banco();//solo cierra los archivos
     void leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
     int contarClientes();
+    int contarCuentas();
     void escribirClientes();
     void escribirCuenta(Cuenta );//Legacy no debe usarse;
     void escribirMovimiento(Cliente ,Cuenta ,const float);

@@ -45,9 +45,10 @@
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="Debug" type="1">
+    <conf name="Debug" type="1" platformSpecific="true">
       <toolsSet>
-        <compilerSet>MinGW_TDM|MinGW_TDM</compilerSet>
+        <compilerSet>default</compilerSet>
+        <platform>3</platform>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>true</rebuildPropChanged>
       </toolsSet>
@@ -57,6 +58,9 @@
           <standard>10</standard>
           <warningLevel>2</warningLevel>
         </cTool>
+        <ccTool>
+          <standard>8</standard>
+        </ccTool>
         <linkerTool>
           <linkerDynSerch>
             <pElem>.</pElem>

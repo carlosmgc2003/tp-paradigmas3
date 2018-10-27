@@ -27,7 +27,7 @@ int main() {
     cout << "Clientes antes"<< endl;
     mostrarClientesBanco(A);
     //Aqui hacer las operaciones de ABM de clientes
-
+    cout << A.clientesActivos[1] << endl;
     //Fin de las operaciones de ABM de clientes
     cout << "Clientes despues:"<< endl;
     mostrarClientesBanco(A);

@@ -60,6 +60,10 @@ void Cliente::agregarCuenta(float deposito){
     cartera.push_back(nueva);
 }
 
+void Cliente::agregarCuenta(Cuenta nueva){
+    cartera.push_back(nueva);
+}
+
 void Cliente::eliminarCuenta(int id){
     if(id < dni)
         cout<<"Dato incorrecto, no se puede buscar cuenta"<<endl;

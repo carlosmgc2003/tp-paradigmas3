@@ -86,15 +86,13 @@ void Cuenta::operator -=(float debito){
 
 //Setters
 void Cuenta::setdniDuenio(int id){
-    if(nuevaCuenta == TRUE){
-        dniDuenio = id;
-    }
+    if(nuevaCuenta == TRUE)
+    dniDuenio = id;
 }
 
 void Cuenta::setSaldo(float s){
-    if(nuevaCuenta == TRUE){
-        saldo = s;
-    }
+    if(nuevaCuenta == TRUE)
+    saldo = s;
 }
 
 void Cuenta::setCuentaIniciada(){
@@ -152,7 +150,6 @@ istream & operator >> (istream & entrada, Cuenta & cuenta){
     tipo = stoi(aux.substr(0,pos));
     //Lo guardo en la instancia de cliente
     cuenta.settipoCuenta(tipo);
-    
     numeroParaSaldo = stof(aux.substr(pos + 1,aux.size() - (pos + 1)));
     cuenta.setSaldo(numeroParaSaldo);
     cuenta.setCuentaIniciada();
