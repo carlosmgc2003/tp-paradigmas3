@@ -10,26 +10,28 @@ Cliente::Cliente(){
     return;
 }
 
-Cliente::Cliente(string n,string a,int id){
+Cliente::Cliente(string n,string a,int id, string d, string t){
     setNombre(n);
     setApellido(a);
     setDni(id);
+    setDireccion(d);
+    setTelefono(t);
 }
 
+//Setters
 //Funcion set del nombre recibe un string, si es mayor a 20 caracteres lo recorta si no lo pasa como esta
 void Cliente::setNombre(string n){
     if(n.size() > 20)
         n.resize(20);
-    else
-        nombre = n;
+    nombre = n;
 }
+
 
 //Funcion set de l apellido recibe un string, si es mayor a 20 caracteres lo recorta, si no lo pasa como esta.
 void Cliente::setApellido(string a){
     if(a.size() > 20)
         a.resize(20);
-    else
-        apellido = a;
+    apellido = a;
 }
 
 
@@ -38,6 +40,17 @@ void Cliente::setDni(int id){
     dni = id >= 1000000? id : 0;
 }
 
+void Cliente::setDireccion(string d){
+    if(d.size() > 50)
+        d.resize(50);
+    direccion = d;
+}
+
+void Cliente::setTelefono(string t){
+    if(t.size() > 15)
+        t.resize(15);
+    telefono = t;
+}
 //Funciones get
 int Cliente::getDni() const{
     return dni;
@@ -49,6 +62,14 @@ string Cliente::getNombre() const{
 
 string Cliente::getApellido() const{
     return apellido;
+}
+
+string Cliente::getDireccion() const{
+    return direccion;
+}
+
+string Cliente::getTelefono() const{
+    return telefono;
 }
 //Fin de funciones get
 
@@ -81,21 +102,36 @@ ostream & operator << (ostream & salida, Cliente & instanciaCliente){
     salida << instanciaCliente.getNombre();
     salida << ",";
     salida << instanciaCliente.getApellido();
+    salida << ",";
+    salida << instanciaCliente.getDireccion();
+    salida << ",";
+    salida << instanciaCliente.getTelefono();
     return salida;
 }
 
 istream & operator >> (istream & entrada, Cliente & instanciaCliente){
     int numero;
-    string aux, nombre, apellido;
+    string aux, nombre, apellido, direccion, telefono;
     entrada >> aux;
-    size_t pos1 = aux.find(',');
-    numero = stoi(aux.substr(0,pos1));
-    size_t pos2 = aux.find_last_of(',');
-    nombre = aux.substr(pos1 + 1,(pos2 - pos1) - 1);
-    apellido = aux.substr(pos2 + 1,aux.size());
+    size_t pos = aux.find(',');
+    numero = stoi(aux.substr(0,pos));
+    aux = aux.substr(pos + 1,aux.size() - (pos + 1));
+    pos = aux.find(',');
+    nombre = aux.substr(0,pos);
+    aux = aux.substr(pos + 1,aux.size() - (pos + 1));
+    pos = aux.find(',');
+    apellido = aux.substr(0,pos);
+    aux = aux.substr(pos + 1,aux.size() - (pos + 1));
+    pos = aux.find(',');
+    direccion = aux.substr(0,pos);
+    aux = aux.substr(pos + 1,aux.size() - (pos + 1));
+    pos = aux.find(',');
+    telefono = aux.substr(0,pos);
     instanciaCliente.setDni(numero);
     instanciaCliente.setNombre(nombre);
     instanciaCliente.setApellido(apellido);
+    instanciaCliente.setDireccion(direccion);
+    instanciaCliente.setTelefono(telefono);
     return entrada;
 }
 

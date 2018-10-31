@@ -37,24 +37,28 @@ void Banco::escribirClientes(){
     clientes.close();
     clientes.open("clientes.txt",fstream::in);
     //Ahora vamos a escribir las cuentas
+    
     cuentas.close();
     cuentas.open("cuentas.txt", fstream::out | fstream::trunc);
     //Para cada cliente:
+    int cuentasTotales = cuentasActivas();
     for(int i = 0; i < clientesActivos.size(); i ++){
         //Si el cliente tiene cuentas:
-        cout << "Escribiendo cuentas para: " << clientesActivos[i] << endl;
         if(clientesActivos[i].contarCuentas() != 0){
+            //cout << "Escribiendo cuentas para: " << clientesActivos[i] << endl;
             //Recorremos cada cuenta
-            cout << "Tiene cuentas activas: " << clientesActivos[i].contarCuentas() << endl;
+            //cout << "Tiene cuentas activas: " << clientesActivos[i].contarCuentas() << endl;
             for(int j = 0;j < clientesActivos[i].contarCuentas(); j++){
                 //La escribimos en el disco
-                cout << "Escribimos la cuenta:" << clientesActivos[i][j] << endl;
+                //cout << "Escribimos la cuenta:" << clientesActivos[i][j] << endl;
                 cuentas << clientesActivos[i][j];
-                if(j < clientesActivos[i].contarCuentas())
+                cuentasTotales --;
+                if(j < clientesActivos[i].contarCuentas() && cuentasTotales > 0)
                     cuentas << endl;
             }
         }
     }
+    
     cuentas.close();
     cuentas.open("cuentas.txt", fstream::in);
 }
@@ -80,11 +84,11 @@ void Banco::leerArchivos(){
     while(!cuentas.eof()){
         Cuenta auxCuenta;
         cuentas >> auxCuenta;
-        cout << "Leida la cuenta: " << auxCuenta << " en posicion: " << cuentas.tellg() <<endl;
+        //cout << "Leida la cuenta: " << auxCuenta << " en posicion: " << cuentas.tellg() <<endl;
         for(int i = 0; i < clientesActivos.size();i ++){
             if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio()){
                 clientesActivos[i].agregarCuenta(auxCuenta);
-                cout <<"Se agrego cuenta: " << auxCuenta << " a " << clientesActivos[i] << " en posicion " << i << endl;
+                //cout <<"Se agrego cuenta: " << auxCuenta << " a " << clientesActivos[i] << " en posicion " << i << endl;
                 break;
             }
         }
@@ -120,4 +124,12 @@ int Banco::contarCuentas(){
             break;
     }
     return i;
+}
+
+int Banco::cuentasActivas(){
+    int contador = 0;
+    for(int i = 0; i < clientesActivos.size();i ++){
+        contador += clientesActivos[i].contarCuentas();
+    }
+    return contador;
 }

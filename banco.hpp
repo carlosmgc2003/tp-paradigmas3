@@ -32,6 +32,7 @@ public:
     void escribirCuenta(Cuenta );//Legacy no debe usarse;
     void escribirMovimiento(Cliente ,Cuenta ,const float);
     vector<Cliente> clientesActivos;
+    int cuentasActivas();
 //private:
     fstream clientes;//puntero a file donde se guardan los clientes.
     fstream cuentas;//puntero a file donde se guardan las cuentas.

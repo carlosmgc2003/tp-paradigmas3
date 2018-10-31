@@ -23,15 +23,19 @@ using namespace std;
 class Cliente{
 public:
     Cliente();//Constructor vacio que sirve para el new[]
-    Cliente(string,string,int);//Constructor de cliente
+    Cliente(string,string,int,string,string);//Constructor de cliente
     //Setters
     void setNombre(string);
     void setApellido(string);
     void setDni(int);
+    void setDireccion(string);
+    void setTelefono(string);
     //getters
     string getNombre() const;
     string getApellido() const;
     int getDni() const;
+    string getDireccion() const;
+    string getTelefono() const;
     //Metodos propios
     void agregarCuenta(float);//Crea una cuenta nueva
     void agregarCuenta(Cuenta);//Push back una cuenta en el vector cartera
@@ -45,6 +49,8 @@ private:
     string nombre;
     string apellido;
     int dni;
+    string direccion;
+    string telefono;
     vector<Cuenta> cartera;
 };
 

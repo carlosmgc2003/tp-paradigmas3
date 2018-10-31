@@ -132,7 +132,7 @@ istream & operator >> (istream & entrada, Cuenta & cuenta){
     size_t pos = aux.find(',');
     //Convierto el primer numero en el DNI
     numDniDuenio = stoi(aux.substr(0,pos));
-    //Lo guardo en la instancia de cliente
+    //Lo guardo en la instancia de cuenta
     cuenta.setdniDuenio(numDniDuenio);
     //Recorto la subcadena de lo que sigue y lo guardo en aux;
     aux = aux.substr(pos + 1,aux.size() - (pos + 1));

@@ -45,10 +45,9 @@
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="Debug" type="1" platformSpecific="true">
+    <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
-        <platform>3</platform>
+        <compilerSet>CLang|CLang</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>true</rebuildPropChanged>
       </toolsSet>
@@ -59,6 +58,7 @@
           <warningLevel>2</warningLevel>
         </cTool>
         <ccTool>
+          <developmentMode>5</developmentMode>
           <standard>8</standard>
         </ccTool>
         <linkerTool>
@@ -85,10 +85,9 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
-    <conf name="Release" type="1" platformSpecific="true">
+    <conf name="Release" type="1">
       <toolsSet>
-        <compilerSet>Cygwin|Cygwin</compilerSet>
-        <platform>3</platform>
+        <compilerSet>CLang|CLang</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>true</rebuildPropChanged>
       </toolsSet>
