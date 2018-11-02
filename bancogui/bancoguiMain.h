@@ -35,6 +35,9 @@ class bancoguiFrame: public wxFrame
         void OnListCtrl1BeginDrag(wxListEvent& event);
         void OnListCtrl1BeginDrag1(wxListEvent& event);
         void OnButton1Click(wxCommandEvent& event);
+        void OnBtnEditarClienteClick(wxCommandEvent& event);
+        void OnbtnCrearClienteClick(wxCommandEvent& event);
+        void OnbtnCrearClienteClick2(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(bancoguiFrame)

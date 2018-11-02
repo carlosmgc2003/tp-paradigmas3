@@ -10,7 +10,7 @@
 #include "bancoguiMain.h"
 #include <wx/msgdlg.h>
 #include "banco.hpp"
-
+#include "crearCliente.h"
 //(*InternalHeaders(bancoguiFrame)
 #include <wx/artprov.h>
 #include <wx/bitmap.h>
@@ -85,7 +85,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     wxStaticBoxSizer* StaticBoxSizer2;
     wxStaticBoxSizer* StaticBoxSizer3;
 
-    Create(parent, id, _("Banco CrisNaMa"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
+    Create(0, id, _("Banco CrisNaMa"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
     SetMinSize(wxSize(-1,-1));
     {
     	wxIcon FrameIcon;
@@ -150,6 +150,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     BoxSizer1->SetSizeHints(this);
 
     Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_BEGIN_DRAG,(wxObjectEventFunction)&bancoguiFrame::OnListCtrl1BeginDrag1);
+    Connect(ID_BTNCREARCLIENTE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnbtnCrearClienteClick);
+    Connect(ID_BTNEDITARCLIENTE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnBtnEditarClienteClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnAbout);
     //*)
@@ -213,3 +215,15 @@ void ListarClientes(Banco & Ban,wxListCtrl & Lista){
 void bancoguiFrame::OnButton1Click(wxCommandEvent& event)
 {
 }
+
+void bancoguiFrame::OnBtnEditarClienteClick(wxCommandEvent& event)
+{
+
+}
+
+void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
+{
+    crearCliente * dialogo = new crearCliente(this);
+    dialogo->ShowModal();
+}
+

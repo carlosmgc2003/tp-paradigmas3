@@ -1712,7 +1712,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1541165515 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1541194941 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
@@ -1969,13 +1969,18 @@
 	"cuenta.hpp"
 	<iomanip>
 
-1541165128 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\crearcliente.cpp
+1541196195 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\crearcliente.cpp
 	"crearCliente.h"
 	<wx/intl.h>
 	<wx/string.h>
 
-1541165127 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\crearcliente.h
+1541196195 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\crearcliente.h
+	<wx/button.h>
 	<wx/dialog.h>
+	<wx/sizer.h>
+	<wx/stattext.h>
+	<wx/textctrl.h>
+	"banco.hpp"
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\dialog.h
 	"wx/toplevel.h"
@@ -2026,4 +2031,90 @@
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\dialog.h
 	"wx/panel.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\stattext.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/stattext.h"
+	"wx/msw/stattext.h"
+	"wx/motif/stattext.h"
+	"wx/gtk/stattext.h"
+	"wx/gtk1/stattext.h"
+	"wx/osx/stattext.h"
+	"wx/cocoa/stattext.h"
+	"wx/os2/stattext.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\univ\stattext.h
+	"wx/generic/stattextg.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\generic\stattextg.h
+	"wx/stattext.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msw\stattext.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\motif\stattext.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\gtk\stattext.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\gtk1\stattext.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\osx\stattext.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\cocoa\stattext.h
+	"wx/cocoa/NSTextField.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
+	"wx/control.h"
+
+1541195424 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+	"bancoguiMain.h"
+	<wx/msgdlg.h>
+	"banco.hpp"
+	"crearCliente.h"
+	<wx/artprov.h>
+	<wx/bitmap.h>
+	<wx/icon.h>
+	<wx/image.h>
+	<wx/intl.h>
+	<wx/string.h>
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msgdlg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/stockitem.h"
+	"wx/generic/msgdlgg.h"
+	"wx/cocoa/msgdlg.h"
+	"wx/msw/msgdlg.h"
+	"wx/motif/msgdlg.h"
+	"wx/gtk/msgdlg.h"
+	"wx/osx/msgdlg.h"
+	"wx/os2/msgdlg.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\stockitem.h
+	"wx/defs.h"
+	"wx/chartype.h"
+	"wx/string.h"
+	"wx/accel.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\generic\msgdlgg.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\cocoa\msgdlg.h
+	"wx/msgdlg.h"
+	"wx/generic/msgdlgg.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msw\msgdlg.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\motif\msgdlg.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\gtk\msgdlg.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\osx\msgdlg.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\os2\msgdlg.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\artprov.h
+	"wx/string.h"
+	"wx/bitmap.h"
+	"wx/icon.h"
+	"wx/iconbndl.h"
 

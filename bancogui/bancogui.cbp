@@ -108,9 +108,12 @@
 		<Unit filename="bancoguiMain.h" />
 		<Unit filename="cliente.cpp" />
 		<Unit filename="cliente.hpp" />
+		<Unit filename="crearCliente.cpp" />
+		<Unit filename="crearCliente.h" />
 		<Unit filename="cuenta.cpp" />
 		<Unit filename="cuenta.hpp" />
 		<Unit filename="wxsmith/bancoguiframe.wxs" />
+		<Unit filename="wxsmith/crearCliente.wxs" />
 		<Extensions>
 			<code_completion />
 			<envvars />
@@ -120,6 +123,7 @@
 				<gui name="wxWidgets" src="bancoguiApp.cpp" main="bancoguiFrame" init_handlers="necessary" language="CPP" />
 				<resources>
 					<wxFrame wxs="wxsmith/bancoguiframe.wxs" src="bancoguiMain.cpp" hdr="bancoguiMain.h" fwddecl="0" i18n="1" name="bancoguiFrame" language="CPP" />
+					<wxDialog wxs="wxsmith/crearCliente.wxs" src="crearCliente.cpp" hdr="crearCliente.h" fwddecl="0" i18n="1" name="crearCliente" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>
