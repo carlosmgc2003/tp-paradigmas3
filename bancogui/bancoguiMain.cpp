@@ -70,8 +70,7 @@ void ListarClientes(Banco &,wxListCtrl &);
 
 bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
 {
-    Banco A;
-    A.leerArchivos();
+    CrisNaMa.leerArchivos();
     //(*Initialize(bancoguiFrame)
     wxBoxSizer* BoxSizer1;
     wxBoxSizer* BoxSizer2;
@@ -124,8 +123,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Menu1->Append(MenuItem1);
     MenuBar1->Append(Menu1, _("&Archivo"));
     Menu3 = new wxMenu();
-    MenuItem3 = new wxMenuItem(Menu3, ID_MENUITEM1, _("&Crear cliente"), wxEmptyString, wxITEM_NORMAL);
-    Menu3->Append(MenuItem3);
+    MenuCrearCliente = new wxMenuItem(Menu3, ID_MENUITEM1, _("&Crear cliente"), wxEmptyString, wxITEM_NORMAL);
+    Menu3->Append(MenuCrearCliente);
     MenuItem4 = new wxMenuItem(Menu3, ID_MENUITEM2, _("E&ditar cliente"), wxEmptyString, wxITEM_NORMAL);
     Menu3->Append(MenuItem4);
     MenuItem5 = new wxMenuItem(Menu3, ID_MENUITEM3, _("&Eliminar cliente"), wxEmptyString, wxITEM_NORMAL);
@@ -159,7 +158,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     ListaClientes->InsertColumn(1,"Nombre");
     ListaClientes->InsertColumn(2,"Apellido");
     ListaClientes->InsertColumn(3,"Dirección",wxLIST_FORMAT_LEFT,200);
-    ListarClientes(A,* ListaClientes);
+    ListarClientes(CrisNaMa,* ListaClientes);
 
 
 
@@ -167,6 +166,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
 
 bancoguiFrame::~bancoguiFrame()
 {
+    CrisNaMa.escribirClientes();
     //(*Destroy(bancoguiFrame)
     //*)
 }
@@ -204,7 +204,8 @@ void ListarClientes(Banco & Ban,wxListCtrl & Lista){
         Lista.SetItem(itemIndex,2,Ban.clientesActivos[i].getApellido());
         //Eliminacion de los guiones bajos de la direccion
         wxString DIRECCION(Ban.clientesActivos[i].getDireccion());
-        DIRECCION.Replace("_"," ");
+        if(DIRECCION.find("_") != wxNOT_FOUND)
+            DIRECCION.Replace("_"," ");
         Lista.SetItem(itemIndex,3,DIRECCION);
     }
     return;
@@ -223,7 +224,18 @@ void bancoguiFrame::OnBtnEditarClienteClick(wxCommandEvent& event)
 
 void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
 {
+    Cliente nuevo;
     crearCliente * dialogo = new crearCliente(this);
-    dialogo->ShowModal();
+    if(dialogo->ShowModal() == wxID_OK){
+        nuevo.setDni(dialogo->getNuevoDni());
+        nuevo.setNombre(dialogo->getNuevoNombre().ToStdString());
+        nuevo.setApellido(dialogo->getNuevoApellido().ToStdString());
+        nuevo.setDireccion(dialogo->getNuevoDireccion().ToStdString());
+        nuevo.setTelefono(dialogo->getNuevoTelefono().ToStdString());
+    }
+    CrisNaMa.clientesActivos.push_back(nuevo);
+    wxMessageBox(_("Cliente Guardado"),_("Felicitaciones!"));
+    ListaClientes->DeleteAllItems();
+    ListarClientes(CrisNaMa,* ListaClientes);
 }
 

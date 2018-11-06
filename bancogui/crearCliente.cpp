@@ -77,13 +77,14 @@ crearCliente::crearCliente(wxWindow* parent,wxWindowID id)
 	ButtonNuevoClienteCancelar = new wxButton(this, ID_BUTTON1, _("Cancelar"), wxDefaultPosition, wxSize(116,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	ButtonNuevoClienteCancelar->SetDefault();
 	BoxSizer7->Add(ButtonNuevoClienteCancelar, 1, wxALL|wxEXPAND, 5);
-	ButtonNuevoClienteGuardar = new wxButton(this, ID_BUTTON2, _("Guardar"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	ButtonNuevoClienteGuardar = new wxButton(this, ID_BUTTON2, _("Guardar"), wxDefaultPosition, wxSize(138,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	BoxSizer7->Add(ButtonNuevoClienteGuardar, 1, wxALL|wxEXPAND, 5);
 	BoxSizer1->Add(BoxSizer7, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
 	SetSizer(BoxSizer1);
 	BoxSizer1->Fit(this);
 	BoxSizer1->SetSizeHints(this);
 
+	Connect(ID_TEXTCTRLNUEVOCLIENTEDNI,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&crearCliente::OnTextCtrlNuevoClienteDNIText);
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&crearCliente::OnButtonNuevoClienteCancelarClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&crearCliente::OnButtonNuevoClienteGuardarClick);
 	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&crearCliente::OnInit);
@@ -104,9 +105,25 @@ void crearCliente::OnInit(wxInitDialogEvent& event)
 
 void crearCliente::OnButtonNuevoClienteCancelarClick(wxCommandEvent& event)
 {
+    /*Cerrar la ventana sin guardar los cambios*/
     Close();
 }
 
 void crearCliente::OnButtonNuevoClienteGuardarClick(wxCommandEvent& event)
+{
+    /*Cuando hacemos click en guarda los valores de las cajas se pasan a
+    los atributos de la clase
+    dialogo para ser posteriormente recuperados por la ventana principal*/
+    nuevoDni = wxAtoi(TextCtrlNuevoClienteDNI->GetValue());
+    nuevoNombre = TextCtrlNuevoClienteNombre->GetValue();
+    nuevoApellido = TextCtrlNuevoClienteApellido->GetValue();
+    nuevoTelefono = TextCtrlNuevoClienteTelefono->GetValue();
+    nuevoDireccion = TextCtrlNuevoClienteDireccion->GetValue();
+    nuevoDireccion.Replace(" ","_");
+    AcceptAndClose();
+}
+
+
+void crearCliente::OnTextCtrlNuevoClienteDNIText(wxCommandEvent& event)
 {
 }

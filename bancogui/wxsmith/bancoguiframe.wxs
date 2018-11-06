@@ -98,7 +98,7 @@
 			</object>
 			<object class="wxMenu" variable="Menu3" member="yes">
 				<label>Cli&amp;entes</label>
-				<object class="wxMenuItem" name="ID_MENUITEM1" variable="MenuItem3" member="yes">
+				<object class="wxMenuItem" name="ID_MENUITEM1" variable="MenuCrearCliente" member="yes">
 					<label>&amp;Crear cliente</label>
 				</object>
 				<object class="wxMenuItem" name="ID_MENUITEM2" variable="MenuItem4" member="yes">

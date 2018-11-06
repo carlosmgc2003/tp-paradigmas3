@@ -20,12 +20,15 @@
 #include <wx/statusbr.h>
 //*)
 
+#include "banco.hpp"
+
 class bancoguiFrame: public wxFrame
 {
     public:
 
         bancoguiFrame(wxWindow* parent,wxWindowID id = -1);
         virtual ~bancoguiFrame();
+        Banco CrisNaMa;
 
     private:
 
@@ -62,7 +65,7 @@ class bancoguiFrame: public wxFrame
         wxListCtrl* ListaClientes;
         wxMenu* Menu3;
         wxMenu* Menu4;
-        wxMenuItem* MenuItem3;
+        wxMenuItem* MenuCrearCliente;
         wxMenuItem* MenuItem4;
         wxMenuItem* MenuItem5;
         wxMenuItem* MenuItem6;

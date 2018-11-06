@@ -17,6 +17,12 @@ class crearCliente: public wxDialog
 		crearCliente(wxWindow* parent,wxWindowID id=wxID_ANY);
 		virtual ~crearCliente();
 
+		int getNuevoDni(){ return nuevoDni;};
+		wxString getNuevoNombre(){ return nuevoNombre;};
+		wxString getNuevoApellido(){ return nuevoApellido;};
+		wxString getNuevoDireccion(){ return nuevoDireccion;}
+		wxString getNuevoTelefono(){ return nuevoTelefono;};
+
 		//(*Declarations(crearCliente)
 		wxButton* ButtonNuevoClienteCancelar;
 		wxButton* ButtonNuevoClienteGuardar;
@@ -55,7 +61,14 @@ class crearCliente: public wxDialog
 		void OnInit(wxInitDialogEvent& event);
 		void OnButtonNuevoClienteCancelarClick(wxCommandEvent& event);
 		void OnButtonNuevoClienteGuardarClick(wxCommandEvent& event);
+		void OnTextCtrlNuevoClienteDNIText(wxCommandEvent& event);
 		//*)
+
+		int nuevoDni;
+		wxString nuevoNombre;
+		wxString nuevoApellido;
+		wxString nuevoDireccion;
+		wxString nuevoTelefono;
 
 		DECLARE_EVENT_TABLE()
 };
