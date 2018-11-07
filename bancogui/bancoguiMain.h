@@ -41,6 +41,7 @@ class bancoguiFrame: public wxFrame
         void OnBtnEditarClienteClick(wxCommandEvent& event);
         void OnbtnCrearClienteClick(wxCommandEvent& event);
         void OnbtnCrearClienteClick2(wxCommandEvent& event);
+        void OnListaClientesItemSelect(wxListEvent& event);
         //*)
 
         //(*Identifiers(bancoguiFrame)
@@ -48,6 +49,7 @@ class bancoguiFrame: public wxFrame
         static const long ID_BTNCREARCLIENTE;
         static const long ID_BTNEDITARCLIENTE;
         static const long ID_BTNELIMINARCLIENTE;
+        static const long ID_LISTACUENTAS;
         static const long ID_PRINCIPAL;
         static const long idMenuQuit;
         static const long ID_MENUITEM1;
@@ -63,6 +65,7 @@ class bancoguiFrame: public wxFrame
         wxButton* BtnEliminarCliente;
         wxButton* btnCrearCliente;
         wxListCtrl* ListaClientes;
+        wxListCtrl* ListaCuentas;
         wxMenu* Menu3;
         wxMenu* Menu4;
         wxMenuItem* MenuCrearCliente;

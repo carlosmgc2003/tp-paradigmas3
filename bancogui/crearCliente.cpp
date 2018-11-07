@@ -1,4 +1,5 @@
 #include "crearCliente.h"
+#include <wx/msgdlg.h>
 
 //(*InternalHeaders(crearCliente)
 #include <wx/intl.h>
@@ -114,13 +115,41 @@ void crearCliente::OnButtonNuevoClienteGuardarClick(wxCommandEvent& event)
     /*Cuando hacemos click en guarda los valores de las cajas se pasan a
     los atributos de la clase
     dialogo para ser posteriormente recuperados por la ventana principal*/
+
     nuevoDni = wxAtoi(TextCtrlNuevoClienteDNI->GetValue());
     nuevoNombre = TextCtrlNuevoClienteNombre->GetValue();
     nuevoApellido = TextCtrlNuevoClienteApellido->GetValue();
     nuevoTelefono = TextCtrlNuevoClienteTelefono->GetValue();
     nuevoDireccion = TextCtrlNuevoClienteDireccion->GetValue();
-    nuevoDireccion.Replace(" ","_");
-    AcceptAndClose();
+    if(nuevoDni == 0){
+        wxMessageBox(_("El campo DNI no puede estar vacío!"),_("Error!"));
+    }
+    else
+        if(nuevoNombre.size() == 0){
+            wxMessageBox(_("El campo Nombre no puede estar vacío!"),_("Error!"));
+        }
+        else{
+            nuevoNombre.Replace(" ","_");
+            if(nuevoApellido.size() == 0){
+                wxMessageBox(_("El campo Apellido no puede estar vacío!"),_("Error!"));
+            }
+            else{
+                nuevoApellido.Replace(" ","_");
+                if(nuevoTelefono.size() == 0){
+                    wxMessageBox(_("El campo Telefono no puede estar vacío!"),_("Error!"));
+                }
+                else{
+                    nuevoTelefono.Replace(" ","_");
+                    if(nuevoDireccion.size() == 0){
+                        wxMessageBox(_("El campo Dirección no puede estar vacío!"),_("Error!"));
+                    }
+                    else{
+                        nuevoDireccion.Replace(" ","_");
+                        AcceptAndClose();
+                    }
+                }
+            }
+        }
 }
 
 

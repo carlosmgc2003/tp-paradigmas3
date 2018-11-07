@@ -51,6 +51,7 @@ const long bancoguiFrame::ID_LISTACLIENTES = wxNewId();
 const long bancoguiFrame::ID_BTNCREARCLIENTE = wxNewId();
 const long bancoguiFrame::ID_BTNEDITARCLIENTE = wxNewId();
 const long bancoguiFrame::ID_BTNELIMINARCLIENTE = wxNewId();
+const long bancoguiFrame::ID_LISTACUENTAS = wxNewId();
 const long bancoguiFrame::ID_PRINCIPAL = wxNewId();
 const long bancoguiFrame::idMenuQuit = wxNewId();
 const long bancoguiFrame::ID_MENUITEM1 = wxNewId();
@@ -67,6 +68,8 @@ BEGIN_EVENT_TABLE(bancoguiFrame,wxFrame)
 END_EVENT_TABLE()
 
 void ListarClientes(Banco &,wxListCtrl &);
+void ListarCuentas(Cliente &, wxListCtrl &);
+void eliminarGuiones(wxString &);
 
 bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
 {
@@ -86,6 +89,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
 
     Create(0, id, _("Banco CrisNaMa"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
     SetMinSize(wxSize(-1,-1));
+    SetMaxSize(wxSize(-1,-1));
     {
     	wxIcon FrameIcon;
     	FrameIcon.CopyFromBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_DELETE")),wxART_FRAME_ICON));
@@ -110,6 +114,9 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StaticBoxSizer2->Add(BtnEliminarCliente, 1, wxALL|wxEXPAND, 5);
     BoxSizer3->Add(StaticBoxSizer2, 1, wxALL|wxEXPAND, 5);
     StaticBoxSizer3 = new wxStaticBoxSizer(wxVERTICAL, Principal, _("Estado Patrimonial"));
+    ListaCuentas = new wxListCtrl(Principal, ID_LISTACUENTAS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTACUENTAS"));
+    ListaCuentas->SetHelpText(_("Lista de cuentas de cliente"));
+    StaticBoxSizer3->Add(ListaCuentas, 1, wxALL|wxEXPAND, 5);
     BoxSizer3->Add(StaticBoxSizer3, 1, wxALL|wxEXPAND, 5);
     BoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND, 5);
     Principal->SetSizer(BoxSizer2);
@@ -149,6 +156,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     BoxSizer1->SetSizeHints(this);
 
     Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_BEGIN_DRAG,(wxObjectEventFunction)&bancoguiFrame::OnListCtrl1BeginDrag1);
+    Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnListaClientesItemSelect);
     Connect(ID_BTNCREARCLIENTE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnbtnCrearClienteClick);
     Connect(ID_BTNEDITARCLIENTE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnBtnEditarClienteClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnQuit);
@@ -158,10 +166,11 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     ListaClientes->InsertColumn(1,"Nombre");
     ListaClientes->InsertColumn(2,"Apellido");
     ListaClientes->InsertColumn(3,"Dirección",wxLIST_FORMAT_LEFT,200);
+    ListaClientes->InsertColumn(4,"Teléfono");
     ListarClientes(CrisNaMa,* ListaClientes);
-
-
-
+    ListaCuentas->InsertColumn(0,"Nro Cuenta");
+    ListaCuentas->InsertColumn(1,"Tipo");
+    ListaCuentas->InsertColumn(2,"Saldo");
 }
 
 bancoguiFrame::~bancoguiFrame()
@@ -192,24 +201,64 @@ void bancoguiFrame::OnListCtrl1BeginDrag1(wxListEvent& event)
 
 }
 void ListarClientes(Banco & Ban,wxListCtrl & Lista){
-    for(int i = 0; i < Ban.clientesActivos.size(); i ++){
-        int itemIndex = i;
-        //Conversion int to wxString del DNI
-        wxString DNI;
-        DNI << Ban.clientesActivos[i].getDni();
-        Lista.InsertItem(itemIndex,_("col1ItemText"));
-        Lista.SetItem(itemIndex,0,DNI);
+    if(Ban.clientesActivos.size() > 0){
+        for(int i = 0; i < Ban.clientesActivos.size(); i ++){
+            int itemIndex = i;
+            //Conversion int to wxString del DNI
+            wxString DNI;
+            DNI << Ban.clientesActivos[i].getDni();
+            Lista.InsertItem(itemIndex,_("col1ItemText"));
+            Lista.SetItem(itemIndex,0,DNI);
 
-        Lista.SetItem(itemIndex,1,Ban.clientesActivos[i].getNombre());
-        Lista.SetItem(itemIndex,2,Ban.clientesActivos[i].getApellido());
-        //Eliminacion de los guiones bajos de la direccion
-        wxString DIRECCION(Ban.clientesActivos[i].getDireccion());
-        if(DIRECCION.find("_") != wxNOT_FOUND)
-            DIRECCION.Replace("_"," ");
-        Lista.SetItem(itemIndex,3,DIRECCION);
+            wxString NOMBRE(Ban.clientesActivos[i].getNombre());
+            eliminarGuiones(NOMBRE);
+            Lista.SetItem(itemIndex,1,NOMBRE);
+
+            wxString APELLIDO(Ban.clientesActivos[i].getApellido());
+            eliminarGuiones(APELLIDO);
+            Lista.SetItem(itemIndex,2,APELLIDO);
+
+            wxString DIRECCION(Ban.clientesActivos[i].getDireccion());
+            eliminarGuiones(DIRECCION);
+            Lista.SetItem(itemIndex,3,DIRECCION);
+
+            wxString TELEFONO(Ban.clientesActivos[i].getTelefono());
+            Lista.SetItem(itemIndex,4,TELEFONO);
+        }
     }
     return;
+}
 
+void ListarCuentas(Cliente & cliente,wxListCtrl & Lista){
+    if(cliente.contarCuentas() > 0){
+        Lista.DeleteAllItems();
+        for(int i = 0;i < cliente.contarCuentas(); i++){
+            wxString IDCUENTA;
+            IDCUENTA << cliente[i].getdniDuenio();
+            wxString auxiliar;
+            auxiliar << cliente[i].getnumeroUnico();
+            IDCUENTA.append(auxiliar);
+            wxString SALDO;
+            SALDO << cliente[i].getSaldo();
+            Lista.InsertItem(i,_("Cuenta"));
+            Lista.SetItem(i,0,IDCUENTA);
+            if(cliente[i].gettipoCuenta() == 0){
+                Lista.SetItem(i,1,_("CA"));
+            }
+            else
+                Lista.SetItem(i,1,_("CC"));
+            Lista.SetItem(i,2,SALDO);
+        }
+    }
+    else
+        Lista.DeleteAllItems();
+
+}
+
+void eliminarGuiones (wxString & cadena){
+    if(cadena.find("_") != wxNOT_FOUND)
+        cadena.Replace("_"," ");
+    return;
 }
 
 
@@ -232,10 +281,16 @@ void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
         nuevo.setApellido(dialogo->getNuevoApellido().ToStdString());
         nuevo.setDireccion(dialogo->getNuevoDireccion().ToStdString());
         nuevo.setTelefono(dialogo->getNuevoTelefono().ToStdString());
+        CrisNaMa.clientesActivos.push_back(nuevo);
+        wxMessageBox(_("Cliente Guardado"),_("Felicitaciones!"));
     }
-    CrisNaMa.clientesActivos.push_back(nuevo);
-    wxMessageBox(_("Cliente Guardado"),_("Felicitaciones!"));
     ListaClientes->DeleteAllItems();
     ListarClientes(CrisNaMa,* ListaClientes);
 }
 
+
+void bancoguiFrame::OnListaClientesItemSelect(wxListEvent& event)
+{
+
+    ListarCuentas(CrisNaMa.clientesActivos[event.GetIndex()],* ListaCuentas);
+}

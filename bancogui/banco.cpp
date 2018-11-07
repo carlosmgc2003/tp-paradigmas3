@@ -5,16 +5,26 @@
  */
 
 #include "banco.hpp"
+#include "wx/msgdlg.h"
 Banco::Banco(){
     clientes.open("clientes.txt", fstream::in);
-    if(clientes.is_open())
-        cout<<"Archivo clientes abierto"<<endl;
-    cuentas.open("cuentas.txt", fstream::in);
-    if(cuentas.is_open())
-        cout<<"Archivo cuentas abierto"<<endl;
-    movimientos.open("movimientos.txt", fstream::in);
-    if(movimientos.is_open())
-        cout<<"Archivo movimientos abierto"<<endl;
+    if(!clientes.is_open()){
+        clientes.open("clientes.txt",fstream::out | fstream::trunc);
+        cuentas.open("cuentas.txt",fstream::out | fstream::trunc);
+        movimientos.open("movimientos.txt",fstream::out | fstream::trunc);
+        clientes.close();
+        cuentas.close();
+        movimientos.close();
+        clientes.open("clientes.txt", fstream::in);
+        cuentas.open("cuentas.txt", fstream::in);
+        movimientos.open("movimientos.txt", fstream::in);
+        wxMessageBox(_("Ejecutando por primera vez Banco CrisNaMa"),_("Atención"));
+    }
+    else{
+        cuentas.open("cuentas.txt", fstream::in);
+        movimientos.open("movimientos.txt", fstream::in);
+    }
+
 }
 
 Banco::~Banco(){
@@ -37,7 +47,7 @@ void Banco::escribirClientes(){
     clientes.close();
     clientes.open("clientes.txt",fstream::in);
     //Ahora vamos a escribir las cuentas
-    
+
     cuentas.close();
     cuentas.open("cuentas.txt", fstream::out | fstream::trunc);
     //Para cada cliente:
@@ -58,7 +68,7 @@ void Banco::escribirClientes(){
             }
         }
     }
-    
+
     cuentas.close();
     cuentas.open("cuentas.txt", fstream::in);
 }
@@ -69,32 +79,35 @@ void Banco::escribirCuenta(Cuenta instanciaCuenta){
 
 void Banco::leerArchivos(){
     int cantClientes = contarClientes();
-    cout << "Clientes contados: " << cantClientes << endl;
-    Cliente auxCliente;
-    clientes.seekg(clientes.beg);
-    while(!clientes.eof()){
-        clientes >> auxCliente;
-        clientesActivos.push_back(auxCliente);
-        if(clientes.eof())
-            break;
-    }
-    int cantCuentas = contarCuentas();
-    cout << "Cuentas contadas: " << cantCuentas << endl;
-    cuentas.seekg(cuentas.beg);
-    while(!cuentas.eof()){
-        Cuenta auxCuenta;
-        cuentas >> auxCuenta;
-        //cout << "Leida la cuenta: " << auxCuenta << " en posicion: " << cuentas.tellg() <<endl;
-        for(int i = 0; i < clientesActivos.size();i ++){
-            if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio()){
-                clientesActivos[i].agregarCuenta(auxCuenta);
-                //cout <<"Se agrego cuenta: " << auxCuenta << " a " << clientesActivos[i] << " en posicion " << i << endl;
+    if(cantClientes > 0){
+        Cliente auxCliente;
+        clientes.seekg(clientes.beg);
+        while(!clientes.eof()){
+            clientes >> auxCliente;
+            clientesActivos.push_back(auxCliente);
+            if(clientes.eof())
                 break;
+        }
+        int cantCuentas = contarCuentas();
+        if(cantCuentas > 0){
+            cuentas.seekg(cuentas.beg);
+            while(!cuentas.eof()){
+                Cuenta auxCuenta;
+                cuentas >> auxCuenta;
+                //cout << "Leida la cuenta: " << auxCuenta << " en posicion: " << cuentas.tellg() <<endl;
+                for(int i = 0; i < clientesActivos.size();i ++){
+                    if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio()){
+                        clientesActivos[i].agregarCuenta(auxCuenta);
+                        //cout <<"Se agrego cuenta: " << auxCuenta << " a " << clientesActivos[i] << " en posicion " << i << endl;
+                        break;
+                    }
+                }
+                if(cuentas.eof())
+                    break;
             }
         }
-        if(cuentas.eof())
-            break;
     }
+
 }
 
 int Banco::contarClientes(){
