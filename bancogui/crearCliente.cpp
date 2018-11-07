@@ -75,10 +75,10 @@ crearCliente::crearCliente(wxWindow* parent,wxWindowID id)
 	BoxSizer6->Add(TextCtrlNuevoClienteTelefono, 1, wxALL|wxEXPAND, 5);
 	BoxSizer1->Add(BoxSizer6, 1, wxALL|wxEXPAND|wxSHAPED, 1);
 	BoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
-	ButtonNuevoClienteCancelar = new wxButton(this, ID_BUTTON1, _("Cancelar"), wxDefaultPosition, wxSize(116,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	ButtonNuevoClienteCancelar = new wxButton(this, ID_BUTTON1, _("Cancelar"), wxDefaultPosition, wxSize(120,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	ButtonNuevoClienteCancelar->SetDefault();
 	BoxSizer7->Add(ButtonNuevoClienteCancelar, 1, wxALL|wxEXPAND, 5);
-	ButtonNuevoClienteGuardar = new wxButton(this, ID_BUTTON2, _("Guardar"), wxDefaultPosition, wxSize(138,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	ButtonNuevoClienteGuardar = new wxButton(this, ID_BUTTON2, _("Guardar"), wxDefaultPosition, wxSize(120,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	BoxSizer7->Add(ButtonNuevoClienteGuardar, 1, wxALL|wxEXPAND, 5);
 	BoxSizer1->Add(BoxSizer7, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 1);
 	SetSizer(BoxSizer1);

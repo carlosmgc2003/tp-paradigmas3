@@ -40,6 +40,7 @@
 										<object class="sizeritem">
 											<object class="wxButton" name="ID_BTNCREARCLIENTE" variable="btnCrearCliente" member="yes">
 												<label>Crear Cliente</label>
+												<focused>1</focused>
 												<tooltip>Abre el dialogo de crear cliente</tooltip>
 												<handler function="OnbtnCrearClienteClick" entry="EVT_BUTTON" />
 											</object>
@@ -50,6 +51,7 @@
 										<object class="sizeritem">
 											<object class="wxButton" name="ID_BTNEDITARCLIENTE" variable="BtnEditarCliente" member="yes">
 												<label>Editar Cliente</label>
+												<enabled>0</enabled>
 												<handler function="OnBtnEditarClienteClick" entry="EVT_BUTTON" />
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
@@ -59,6 +61,7 @@
 										<object class="sizeritem">
 											<object class="wxButton" name="ID_BTNELIMINARCLIENTE" variable="BtnEliminarCliente" member="yes">
 												<label>Eliminar Cliente</label>
+												<enabled>0</enabled>
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
 											<border>5</border>
@@ -93,6 +96,7 @@
 														<object class="sizeritem">
 															<object class="wxButton" name="ID_BUTTON1" variable="ButtonNuevaCuenta" member="yes">
 																<label>Nueva Cuenta</label>
+																<enabled>0</enabled>
 															</object>
 															<flag>wxALL|wxEXPAND</flag>
 															<border>5</border>
@@ -101,6 +105,7 @@
 														<object class="sizeritem">
 															<object class="wxButton" name="ID_BUTTON2" variable="ButtonCerrarCuenta" member="yes">
 																<label>Cerrar Cuenta</label>
+																<enabled>0</enabled>
 															</object>
 															<flag>wxALL|wxEXPAND</flag>
 															<border>5</border>
@@ -118,6 +123,7 @@
 														<object class="sizeritem">
 															<object class="wxButton" name="ID_BUTTON3" variable="ButtonDeposito" member="yes">
 																<label>Depósito</label>
+																<enabled>0</enabled>
 																<font>
 																	<size>0</size>
 																	<weight>bold</weight>
@@ -130,6 +136,7 @@
 														<object class="sizeritem">
 															<object class="wxButton" name="ID_BUTTON4" variable="ButtonExtraccion" member="yes">
 																<label>Extracción</label>
+																<enabled>0</enabled>
 																<font>
 																	<size>0</size>
 																	<weight>bold</weight>

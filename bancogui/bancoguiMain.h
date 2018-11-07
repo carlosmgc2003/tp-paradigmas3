@@ -29,6 +29,7 @@ class bancoguiFrame: public wxFrame
         bancoguiFrame(wxWindow* parent,wxWindowID id = -1);
         virtual ~bancoguiFrame();
         Banco CrisNaMa;
+        int ClienteSeleccionado;
 
     private:
 

@@ -139,7 +139,7 @@
 						<object class="wxButton" name="ID_BUTTON1" variable="ButtonNuevoClienteCancelar" member="yes">
 							<label>Cancelar</label>
 							<default>1</default>
-							<size>116,23</size>
+							<size>120,23</size>
 							<handler function="OnButtonNuevoClienteCancelarClick" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALL|wxEXPAND</flag>
@@ -149,7 +149,7 @@
 					<object class="sizeritem">
 						<object class="wxButton" name="ID_BUTTON2" variable="ButtonNuevoClienteGuardar" member="yes">
 							<label>Guardar</label>
-							<size>138,23</size>
+							<size>120,23</size>
 							<handler function="OnButtonNuevoClienteGuardarClick" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALL|wxEXPAND</flag>

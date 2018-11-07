@@ -120,8 +120,10 @@ int Banco::contarClientes(){
     string aux;
     clientes.seekg(clientes.beg);
     while(!clientes.eof()){
-        i++;
         clientes >> aux;
+        if(aux.size() > 1){
+            i ++;
+        }
         if(clientes.eof())
             break;
     }
