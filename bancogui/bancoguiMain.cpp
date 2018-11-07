@@ -14,6 +14,7 @@
 //(*InternalHeaders(bancoguiFrame)
 #include <wx/artprov.h>
 #include <wx/bitmap.h>
+#include <wx/font.h>
 #include <wx/icon.h>
 #include <wx/image.h>
 #include <wx/intl.h>
@@ -52,6 +53,10 @@ const long bancoguiFrame::ID_BTNCREARCLIENTE = wxNewId();
 const long bancoguiFrame::ID_BTNEDITARCLIENTE = wxNewId();
 const long bancoguiFrame::ID_BTNELIMINARCLIENTE = wxNewId();
 const long bancoguiFrame::ID_LISTACUENTAS = wxNewId();
+const long bancoguiFrame::ID_BUTTON1 = wxNewId();
+const long bancoguiFrame::ID_BUTTON2 = wxNewId();
+const long bancoguiFrame::ID_BUTTON3 = wxNewId();
+const long bancoguiFrame::ID_BUTTON4 = wxNewId();
 const long bancoguiFrame::ID_PRINCIPAL = wxNewId();
 const long bancoguiFrame::idMenuQuit = wxNewId();
 const long bancoguiFrame::ID_MENUITEM1 = wxNewId();
@@ -71,6 +76,8 @@ void ListarClientes(Banco &,wxListCtrl &);
 void ListarCuentas(Cliente &, wxListCtrl &);
 void eliminarGuiones(wxString &);
 
+int Cuenta::generadorNumeros = 1;
+
 bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
 {
     CrisNaMa.leerArchivos();
@@ -78,6 +85,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     wxBoxSizer* BoxSizer1;
     wxBoxSizer* BoxSizer2;
     wxBoxSizer* BoxSizer3;
+    wxBoxSizer* BoxSizer4;
     wxMenu* Menu1;
     wxMenu* Menu2;
     wxMenuBar* MenuBar1;
@@ -86,8 +94,11 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     wxStaticBoxSizer* StaticBoxSizer1;
     wxStaticBoxSizer* StaticBoxSizer2;
     wxStaticBoxSizer* StaticBoxSizer3;
+    wxStaticBoxSizer* StaticBoxSizer4;
+    wxStaticBoxSizer* StaticBoxSizer5;
 
     Create(0, id, _("Banco CrisNaMa"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
+    SetClientSize(wxSize(820,500));
     SetMinSize(wxSize(-1,-1));
     SetMaxSize(wxSize(-1,-1));
     {
@@ -112,17 +123,37 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StaticBoxSizer2->Add(BtnEditarCliente, 1, wxALL|wxEXPAND, 5);
     BtnEliminarCliente = new wxButton(Principal, ID_BTNELIMINARCLIENTE, _("Eliminar Cliente"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BTNELIMINARCLIENTE"));
     StaticBoxSizer2->Add(BtnEliminarCliente, 1, wxALL|wxEXPAND, 5);
-    BoxSizer3->Add(StaticBoxSizer2, 1, wxALL|wxEXPAND, 5);
-    StaticBoxSizer3 = new wxStaticBoxSizer(wxVERTICAL, Principal, _("Estado Patrimonial"));
+    BoxSizer3->Add(StaticBoxSizer2, 1, wxALL|wxEXPAND, 1);
+    StaticBoxSizer3 = new wxStaticBoxSizer(wxVERTICAL, Principal, _("Estado Bancario del Cliente"));
     ListaCuentas = new wxListCtrl(Principal, ID_LISTACUENTAS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTACUENTAS"));
+    ListaCuentas->SetMinSize(wxSize(-1,-1));
+    ListaCuentas->SetMaxSize(wxSize(-1,-1));
     ListaCuentas->SetHelpText(_("Lista de cuentas de cliente"));
     StaticBoxSizer3->Add(ListaCuentas, 1, wxALL|wxEXPAND, 5);
-    BoxSizer3->Add(StaticBoxSizer3, 1, wxALL|wxEXPAND, 5);
-    BoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND, 5);
+    BoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
+    StaticBoxSizer4 = new wxStaticBoxSizer(wxVERTICAL, Principal, _("Cartera"));
+    ButtonNuevaCuenta = new wxButton(Principal, ID_BUTTON1, _("Nueva Cuenta"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    StaticBoxSizer4->Add(ButtonNuevaCuenta, 1, wxALL|wxEXPAND, 5);
+    ButtonCerrarCuenta = new wxButton(Principal, ID_BUTTON2, _("Cerrar Cuenta"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    StaticBoxSizer4->Add(ButtonCerrarCuenta, 1, wxALL|wxEXPAND, 5);
+    BoxSizer4->Add(StaticBoxSizer4, 1, wxALL|wxEXPAND, 5);
+    StaticBoxSizer5 = new wxStaticBoxSizer(wxVERTICAL, Principal, _("Caja"));
+    ButtonDeposito = new wxButton(Principal, ID_BUTTON3, _("Depósito"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+    wxFont ButtonDepositoFont(0,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_BOLD,false,wxEmptyString,wxFONTENCODING_DEFAULT);
+    ButtonDeposito->SetFont(ButtonDepositoFont);
+    StaticBoxSizer5->Add(ButtonDeposito, 1, wxALL|wxEXPAND, 5);
+    ButtonExtraccion = new wxButton(Principal, ID_BUTTON4, _("Extracción"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    wxFont ButtonExtraccionFont(0,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_BOLD,false,wxEmptyString,wxFONTENCODING_DEFAULT);
+    ButtonExtraccion->SetFont(ButtonExtraccionFont);
+    StaticBoxSizer5->Add(ButtonExtraccion, 1, wxALL|wxEXPAND, 5);
+    BoxSizer4->Add(StaticBoxSizer5, 1, wxALL|wxEXPAND, 5);
+    StaticBoxSizer3->Add(BoxSizer4, 1, wxALL|wxEXPAND, 1);
+    BoxSizer3->Add(StaticBoxSizer3, 1, wxALL|wxEXPAND, 1);
+    BoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5);
     Principal->SetSizer(BoxSizer2);
     BoxSizer2->Fit(Principal);
     BoxSizer2->SetSizeHints(Principal);
-    BoxSizer1->Add(Principal, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
+    BoxSizer1->Add(Principal, 1, wxALL|wxEXPAND, 0);
     SetSizer(BoxSizer1);
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
@@ -152,8 +183,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    BoxSizer1->Fit(this);
-    BoxSizer1->SetSizeHints(this);
+    SetSizer(BoxSizer1);
+    Layout();
 
     Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_BEGIN_DRAG,(wxObjectEventFunction)&bancoguiFrame::OnListCtrl1BeginDrag1);
     Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnListaClientesItemSelect);
@@ -293,4 +324,8 @@ void bancoguiFrame::OnListaClientesItemSelect(wxListEvent& event)
 {
 
     ListarCuentas(CrisNaMa.clientesActivos[event.GetIndex()],* ListaCuentas);
+}
+
+void bancoguiFrame::OnButton1Click1(wxCommandEvent& event)
+{
 }

@@ -91,9 +91,13 @@ void Banco::leerArchivos(){
         int cantCuentas = contarCuentas();
         if(cantCuentas > 0){
             cuentas.seekg(cuentas.beg);
+            int mayorId = 0;
             while(!cuentas.eof()){
+
                 Cuenta auxCuenta;
                 cuentas >> auxCuenta;
+                if(auxCuenta.getnumeroUnico() > mayorId)
+                    mayorId = auxCuenta.getnumeroUnico();
                 //cout << "Leida la cuenta: " << auxCuenta << " en posicion: " << cuentas.tellg() <<endl;
                 for(int i = 0; i < clientesActivos.size();i ++){
                     if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio()){
@@ -105,6 +109,7 @@ void Banco::leerArchivos(){
                 if(cuentas.eof())
                     break;
             }
+            Cuenta::inicializarGenerador(mayorId);
         }
     }
 

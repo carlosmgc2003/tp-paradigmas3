@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1541598499 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
+1541600046 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
 	"banco.hpp"
 	"wx/msgdlg.h"
 
-1541034857 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.hpp
+1541600007 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.hpp
 	<string>
 	<fstream>
 	<iostream>
@@ -17,11 +17,11 @@
 	<vector>
 	"cuenta.hpp"
 
-1541035135 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
+1541600007 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
 	<string>
 	<iostream>
 
-1541035560 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguiapp.cpp
+1541599343 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguiapp.cpp
 	"bancoguiApp.h"
 	"banco.hpp"
 	"bancoguiMain.h"
@@ -1713,7 +1713,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1541596139 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1541602210 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
@@ -1967,7 +1967,7 @@
 1541034857 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
 	"cliente.hpp"
 
-1541035104 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
+1541600247 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
 	"cuenta.hpp"
 	<iomanip>
 
@@ -2069,7 +2069,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1541598653 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1541600819 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	"bancoguiMain.h"
 	<wx/msgdlg.h>
 	"banco.hpp"

@@ -10,7 +10,7 @@
 #include "bancoguiApp.h"
 #include "banco.hpp"
 
-int Cuenta::generadorNumeros = 1;
+
 //(*AppHeaders
 #include "bancoguiMain.h"
 #include <wx/image.h>

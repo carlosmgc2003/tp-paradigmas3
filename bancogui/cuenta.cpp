@@ -156,3 +156,7 @@ istream & operator >> (istream & entrada, Cuenta & cuenta){
     cuenta.setCuentaIniciada();
     return entrada;
 }
+
+void Cuenta::inicializarGenerador(int mayor){
+    generadorNumeros = mayor;
+}

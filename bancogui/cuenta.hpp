@@ -50,6 +50,7 @@ public:
     void acreditar(float);//El saldo ingresado se suma al existente.
     void debitar(float);//El saldo ingresado se resta al existente.
     static int generadorNumeros;
+    static void inicializarGenerador(int);
 
 private:
     float saldo;//Saldo en pesos de la cuenta

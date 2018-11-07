@@ -3,7 +3,9 @@
 	<object class="wxFrame" name="bancoguiFrame">
 		<title>Banco CrisNaMa</title>
 		<icon stock_id="wxART_DELETE" />
+		<size>820,500</size>
 		<minsize>-1,-1</minsize>
+		<maxsize>-1,-1</maxsize>
 		<parent_arg>0</parent_arg>
 		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
 			<object class="sizeritem">
@@ -64,36 +66,102 @@
 										</object>
 									</object>
 									<flag>wxALL|wxEXPAND</flag>
-									<border>5</border>
+									<border>1</border>
 									<option>1</option>
 								</object>
 								<object class="sizeritem">
 									<object class="wxStaticBoxSizer" variable="StaticBoxSizer3" member="no">
-										<label>Estado Patrimonial</label>
+										<label>Estado Bancario del Cliente</label>
 										<orient>wxVERTICAL</orient>
 										<object class="sizeritem">
 											<object class="wxListCtrl" name="ID_LISTACUENTAS" variable="ListaCuentas" member="yes">
 												<help>Lista de cuentas de cliente</help>
-												<minsize>200,0</minsize>
+												<minsize>-1,-1</minsize>
+												<maxsize>-1,-1</maxsize>
 												<style>wxLC_REPORT</style>
 											</object>
-											<flag>wxALL|wxFIXED_MINSIZE</flag>
+											<flag>wxALL|wxEXPAND</flag>
 											<border>5</border>
+											<option>1</option>
+										</object>
+										<object class="sizeritem">
+											<object class="wxBoxSizer" variable="BoxSizer4" member="no">
+												<object class="sizeritem">
+													<object class="wxStaticBoxSizer" variable="StaticBoxSizer4" member="no">
+														<label>Cartera</label>
+														<orient>wxVERTICAL</orient>
+														<object class="sizeritem">
+															<object class="wxButton" name="ID_BUTTON1" variable="ButtonNuevaCuenta" member="yes">
+																<label>Nueva Cuenta</label>
+															</object>
+															<flag>wxALL|wxEXPAND</flag>
+															<border>5</border>
+															<option>1</option>
+														</object>
+														<object class="sizeritem">
+															<object class="wxButton" name="ID_BUTTON2" variable="ButtonCerrarCuenta" member="yes">
+																<label>Cerrar Cuenta</label>
+															</object>
+															<flag>wxALL|wxEXPAND</flag>
+															<border>5</border>
+															<option>1</option>
+														</object>
+													</object>
+													<flag>wxALL|wxEXPAND</flag>
+													<border>5</border>
+													<option>1</option>
+												</object>
+												<object class="sizeritem">
+													<object class="wxStaticBoxSizer" variable="StaticBoxSizer5" member="no">
+														<label>Caja</label>
+														<orient>wxVERTICAL</orient>
+														<object class="sizeritem">
+															<object class="wxButton" name="ID_BUTTON3" variable="ButtonDeposito" member="yes">
+																<label>Depósito</label>
+																<font>
+																	<size>0</size>
+																	<weight>bold</weight>
+																</font>
+															</object>
+															<flag>wxALL|wxEXPAND</flag>
+															<border>5</border>
+															<option>1</option>
+														</object>
+														<object class="sizeritem">
+															<object class="wxButton" name="ID_BUTTON4" variable="ButtonExtraccion" member="yes">
+																<label>Extracción</label>
+																<font>
+																	<size>0</size>
+																	<weight>bold</weight>
+																</font>
+															</object>
+															<flag>wxALL|wxEXPAND</flag>
+															<border>5</border>
+															<option>1</option>
+														</object>
+													</object>
+													<flag>wxALL|wxEXPAND</flag>
+													<border>5</border>
+													<option>1</option>
+												</object>
+											</object>
+											<flag>wxALL|wxEXPAND</flag>
+											<border>1</border>
 											<option>1</option>
 										</object>
 									</object>
 									<flag>wxALL|wxEXPAND</flag>
-									<border>5</border>
+									<border>1</border>
 									<option>1</option>
 								</object>
 							</object>
-							<flag>wxALL</flag>
+							<flag>wxALL|wxEXPAND|wxFIXED_MINSIZE</flag>
 							<border>5</border>
 							<option>1</option>
 						</object>
 					</object>
 				</object>
-				<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+				<flag>wxALL|wxEXPAND</flag>
 				<option>1</option>
 			</object>
 		</object>
