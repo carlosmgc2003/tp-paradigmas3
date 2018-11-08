@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   cliente.hpp
  * Author: cmaceira
  *
@@ -43,8 +43,9 @@ public:
     friend ostream & operator <<(ostream &, Cliente &);//Sobrecarga de salida para escribir archivos
     friend istream & operator >>(istream &, Cliente &);//Sobrecarga de entrada para leer archivos
     Cuenta & operator [] (const int);//Sobrecarga de los corchetes sirve para acceder a cada cuenta del cliente de forma directa
-    int contarCuentas() const;
-    
+    int contarCuentasCliente() const;
+    float contarDinero() const;
+
 private:
     string nombre;
     string apellido;

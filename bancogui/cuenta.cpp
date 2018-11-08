@@ -24,9 +24,17 @@ Cuenta::Cuenta(int id,int tipo,float s){
 
 Cuenta::Cuenta(int id,int tipo){
     tipoCuenta = tipo;
-    setdniDuenio(id);
     saldo = 0.0;
     nuevaCuenta = TRUE;
+    generadorNumeros ++;
+}
+
+Cuenta::Cuenta(int id,int NumUni,int tipo){
+    tipoCuenta = tipo;
+    dniDuenio = id;
+    numeroUnico = NumUni;
+    saldo = 0.0;
+    setCuentaIniciada();
     generadorNumeros ++;
 }
 Cuenta::Cuenta(){

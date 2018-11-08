@@ -17,12 +17,12 @@ Banco::Banco(){
         movimientos.close();
         clientes.open("clientes.txt", fstream::in);
         cuentas.open("cuentas.txt", fstream::in);
-        movimientos.open("movimientos.txt", fstream::in);
-        wxMessageBox(_("Ejecutando por primera vez Banco CrisNaMa"),_("Atención"));
+        movimientos.open("movimientos.txt", fstream::out | fstream::app);
+        wxMessageBox(_("Ejecutando por primera vez Banco CrisNaMa\nEmpiece creando un cliente."),_("Atención"));
     }
     else{
         cuentas.open("cuentas.txt", fstream::in);
-        movimientos.open("movimientos.txt", fstream::in);
+        movimientos.open("movimientos.txt", fstream::out | fstream::app);
     }
 
 }
@@ -54,16 +54,16 @@ void Banco::escribirClientes(){
     int cuentasTotales = cuentasActivas();
     for(int i = 0; i < clientesActivos.size(); i ++){
         //Si el cliente tiene cuentas:
-        if(clientesActivos[i].contarCuentas() != 0){
+        if(clientesActivos[i].contarCuentasCliente() != 0){
             //cout << "Escribiendo cuentas para: " << clientesActivos[i] << endl;
             //Recorremos cada cuenta
             //cout << "Tiene cuentas activas: " << clientesActivos[i].contarCuentas() << endl;
-            for(int j = 0;j < clientesActivos[i].contarCuentas(); j++){
+            for(int j = 0;j < clientesActivos[i].contarCuentasCliente(); j++){
                 //La escribimos en el disco
                 //cout << "Escribimos la cuenta:" << clientesActivos[i][j] << endl;
                 cuentas << clientesActivos[i][j];
                 cuentasTotales --;
-                if(j < clientesActivos[i].contarCuentas() && cuentasTotales > 0)
+                if(j < clientesActivos[i].contarCuentasCliente() && cuentasTotales > 0)
                     cuentas << endl;
             }
         }
@@ -91,9 +91,8 @@ void Banco::leerArchivos(){
         int cantCuentas = contarCuentas();
         if(cantCuentas > 0){
             cuentas.seekg(cuentas.beg);
-            int mayorId = 0;
+            int mayorId = 1;
             while(!cuentas.eof()){
-
                 Cuenta auxCuenta;
                 cuentas >> auxCuenta;
                 if(auxCuenta.getnumeroUnico() > mayorId)
@@ -138,8 +137,9 @@ int Banco::contarCuentas(){
     cuentas.seekg(cuentas.beg);
     while(!cuentas.eof()){
         cuentas >> aux;
-        cout << aux;
-        i++;
+        if(aux.size() > 1){
+            i++;
+        }
         if(cuentas.eof())
             break;
     }
@@ -149,7 +149,7 @@ int Banco::contarCuentas(){
 int Banco::cuentasActivas(){
     int contador = 0;
     for(int i = 0; i < clientesActivos.size();i ++){
-        contador += clientesActivos[i].contarCuentas();
+        contador += clientesActivos[i].contarCuentasCliente();
     }
     return contador;
 }

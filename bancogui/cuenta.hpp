@@ -22,6 +22,7 @@ enum TIPO {CA,CC};
 class Cuenta{
 public:
     //Constructores
+    Cuenta(int,int,int);
     Cuenta(int,int,float);//Constructor con id y saldo, deja nuevaCuenta en False.
     Cuenta(int,int);/** Constructor solo con id. Deja nuevaCuenta en false, por lo cual
                  * cualquier modificacion futura del saldo debe ser usado creditos y

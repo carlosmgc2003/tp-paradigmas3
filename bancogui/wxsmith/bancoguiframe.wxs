@@ -4,7 +4,6 @@
 		<title>Banco CrisNaMa</title>
 		<icon stock_id="wxART_DELETE" />
 		<size>820,500</size>
-		<minsize>-1,-1</minsize>
 		<maxsize>-1,-1</maxsize>
 		<parent_arg>0</parent_arg>
 		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
@@ -17,9 +16,10 @@
 								<object class="sizeritem">
 									<object class="wxListCtrl" name="ID_LISTACLIENTES" variable="ListaClientes" member="yes">
 										<help>Lista de clientes</help>
-										<style>wxLC_REPORT</style>
+										<style>wxLC_REPORT|wxLC_SORT_ASCENDING</style>
 										<handler function="OnListCtrl1BeginDrag1" entry="EVT_LIST_BEGIN_DRAG" />
 										<handler function="OnListaClientesItemSelect" entry="EVT_LIST_ITEM_SELECTED" />
+										<handler function="OnListaClientesInsertItem" entry="EVT_LIST_INSERT_ITEM" />
 									</object>
 									<flag>wxALL|wxEXPAND</flag>
 									<border>5</border>
@@ -41,6 +41,14 @@
 											<object class="wxButton" name="ID_BTNCREARCLIENTE" variable="btnCrearCliente" member="yes">
 												<label>Crear Cliente</label>
 												<focused>1</focused>
+												<font>
+													<size>10</size>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<family>swiss</family>
+													<face></face>
+												</font>
 												<tooltip>Abre el dialogo de crear cliente</tooltip>
 												<handler function="OnbtnCrearClienteClick" entry="EVT_BUTTON" />
 											</object>
@@ -52,6 +60,14 @@
 											<object class="wxButton" name="ID_BTNEDITARCLIENTE" variable="BtnEditarCliente" member="yes">
 												<label>Editar Cliente</label>
 												<enabled>0</enabled>
+												<font>
+													<size>10</size>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<family>swiss</family>
+													<face></face>
+												</font>
 												<handler function="OnBtnEditarClienteClick" entry="EVT_BUTTON" />
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
@@ -62,6 +78,15 @@
 											<object class="wxButton" name="ID_BTNELIMINARCLIENTE" variable="BtnEliminarCliente" member="yes">
 												<label>Eliminar Cliente</label>
 												<enabled>0</enabled>
+												<font>
+													<size>10</size>
+													<style>normal</style>
+													<weight>bold</weight>
+													<underlined>0</underlined>
+													<family>swiss</family>
+													<face></face>
+												</font>
+												<handler function="OnBtnEliminarClienteClick" entry="EVT_BUTTON" />
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
 											<border>5</border>
@@ -82,6 +107,9 @@
 												<minsize>-1,-1</minsize>
 												<maxsize>-1,-1</maxsize>
 												<style>wxLC_REPORT</style>
+												<handler function="OnListaCuentasDeleteAllItems" entry="EVT_LIST_DELETE_ALL_ITEMS" />
+												<handler function="OnListaCuentasItemSelect" entry="EVT_LIST_ITEM_SELECTED" />
+												<handler function="OnListaCuentasInsertItem" entry="EVT_LIST_INSERT_ITEM" />
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
 											<border>5</border>
@@ -97,6 +125,7 @@
 															<object class="wxButton" name="ID_BUTTON1" variable="ButtonNuevaCuenta" member="yes">
 																<label>Nueva Cuenta</label>
 																<enabled>0</enabled>
+																<handler function="OnButtonNuevaCuentaClick" entry="EVT_BUTTON" />
 															</object>
 															<flag>wxALL|wxEXPAND</flag>
 															<border>5</border>
@@ -106,6 +135,7 @@
 															<object class="wxButton" name="ID_BUTTON2" variable="ButtonCerrarCuenta" member="yes">
 																<label>Cerrar Cuenta</label>
 																<enabled>0</enabled>
+																<handler function="OnButtonCerrarCuentaClick" entry="EVT_BUTTON" />
 															</object>
 															<flag>wxALL|wxEXPAND</flag>
 															<border>5</border>
@@ -184,14 +214,16 @@
 			</object>
 			<object class="wxMenu" variable="Menu3" member="yes">
 				<label>Cli&amp;entes</label>
-				<object class="wxMenuItem" name="ID_MENUITEM1" variable="MenuCrearCliente" member="yes">
+				<object class="wxMenuItem" name="id_menuCrearCliente" variable="MenuCrearCliente" member="yes">
 					<label>&amp;Crear cliente</label>
 				</object>
-				<object class="wxMenuItem" name="ID_MENUITEM2" variable="MenuItem4" member="yes">
+				<object class="wxMenuItem" name="id_menueditarCliente" variable="MenuItem4" member="yes">
 					<label>E&amp;ditar cliente</label>
+					<enabled>0</enabled>
 				</object>
-				<object class="wxMenuItem" name="ID_MENUITEM3" variable="MenuItem5" member="yes">
+				<object class="wxMenuItem" name="id_menueliminarCliente" variable="MenuItem5" member="yes">
 					<label>&amp;Eliminar cliente</label>
+					<enabled>0</enabled>
 				</object>
 			</object>
 			<object class="wxMenu" variable="Menu4" member="yes">
@@ -205,7 +237,7 @@
 				<object class="wxMenuItem" name="idMenuAbout" variable="MenuItem2" member="no">
 					<label>Acerca de Banco</label>
 					<accel>F1</accel>
-					<help>Show info about this application</help>
+					<help>Mostrar informacion acerca de esta aplicación</help>
 					<handler function="OnAbout" entry="EVT_MENU" />
 				</object>
 			</object>
@@ -214,6 +246,16 @@
 			<fields>1</fields>
 			<widths>-1</widths>
 			<styles>wxSB_NORMAL</styles>
+		</object>
+		<object class="wxMessageDialog" name="ID_MESSAGEDIALOG1" variable="MessageDialogEliminarCliente" member="yes">
+			<caption>Atención</caption>
+			<message>¿Esta seguro que desea eliminar este cliente?</message>
+			<style>wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP</style>
+		</object>
+		<object class="wxMessageDialog" name="ID_MESSAGEDIALOG2" variable="MessageDialogEliminarCuenta" member="yes">
+			<caption>Atención</caption>
+			<message>¿Está seguro de cerrar esta cuenta?</message>
+			<style>wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION</style>
 		</object>
 	</object>
 </wxsmith>

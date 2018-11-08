@@ -15,6 +15,7 @@
 #include <wx/frame.h>
 #include <wx/listctrl.h>
 #include <wx/menu.h>
+#include <wx/msgdlg.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
 #include <wx/statusbr.h>
@@ -30,6 +31,7 @@ class bancoguiFrame: public wxFrame
         virtual ~bancoguiFrame();
         Banco CrisNaMa;
         int ClienteSeleccionado;
+        int CuentaSeleccionada;
 
     private:
 
@@ -44,6 +46,13 @@ class bancoguiFrame: public wxFrame
         void OnbtnCrearClienteClick2(wxCommandEvent& event);
         void OnListaClientesItemSelect(wxListEvent& event);
         void OnButton1Click1(wxCommandEvent& event);
+        void OnBtnEliminarClienteClick(wxCommandEvent& event);
+        void OnButtonNuevaCuentaClick(wxCommandEvent& event);
+        void OnListaClientesInsertItem(wxListEvent& event);
+        void OnListaCuentasInsertItem(wxListEvent& event);
+        void OnListaCuentasItemSelect(wxListEvent& event);
+        void OnListaCuentasDeleteAllItems(wxListEvent& event);
+        void OnButtonCerrarCuentaClick(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(bancoguiFrame)
@@ -58,12 +67,14 @@ class bancoguiFrame: public wxFrame
         static const long ID_BUTTON4;
         static const long ID_PRINCIPAL;
         static const long idMenuQuit;
-        static const long ID_MENUITEM1;
-        static const long ID_MENUITEM2;
-        static const long ID_MENUITEM3;
+        static const long id_menuCrearCliente;
+        static const long id_menueditarCliente;
+        static const long id_menueliminarCliente;
         static const long ID_MENUITEM4;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
+        static const long ID_MESSAGEDIALOG1;
+        static const long ID_MESSAGEDIALOG2;
         //*)
 
         //(*Declarations(bancoguiFrame)
@@ -82,6 +93,8 @@ class bancoguiFrame: public wxFrame
         wxMenuItem* MenuItem4;
         wxMenuItem* MenuItem5;
         wxMenuItem* MenuItem6;
+        wxMessageDialog* MessageDialogEliminarCliente;
+        wxMessageDialog* MessageDialogEliminarCuenta;
         wxPanel* Principal;
         wxStatusBar* StatusBar1;
         //*)

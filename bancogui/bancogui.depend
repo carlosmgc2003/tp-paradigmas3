@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1541605429 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
+1541635689 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
 	"banco.hpp"
 	"wx/msgdlg.h"
 
@@ -11,13 +11,13 @@
 	"cliente.hpp"
 	"cuenta.hpp"
 
-1541034857 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.hpp
+1541621775 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.hpp
 	<iostream>
 	<string>
 	<vector>
 	"cuenta.hpp"
 
-1541600007 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
+1541623694 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
 	<string>
 	<iostream>
 
@@ -1713,11 +1713,12 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1541613468 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1541635809 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
 	<wx/menu.h>
+	<wx/msgdlg.h>
 	<wx/panel.h>
 	<wx/sizer.h>
 	<wx/statusbr.h>
@@ -1964,10 +1965,10 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1541034857 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
+1541635203 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
 	"cliente.hpp"
 
-1541600247 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
+1541623694 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
 	"cuenta.hpp"
 	<iomanip>
 
@@ -2069,12 +2070,13 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1541613924 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1541635042 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	"bancoguiMain.h"
 	<wx/msgdlg.h>
 	"banco.hpp"
 	"crearCliente.h"
 	"editarCliente.h"
+	"DialogoNuevaCuenta.h"
 	<wx/artprov.h>
 	<wx/bitmap.h>
 	<wx/font.h>
@@ -2135,4 +2137,154 @@
 	<wx/sizer.h>
 	<wx/stattext.h>
 	<wx/textctrl.h>
+
+1541622761 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\dialogonuevacuenta.cpp
+	"DialogoNuevaCuenta.h"
+	<wx/intl.h>
+	<wx/string.h>
+
+1541622743 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\dialogonuevacuenta.h
+	<wx/button.h>
+	<wx/choice.h>
+	<wx/dialog.h>
+	<wx/sizer.h>
+	<wx/stattext.h>
+	<wx/textctrl.h>
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\choice.h
+	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/univ/choice.h"
+	"wx/msw/wince/choicece.h"
+	"wx/msw/choice.h"
+	"wx/motif/choice.h"
+	"wx/gtk/choice.h"
+	"wx/gtk1/choice.h"
+	"wx/osx/choice.h"
+	"wx/cocoa/choice.h"
+	"wx/os2/choice.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\ctrlsub.h
+	"wx/defs.h"
+	"wx/arrstr.h"
+	"wx/control.h"
+	"wx/msw/ctrlsub.h"
+	"wx/motif/ctrlsub.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msw\ctrlsub.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\motif\ctrlsub.h
+	"wx/dynarray.h"
+	"wx/generic/ctrlsub.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\generic\ctrlsub.h
+	"wx/dynarray.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\univ\choice.h
+	"wx/combobox.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\combobox.h
+	"wx/defs.h"
+	"wx/textctrl.h"
+	"wx/ctrlsub.h"
+	"wx/textentry.h"
+	"wx/univ/combobox.h"
+	"wx/msw/combobox.h"
+	"wx/motif/combobox.h"
+	"wx/gtk/combobox.h"
+	"wx/gtk1/combobox.h"
+	"wx/osx/combobox.h"
+	"wx/cocoa/combobox.h"
+	"wx/os2/combobox.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\univ\combobox.h
+	"wx/combo.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\combo.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/renderer.h"
+	"wx/bitmap.h"
+	"wx/textentry.h"
+	"wx/msw/combo.h"
+	"wx/generic/combo.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\renderer.h
+	"wx/gdicmn.h"
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/bitmap.h"
+	"wx/string.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msw\combo.h
+	"wx/timer.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\generic\combo.h
+	"wx/dcbuffer.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\dcbuffer.h
+	"wx/dcmemory.h"
+	"wx/dcclient.h"
+	"wx/window.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\dcmemory.h
+	"wx/dc.h"
+	"wx/bitmap.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\dcclient.h
+	"wx/dc.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msw\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\motif\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\gtk\combobox.h
+	"wx/choice.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\gtk1\combobox.h
+	"wx/defs.h"
+	"wx/object.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\osx\combobox.h
+	"wx/containr.h"
+	"wx/choice.h"
+	"wx/textctrl.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\cocoa\combobox.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+	"wx/textctrl.h"
+	"wx/dynarray.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\os2\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msw\wince\choicece.h
+	"wx/defs.h"
+	"wx/dynarray.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\msw\choice.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\motif\choice.h
+	"wx/clntdata.h"
+	"wx/dynarray.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\gtk\choice.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\gtk1\choice.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\osx\choice.h
+	"wx/control.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\cocoa\choice.h
+	"wx/cocoa/NSMenu.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\os2\choice.h
 

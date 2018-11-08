@@ -100,6 +100,8 @@
 			<Add library="libwsock32.a" />
 			<Add library="libodbc32.a" />
 		</Linker>
+		<Unit filename="DialogoNuevaCuenta.cpp" />
+		<Unit filename="DialogoNuevaCuenta.h" />
 		<Unit filename="banco.cpp" />
 		<Unit filename="banco.hpp" />
 		<Unit filename="bancoguiApp.cpp" />
@@ -114,6 +116,7 @@
 		<Unit filename="cuenta.hpp" />
 		<Unit filename="editarCliente.cpp" />
 		<Unit filename="editarCliente.h" />
+		<Unit filename="wxsmith/DialogoNuevaCuenta.wxs" />
 		<Unit filename="wxsmith/bancoguiframe.wxs" />
 		<Unit filename="wxsmith/crearCliente.wxs" />
 		<Unit filename="wxsmith/editarCliente.wxs" />
@@ -128,6 +131,7 @@
 					<wxFrame wxs="wxsmith/bancoguiframe.wxs" src="bancoguiMain.cpp" hdr="bancoguiMain.h" fwddecl="0" i18n="1" name="bancoguiFrame" language="CPP" />
 					<wxDialog wxs="wxsmith/crearCliente.wxs" src="crearCliente.cpp" hdr="crearCliente.h" fwddecl="0" i18n="1" name="crearCliente" language="CPP" />
 					<wxDialog wxs="wxsmith/editarCliente.wxs" src="editarCliente.cpp" hdr="editarCliente.h" fwddecl="0" i18n="1" name="editarCliente" language="CPP" />
+					<wxDialog wxs="wxsmith/DialogoNuevaCuenta.wxs" src="DialogoNuevaCuenta.cpp" hdr="DialogoNuevaCuenta.h" fwddecl="0" i18n="1" name="DialogoNuevaCuenta" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>
