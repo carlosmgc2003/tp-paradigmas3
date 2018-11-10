@@ -1713,7 +1713,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1541851635 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1541867524 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
@@ -1721,8 +1721,10 @@
 	<wx/msgdlg.h>
 	<wx/panel.h>
 	<wx/sizer.h>
+	<wx/stattext.h>
 	<wx/statusbr.h>
 	<wx/textctrl.h>
+	<wx/timer.h>
 	"banco.hpp"
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\listctrl.h
@@ -2072,7 +2074,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1541852995 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1541858476 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	"bancoguiMain.h"
 	<wx/msgdlg.h>
 	"banco.hpp"
@@ -2086,6 +2088,7 @@
 	<wx/icon.h>
 	<wx/image.h>
 	<wx/intl.h>
+	<wx/settings.h>
 	<wx/string.h>
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\msgdlg.h

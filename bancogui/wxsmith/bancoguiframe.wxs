@@ -3,9 +3,10 @@
 	<object class="wxFrame" name="bancoguiFrame">
 		<title>Banco CrisNaMa</title>
 		<icon stock_id="wxART_DELETE" />
-		<size>910,500</size>
+		<size>910,570</size>
 		<maxsize>-1,-1</maxsize>
 		<parent_arg>0</parent_arg>
+		<style>wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxFRAME_TOOL_WINDOW|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxRAISED_BORDER</style>
 		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
 			<object class="sizeritem">
 				<object class="wxPanel" name="ID_PRINCIPAL" variable="Principal" member="yes">
@@ -108,7 +109,7 @@
 												<handler function="OnListaCuentasItemSelect" entry="EVT_LIST_ITEM_SELECTED" />
 												<handler function="OnListaCuentasInsertItem" entry="EVT_LIST_INSERT_ITEM" />
 											</object>
-											<flag>wxALL|wxEXPAND</flag>
+											<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 											<border>5</border>
 											<option>1</option>
 										</object>
@@ -120,7 +121,7 @@
 														<orient>wxVERTICAL</orient>
 														<object class="sizeritem">
 															<object class="wxButton" name="ID_BUTTON1" variable="ButtonNuevaCuenta" member="yes">
-																<label>Nueva Cuenta</label>
+																<label>Nueva&#x0A;Cuenta</label>
 																<enabled>0</enabled>
 																<handler function="OnButtonNuevaCuentaClick" entry="EVT_BUTTON" />
 															</object>
@@ -130,7 +131,7 @@
 														</object>
 														<object class="sizeritem">
 															<object class="wxButton" name="ID_BUTTON2" variable="ButtonCerrarCuenta" member="yes">
-																<label>Cerrar Cuenta</label>
+																<label>Cerrar&#x0A;Cuenta</label>
 																<enabled>0</enabled>
 																<handler function="OnButtonCerrarCuentaClick" entry="EVT_BUTTON" />
 															</object>
@@ -154,9 +155,15 @@
 																	<object class="wxTextCtrl" name="ID_TEXTCTRLCANTDINERO" variable="TextCtrlCantidadDinero" member="yes">
 																		<validator>ValidadorDeDinero</validator>
 																		<enabled>0</enabled>
+																		<font>
+																			<size>22</size>
+																			<weight>normal</weight>
+																			<sysfont>wxSYS_OEM_FIXED_FONT</sysfont>
+																		</font>
+																		<style>wxTE_CENTRE</style>
 																	</object>
-																	<flag>wxALL|wxEXPAND</flag>
-																	<border>5</border>
+																	<flag>wxALL|wxSHAPED</flag>
+																	<border>1</border>
 																	<option>1</option>
 																</object>
 																<object class="sizeritem">
@@ -165,9 +172,12 @@
 																			<object class="wxButton" name="ID_BUTTONDEPOSITARDINERO" variable="ButtonDepositarenCuenta" member="yes">
 																				<label>Depósito</label>
 																				<enabled>0</enabled>
+																				<font>
+																					<size>12</size>
+																				</font>
 																				<handler function="OnButtonDepositarenCuentaClick" entry="EVT_BUTTON" />
 																			</object>
-																			<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+																			<flag>wxALL|wxEXPAND</flag>
 																			<border>5</border>
 																			<option>1</option>
 																		</object>
@@ -175,9 +185,12 @@
 																			<object class="wxButton" name="ID_BUTTONEXTRAERDINERO" variable="ButtonExtraerdeCuenta" member="yes">
 																				<label>Extracción</label>
 																				<enabled>0</enabled>
+																				<font>
+																					<size>12</size>
+																				</font>
 																				<handler function="OnButtonExtraerdeCuentaClick" entry="EVT_BUTTON" />
 																			</object>
-																			<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+																			<flag>wxALL|wxEXPAND</flag>
 																			<border>5</border>
 																			<option>1</option>
 																		</object>
@@ -197,12 +210,30 @@
 												</object>
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
-											<border>1</border>
 											<option>1</option>
 										</object>
 									</object>
 									<flag>wxALL|wxEXPAND</flag>
 									<border>1</border>
+									<option>1</option>
+								</object>
+								<object class="sizeritem">
+									<object class="wxBoxSizer" variable="BoxSizer7" member="no">
+										<object class="sizeritem">
+											<object class="wxStaticText" name="ID_STATICTEXTTIME" variable="StaticTextTime" member="yes">
+												<label></label>
+												<font>
+													<size>20</size>
+													<sysfont>wxSYS_OEM_FIXED_FONT</sysfont>
+												</font>
+												<style>wxALIGN_CENTRE</style>
+											</object>
+											<flag>wxALL</flag>
+											<border>5</border>
+											<option>1</option>
+										</object>
+									</object>
+									<flag>wxALL|wxEXPAND</flag>
 									<option>1</option>
 								</object>
 							</object>
@@ -219,6 +250,12 @@
 		<object class="wxMenuBar" variable="MenuBar1" member="no">
 			<object class="wxMenu" variable="Menu1" member="no">
 				<label>&amp;Archivo</label>
+				<object class="wxMenuItem" name="idGuardarEstado" variable="MenuItem3" member="yes">
+					<label>Guardar estado</label>
+					<accel>Alt-F3</accel>
+					<help>Guarda el estado actual del banco en los archivos de testo</help>
+				</object>
+				<object class="separator" />
 				<object class="wxMenuItem" name="idMenuQuit" variable="MenuItem1" member="no">
 					<label>Cerrar</label>
 					<accel>Alt-F4</accel>
@@ -238,12 +275,6 @@
 				<object class="wxMenuItem" name="id_menueliminarCliente" variable="MenuItem5" member="yes">
 					<label>&amp;Eliminar cliente</label>
 					<enabled>0</enabled>
-				</object>
-			</object>
-			<object class="wxMenu" variable="Menu4" member="yes">
-				<label>Rep&amp;orte</label>
-				<object class="wxMenuItem" name="ID_MENUITEM4" variable="MenuItem6" member="yes">
-					<label>Generar...</label>
 				</object>
 			</object>
 			<object class="wxMenu" variable="Menu2" member="no">
@@ -270,6 +301,15 @@
 			<caption>Atención</caption>
 			<message>¿Está seguro de cerrar esta cuenta?</message>
 			<style>wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION</style>
+		</object>
+		<object class="wxMessageDialog" name="ID_MESSAGEDIALOGGUARDAR" variable="MessageDialogGuardar" member="yes">
+			<caption>Guardar</caption>
+			<message>Estado del banco guardado</message>
+			<style>wxOK|wxICON_EXCLAMATION|wxSTAY_ON_TOP</style>
+		</object>
+		<object class="wxTimer" name="ID_TIMERHORA" variable="TimerHora" member="yes">
+			<interval>1000</interval>
+			<handler function="OnTimer1Trigger" entry="EVT_TIMER" />
 		</object>
 	</object>
 </wxsmith>

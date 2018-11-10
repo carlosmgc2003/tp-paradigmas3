@@ -22,6 +22,7 @@
 						<object class="wxTextCtrl" name="ID_TEXTCTRLNUEVOCLIENTEDNI" variable="TextCtrlNuevoClienteDNI" member="yes">
 							<maxlength>8</maxlength>
 							<size>140,23</size>
+							<validator>ValidarDNI</validator>
 							<handler function="OnTextCtrlNuevoClienteDNIText" entry="EVT_TEXT" />
 						</object>
 						<flag>wxALL|wxEXPAND</flag>

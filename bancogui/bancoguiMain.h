@@ -18,8 +18,10 @@
 #include <wx/msgdlg.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
+#include <wx/stattext.h>
 #include <wx/statusbr.h>
 #include <wx/textctrl.h>
+#include <wx/timer.h>
 //*)
 
 #include "banco.hpp"
@@ -58,7 +60,10 @@ class bancoguiFrame: public wxFrame
         void OnTextCtrlCantidadDineroText(wxCommandEvent& event);
         void OnButtonDepositarenCuentaClick(wxCommandEvent& event);
         void OnButtonExtraerdeCuentaClick(wxCommandEvent& event);
+        void OnTimer1Trigger(wxTimerEvent& event);
         //*)
+
+        void OnGuardar(wxCommandEvent& event);
 
         //(*Identifiers(bancoguiFrame)
         static const long ID_LISTACLIENTES;
@@ -71,16 +76,19 @@ class bancoguiFrame: public wxFrame
         static const long ID_TEXTCTRLCANTDINERO;
         static const long ID_BUTTONDEPOSITARDINERO;
         static const long ID_BUTTONEXTRAERDINERO;
+        static const long ID_STATICTEXTTIME;
         static const long ID_PRINCIPAL;
+        static const long idGuardarEstado;
         static const long idMenuQuit;
         static const long id_menuCrearCliente;
         static const long id_menueditarCliente;
         static const long id_menueliminarCliente;
-        static const long ID_MENUITEM4;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         static const long ID_MESSAGEDIALOG1;
         static const long ID_MESSAGEDIALOG2;
+        static const long ID_MESSAGEDIALOGGUARDAR;
+        static const long ID_TIMERHORA;
         //*)
 
         //(*Declarations(bancoguiFrame)
@@ -94,18 +102,21 @@ class bancoguiFrame: public wxFrame
         wxListCtrl* ListaClientes;
         wxListCtrl* ListaCuentas;
         wxMenu* Menu3;
-        wxMenu* Menu4;
         wxMenuItem* MenuCrearCliente;
+        wxMenuItem* MenuItem3;
         wxMenuItem* MenuItem4;
         wxMenuItem* MenuItem5;
-        wxMenuItem* MenuItem6;
         wxMessageDialog* MessageDialogEliminarCliente;
         wxMessageDialog* MessageDialogEliminarCuenta;
+        wxMessageDialog* MessageDialogGuardar;
         wxPanel* Principal;
+        wxStaticText* StaticTextTime;
         wxStatusBar* StatusBar1;
         wxTextCtrl* TextCtrlCantidadDinero;
+        wxTimer TimerHora;
         //*)
         float ValorDinero;
+        wxString horayfechaActual;
         DECLARE_EVENT_TABLE()
 };
 

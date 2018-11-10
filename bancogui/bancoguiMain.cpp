@@ -21,6 +21,7 @@
 #include <wx/icon.h>
 #include <wx/image.h>
 #include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 //*)
 
@@ -61,16 +62,19 @@ const long bancoguiFrame::ID_BUTTON2 = wxNewId();
 const long bancoguiFrame::ID_TEXTCTRLCANTDINERO = wxNewId();
 const long bancoguiFrame::ID_BUTTONDEPOSITARDINERO = wxNewId();
 const long bancoguiFrame::ID_BUTTONEXTRAERDINERO = wxNewId();
+const long bancoguiFrame::ID_STATICTEXTTIME = wxNewId();
 const long bancoguiFrame::ID_PRINCIPAL = wxNewId();
+const long bancoguiFrame::idGuardarEstado = wxNewId();
 const long bancoguiFrame::idMenuQuit = wxNewId();
 const long bancoguiFrame::id_menuCrearCliente = wxNewId();
 const long bancoguiFrame::id_menueditarCliente = wxNewId();
 const long bancoguiFrame::id_menueliminarCliente = wxNewId();
-const long bancoguiFrame::ID_MENUITEM4 = wxNewId();
 const long bancoguiFrame::idMenuAbout = wxNewId();
 const long bancoguiFrame::ID_STATUSBAR1 = wxNewId();
 const long bancoguiFrame::ID_MESSAGEDIALOG1 = wxNewId();
 const long bancoguiFrame::ID_MESSAGEDIALOG2 = wxNewId();
+const long bancoguiFrame::ID_MESSAGEDIALOGGUARDAR = wxNewId();
+const long bancoguiFrame::ID_TIMERHORA = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(bancoguiFrame,wxFrame)
@@ -87,6 +91,11 @@ int Cuenta::generadorNumeros = 1;
 bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
 {
     CrisNaMa.leerArchivos();
+    wxString horaActual = wxDateTime::Now().FormatTime();
+    wxString fechaActual = wxDateTime::Today().FormatDate();
+    horayfechaActual = horaActual +" "+fechaActual;
+    CrisNaMa.movimientos << "------------------------------------" << endl;
+    CrisNaMa.movimientos << horayfechaActual << " - " <<"Iniciado programa"<< endl;
     wxFloatingPointValidator<float> ValidadorDeDinero(2,&ValorDinero,wxNUM_VAL_ZERO_AS_BLANK);
     ValidadorDeDinero.SetRange(0,99999999);
     //(*Initialize(bancoguiFrame)
@@ -96,6 +105,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     wxBoxSizer* BoxSizer4;
     wxBoxSizer* BoxSizer5;
     wxBoxSizer* BoxSizer6;
+    wxBoxSizer* BoxSizer7;
     wxMenu* Menu1;
     wxMenu* Menu2;
     wxMenuBar* MenuBar1;
@@ -107,8 +117,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     wxStaticBoxSizer* StaticBoxSizer4;
     wxStaticBoxSizer* StaticBoxSizer5;
 
-    Create(0, id, _("Banco CrisNaMa"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
-    SetClientSize(wxSize(910,500));
+    Create(0, id, _("Banco CrisNaMa"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxFRAME_TOOL_WINDOW|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxRAISED_BORDER, _T("id"));
+    SetClientSize(wxSize(910,570));
     SetMaxSize(wxSize(-1,-1));
     {
     	wxIcon FrameIcon;
@@ -147,33 +157,50 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     ListaCuentas->SetMinSize(wxSize(-1,-1));
     ListaCuentas->SetMaxSize(wxSize(-1,-1));
     ListaCuentas->SetHelpText(_("Lista de cuentas de cliente"));
-    StaticBoxSizer3->Add(ListaCuentas, 1, wxALL|wxEXPAND, 5);
+    StaticBoxSizer3->Add(ListaCuentas, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
     StaticBoxSizer4 = new wxStaticBoxSizer(wxVERTICAL, Principal, _("Cartera"));
-    ButtonNuevaCuenta = new wxButton(Principal, ID_BUTTON1, _("Nueva Cuenta"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    ButtonNuevaCuenta = new wxButton(Principal, ID_BUTTON1, _("Nueva\nCuenta"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
     ButtonNuevaCuenta->Disable();
     StaticBoxSizer4->Add(ButtonNuevaCuenta, 1, wxALL|wxEXPAND, 5);
-    ButtonCerrarCuenta = new wxButton(Principal, ID_BUTTON2, _("Cerrar Cuenta"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    ButtonCerrarCuenta = new wxButton(Principal, ID_BUTTON2, _("Cerrar\nCuenta"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
     ButtonCerrarCuenta->Disable();
     StaticBoxSizer4->Add(ButtonCerrarCuenta, 1, wxALL|wxEXPAND, 5);
     BoxSizer4->Add(StaticBoxSizer4, 1, wxALL|wxEXPAND, 5);
     StaticBoxSizer5 = new wxStaticBoxSizer(wxVERTICAL, Principal, _("Caja"));
     BoxSizer5 = new wxBoxSizer(wxVERTICAL);
-    TextCtrlCantidadDinero = new wxTextCtrl(Principal, ID_TEXTCTRLCANTDINERO, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, ValidadorDeDinero, _T("ID_TEXTCTRLCANTDINERO"));
+    TextCtrlCantidadDinero = new wxTextCtrl(Principal, ID_TEXTCTRLCANTDINERO, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_CENTRE, ValidadorDeDinero, _T("ID_TEXTCTRLCANTDINERO"));
     TextCtrlCantidadDinero->Disable();
-    BoxSizer5->Add(TextCtrlCantidadDinero, 1, wxALL|wxEXPAND, 5);
+    wxFont TextCtrlCantidadDineroFont = wxSystemSettings::GetFont(wxSYS_OEM_FIXED_FONT);
+    if ( !TextCtrlCantidadDineroFont.Ok() ) TextCtrlCantidadDineroFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    TextCtrlCantidadDineroFont.SetPointSize(22);
+    TextCtrlCantidadDineroFont.SetWeight(wxFONTWEIGHT_NORMAL);
+    TextCtrlCantidadDinero->SetFont(TextCtrlCantidadDineroFont);
+    BoxSizer5->Add(TextCtrlCantidadDinero, 1, wxALL|wxSHAPED, 1);
     BoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
     ButtonDepositarenCuenta = new wxButton(Principal, ID_BUTTONDEPOSITARDINERO, _("Depósito"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONDEPOSITARDINERO"));
     ButtonDepositarenCuenta->Disable();
-    BoxSizer6->Add(ButtonDepositarenCuenta, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    wxFont ButtonDepositarenCuentaFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
+    ButtonDepositarenCuenta->SetFont(ButtonDepositarenCuentaFont);
+    BoxSizer6->Add(ButtonDepositarenCuenta, 1, wxALL|wxEXPAND, 5);
     ButtonExtraerdeCuenta = new wxButton(Principal, ID_BUTTONEXTRAERDINERO, _("Extracción"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONEXTRAERDINERO"));
     ButtonExtraerdeCuenta->Disable();
-    BoxSizer6->Add(ButtonExtraerdeCuenta, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    wxFont ButtonExtraerdeCuentaFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
+    ButtonExtraerdeCuenta->SetFont(ButtonExtraerdeCuentaFont);
+    BoxSizer6->Add(ButtonExtraerdeCuenta, 1, wxALL|wxEXPAND, 5);
     BoxSizer5->Add(BoxSizer6, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
     StaticBoxSizer5->Add(BoxSizer5, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer4->Add(StaticBoxSizer5, 1, wxALL|wxEXPAND, 5);
-    StaticBoxSizer3->Add(BoxSizer4, 1, wxALL|wxEXPAND, 1);
+    StaticBoxSizer3->Add(BoxSizer4, 1, wxALL|wxEXPAND, 0);
     BoxSizer3->Add(StaticBoxSizer3, 1, wxALL|wxEXPAND, 1);
+    BoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
+    StaticTextTime = new wxStaticText(Principal, ID_STATICTEXTTIME, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE, _T("ID_STATICTEXTTIME"));
+    wxFont StaticTextTimeFont = wxSystemSettings::GetFont(wxSYS_OEM_FIXED_FONT);
+    if ( !StaticTextTimeFont.Ok() ) StaticTextTimeFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    StaticTextTimeFont.SetPointSize(20);
+    StaticTextTime->SetFont(StaticTextTimeFont);
+    BoxSizer7->Add(StaticTextTime, 1, wxALL, 5);
+    BoxSizer3->Add(BoxSizer7, 1, wxALL|wxEXPAND, 0);
     BoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5);
     Principal->SetSizer(BoxSizer2);
     BoxSizer2->Fit(Principal);
@@ -182,6 +209,9 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     SetSizer(BoxSizer1);
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
+    MenuItem3 = new wxMenuItem(Menu1, idGuardarEstado, _("Guardar estado\tAlt-F3"), _("Guarda el estado actual del banco en los archivos de testo"), wxITEM_NORMAL);
+    Menu1->Append(MenuItem3);
+    Menu1->AppendSeparator();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Cerrar\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
     Menu1->Append(MenuItem1);
     MenuBar1->Append(Menu1, _("&Archivo"));
@@ -195,10 +225,6 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Menu3->Append(MenuItem5);
     MenuItem5->Enable(false);
     MenuBar1->Append(Menu3, _("Cli&entes"));
-    Menu4 = new wxMenu();
-    MenuItem6 = new wxMenuItem(Menu4, ID_MENUITEM4, _("Generar..."), wxEmptyString, wxITEM_NORMAL);
-    Menu4->Append(MenuItem6);
-    MenuBar1->Append(Menu4, _("Rep&orte"));
     Menu2 = new wxMenu();
     MenuItem2 = new wxMenuItem(Menu2, idMenuAbout, _("Acerca de Banco\tF1"), _("Mostrar informacion acerca de esta aplicación"), wxITEM_NORMAL);
     Menu2->Append(MenuItem2);
@@ -212,6 +238,9 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     SetStatusBar(StatusBar1);
     MessageDialogEliminarCliente = new wxMessageDialog(this, _("¿Esta seguro que desea eliminar este cliente\?"), _("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
     MessageDialogEliminarCuenta = new wxMessageDialog(this, _("¿Está seguro de cerrar esta cuenta\?"), _("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
+    MessageDialogGuardar = new wxMessageDialog(this, _("Estado del banco guardado"), _("Guardar"), wxOK|wxICON_EXCLAMATION|wxSTAY_ON_TOP, wxDefaultPosition);
+    TimerHora.SetOwner(this, ID_TIMERHORA);
+    TimerHora.Start(1000, false);
     SetSizer(BoxSizer1);
     Layout();
 
@@ -230,9 +259,14 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BUTTONEXTRAERDINERO,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonExtraerdeCuentaClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnAbout);
+    Connect(ID_TIMERHORA,wxEVT_TIMER,(wxObjectEventFunction)&bancoguiFrame::OnTimer1Trigger);
     //*)
 
     Connect(id_menuCrearCliente,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnbtnCrearClienteClick);
+    Connect(id_menueditarCliente,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnBtnEditarClienteClick);
+    Connect(id_menueliminarCliente,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnBtnEliminarClienteClick);
+    Connect(idGuardarEstado,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnGuardar);
+
     ListaClientes->InsertColumn(0,"DNI",wxLIST_FORMAT_LEFT,60);
     ListaClientes->InsertColumn(1,"Nombre");
     ListaClientes->InsertColumn(2,"Apellido");
@@ -248,6 +282,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
 bancoguiFrame::~bancoguiFrame()
 {
     CrisNaMa.escribirClientes();
+    CrisNaMa.movimientos << horayfechaActual << " - " <<"Cerrado programa"<< endl;
+    CrisNaMa.movimientos << "------------------------------------" << endl;
     //(*Destroy(bancoguiFrame)
     //*)
 }
@@ -263,7 +299,15 @@ void bancoguiFrame::OnAbout(wxCommandEvent& event)
     wxMessageBox(msg, _("Banco"));
 }
 
+void bancoguiFrame::OnListCtrl1BeginDrag(wxListEvent& event)
+{
 
+}
+
+void bancoguiFrame::OnListCtrl1BeginDrag1(wxListEvent& event)
+{
+
+}
 void ListarClientes(Banco & Ban,wxListCtrl & Lista){
     if(Ban.clientesActivos.size() > 0){
         for(int i = 0; i < Ban.clientesActivos.size(); i ++){
@@ -304,6 +348,7 @@ void ListarCuentas(Cliente & cliente,wxListCtrl & Lista){
             IDCUENTA.append(auxiliar);
             wxString SALDO;
             SALDO << cliente[i].getSaldo();
+            SALDO.resize(SALDO.Find(".") + 3 );
             Lista.InsertItem(i,_("Cuenta"));
             Lista.SetItem(i,0,IDCUENTA);
             if(cliente[i].gettipoCuenta() == 0){
@@ -343,6 +388,7 @@ void bancoguiFrame::OnBtnEditarClienteClick(wxCommandEvent& event)
             CrisNaMa.clientesActivos[ClienteSeleccionado].setTelefono(dialogo->getDialogoTelefono().ToStdString());
             //wxMessageBox(_("Cambios Guardados"),_("Felicitaciones!"));
     }
+    CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente editado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << endl;
     ListaClientes->DeleteAllItems();
     ListarClientes(CrisNaMa,* ListaClientes);
 }
@@ -360,6 +406,7 @@ void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
         CrisNaMa.clientesActivos.push_back(nuevo);
         //wxMessageBox(_("Cliente Guardado"),_("Felicitaciones!"));
     }
+    CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente creado: "<< nuevo << endl;
     ListaClientes->DeleteAllItems();
     ListarClientes(CrisNaMa,* ListaClientes);
 }
@@ -372,6 +419,8 @@ void bancoguiFrame::OnListaClientesItemSelect(wxListEvent& event)
     BtnEditarCliente->Enable();
     BtnEliminarCliente->Enable();
     ButtonNuevaCuenta->Enable();
+    MenuItem4->Enable();
+    MenuItem5->Enable();
 }
 
 void bancoguiFrame::OnButton1Click1(wxCommandEvent& event)
@@ -394,6 +443,7 @@ void bancoguiFrame::OnBtnEliminarClienteClick(wxCommandEvent& event)
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Cobre"));
         }
+        CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente Eliminado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << endl;
         CrisNaMa.clientesActivos.erase(CrisNaMa.clientesActivos.begin() + ClienteSeleccionado);
         ListaClientes->DeleteAllItems();
         ListarClientes(CrisNaMa,* ListaClientes);
@@ -414,6 +464,7 @@ void bancoguiFrame::OnButtonNuevaCuentaClick(wxCommandEvent& event)
             //wxMessageBox(_("Nueva cuenta creada con éxito"),_("Felicitaciones!"));
             ListaCuentas->DeleteAllItems();
             ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado],* ListaCuentas);
+            CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta creada: "<< nuevaCuenta << endl;
     }
 }
 
@@ -454,6 +505,9 @@ void bancoguiFrame::OnListaCuentasItemSelect(wxListEvent& event)
 void bancoguiFrame::OnListaCuentasDeleteAllItems(wxListEvent& event)
 {
     ButtonCerrarCuenta->Disable();
+    ButtonDepositarenCuenta->Disable();
+    ButtonExtraerdeCuenta->Disable();
+    TextCtrlCantidadDinero->Disable();
 }
 
 void bancoguiFrame::OnButtonCerrarCuentaClick(wxCommandEvent& event)
@@ -472,9 +526,13 @@ void bancoguiFrame::OnButtonCerrarCuentaClick(wxCommandEvent& event)
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Cobre"));
         }
+        wxString NroCuentaEliminada;
+        NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
+        NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
         CrisNaMa.clientesActivos[ClienteSeleccionado].eliminarCuenta(CuentaSeleccionada);
         ListaCuentas->DeleteAllItems();
         ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado],* ListaCuentas);
+        CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta cerrada: "<< NroCuentaEliminada << endl;
     }
 }
 
@@ -488,6 +546,10 @@ void bancoguiFrame::OnButtonDepositarenCuentaClick(wxCommandEvent& event)
     if(!cadenaObtenida.ToDouble(&deposito))
         wxMessageBox(_("No se pudo convertir cadena ingresada!"),_("Error"));
     CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada] += deposito;
+    wxString NroCuentaDepositada;
+    NroCuentaDepositada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
+    NroCuentaDepositada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
+    CrisNaMa.movimientos << horayfechaActual << " - " << "Depositado: $"<< cadenaObtenida <<" en Cuenta: "<< NroCuentaDepositada << endl;
     ListaCuentas->DeleteAllItems();
     ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado], * ListaCuentas);
     TextCtrlCantidadDinero->Clear();
@@ -506,4 +568,22 @@ void bancoguiFrame::OnButtonExtraerdeCuentaClick(wxCommandEvent& event)
     ListaCuentas->DeleteAllItems();
     ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado], * ListaCuentas);
     TextCtrlCantidadDinero->Clear();
+    wxString NroCuentaExtraida;
+    NroCuentaExtraida << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
+    NroCuentaExtraida << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
+    CrisNaMa.movimientos << horayfechaActual << " - " << "Extraido: $"<< cadenaObtenida <<" en Cuenta: "<< NroCuentaExtraida << endl;
+}
+
+void bancoguiFrame::OnGuardar(wxCommandEvent& event){
+    CrisNaMa.escribirClientes();
+    MessageDialogGuardar->ShowModal();
+    CrisNaMa.movimientos << horayfechaActual << " - " <<"Guardado el estado del Banco"<< endl;
+}
+
+void bancoguiFrame::OnTimer1Trigger(wxTimerEvent& event)
+{
+    wxString horaActual = wxDateTime::Now().FormatTime();
+    wxString fechaActual = wxDateTime::Today().FormatDate();
+    horayfechaActual = horaActual +" "+fechaActual;
+    StaticTextTime->SetLabel(horayfechaActual);
 }
