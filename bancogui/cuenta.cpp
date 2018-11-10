@@ -168,3 +168,12 @@ istream & operator >> (istream & entrada, Cuenta & cuenta){
 void Cuenta::inicializarGenerador(int mayor){
     generadorNumeros = mayor;
 }
+
+bool Cuenta::autorizarExtraccion(float cantidad){
+    if(tipoCuenta == 0){
+        if(saldo - cantidad >= 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+}

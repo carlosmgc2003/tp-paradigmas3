@@ -3,7 +3,7 @@
 	<object class="wxFrame" name="bancoguiFrame">
 		<title>Banco CrisNaMa</title>
 		<icon stock_id="wxART_DELETE" />
-		<size>820,500</size>
+		<size>910,500</size>
 		<maxsize>-1,-1</maxsize>
 		<parent_arg>0</parent_arg>
 		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
@@ -148,29 +148,45 @@
 														<label>Caja</label>
 														<orient>wxVERTICAL</orient>
 														<object class="sizeritem">
-															<object class="wxButton" name="ID_BUTTON3" variable="ButtonDeposito" member="yes">
-																<label>Depósito</label>
-																<enabled>0</enabled>
-																<font>
-																	<size>0</size>
-																	<weight>bold</weight>
-																</font>
-																<handler function="OnButtonDepositoClick" entry="EVT_BUTTON" />
+															<object class="wxBoxSizer" variable="BoxSizer5" member="no">
+																<orient>wxVERTICAL</orient>
+																<object class="sizeritem">
+																	<object class="wxTextCtrl" name="ID_TEXTCTRLCANTDINERO" variable="TextCtrlCantidadDinero" member="yes">
+																		<validator>ValidadorDeDinero</validator>
+																		<enabled>0</enabled>
+																	</object>
+																	<flag>wxALL|wxEXPAND</flag>
+																	<border>5</border>
+																	<option>1</option>
+																</object>
+																<object class="sizeritem">
+																	<object class="wxBoxSizer" variable="BoxSizer6" member="no">
+																		<object class="sizeritem">
+																			<object class="wxButton" name="ID_BUTTONDEPOSITARDINERO" variable="ButtonDepositarenCuenta" member="yes">
+																				<label>Depósito</label>
+																				<enabled>0</enabled>
+																				<handler function="OnButtonDepositarenCuentaClick" entry="EVT_BUTTON" />
+																			</object>
+																			<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+																			<border>5</border>
+																			<option>1</option>
+																		</object>
+																		<object class="sizeritem">
+																			<object class="wxButton" name="ID_BUTTONEXTRAERDINERO" variable="ButtonExtraerdeCuenta" member="yes">
+																				<label>Extracción</label>
+																				<enabled>0</enabled>
+																				<handler function="OnButtonExtraerdeCuentaClick" entry="EVT_BUTTON" />
+																			</object>
+																			<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+																			<border>5</border>
+																			<option>1</option>
+																		</object>
+																	</object>
+																	<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+																	<option>1</option>
+																</object>
 															</object>
-															<flag>wxALL|wxEXPAND</flag>
-															<border>5</border>
-															<option>1</option>
-														</object>
-														<object class="sizeritem">
-															<object class="wxButton" name="ID_BUTTON4" variable="ButtonExtraccion" member="yes">
-																<label>Extracción</label>
-																<enabled>0</enabled>
-																<font>
-																	<size>0</size>
-																	<weight>bold</weight>
-																</font>
-															</object>
-															<flag>wxALL|wxEXPAND</flag>
+															<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 															<border>5</border>
 															<option>1</option>
 														</object>

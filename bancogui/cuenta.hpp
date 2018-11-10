@@ -52,6 +52,7 @@ public:
     void debitar(float);//El saldo ingresado se resta al existente.
     static int generadorNumeros;
     static void inicializarGenerador(int);
+    bool autorizarExtraccion(float);
 
 private:
     float saldo;//Saldo en pesos de la cuenta

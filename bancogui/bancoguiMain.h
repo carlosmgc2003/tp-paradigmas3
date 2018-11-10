@@ -19,6 +19,7 @@
 #include <wx/panel.h>
 #include <wx/sizer.h>
 #include <wx/statusbr.h>
+#include <wx/textctrl.h>
 //*)
 
 #include "banco.hpp"
@@ -54,6 +55,9 @@ class bancoguiFrame: public wxFrame
         void OnListaCuentasDeleteAllItems(wxListEvent& event);
         void OnButtonCerrarCuentaClick(wxCommandEvent& event);
         void OnButtonDepositoClick(wxCommandEvent& event);
+        void OnTextCtrlCantidadDineroText(wxCommandEvent& event);
+        void OnButtonDepositarenCuentaClick(wxCommandEvent& event);
+        void OnButtonExtraerdeCuentaClick(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(bancoguiFrame)
@@ -64,8 +68,9 @@ class bancoguiFrame: public wxFrame
         static const long ID_LISTACUENTAS;
         static const long ID_BUTTON1;
         static const long ID_BUTTON2;
-        static const long ID_BUTTON3;
-        static const long ID_BUTTON4;
+        static const long ID_TEXTCTRLCANTDINERO;
+        static const long ID_BUTTONDEPOSITARDINERO;
+        static const long ID_BUTTONEXTRAERDINERO;
         static const long ID_PRINCIPAL;
         static const long idMenuQuit;
         static const long id_menuCrearCliente;
@@ -82,8 +87,8 @@ class bancoguiFrame: public wxFrame
         wxButton* BtnEditarCliente;
         wxButton* BtnEliminarCliente;
         wxButton* ButtonCerrarCuenta;
-        wxButton* ButtonDeposito;
-        wxButton* ButtonExtraccion;
+        wxButton* ButtonDepositarenCuenta;
+        wxButton* ButtonExtraerdeCuenta;
         wxButton* ButtonNuevaCuenta;
         wxButton* btnCrearCliente;
         wxListCtrl* ListaClientes;
@@ -98,8 +103,9 @@ class bancoguiFrame: public wxFrame
         wxMessageDialog* MessageDialogEliminarCuenta;
         wxPanel* Principal;
         wxStatusBar* StatusBar1;
+        wxTextCtrl* TextCtrlCantidadDinero;
         //*)
-
+        float ValorDinero;
         DECLARE_EVENT_TABLE()
 };
 

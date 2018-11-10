@@ -1,6 +1,6 @@
 #include "crearCliente.h"
 #include <wx/msgdlg.h>
-#include <wx/valtext.h>
+#include <wx/valnum.h>
 
 //(*InternalHeaders(crearCliente)
 #include <wx/intl.h>
@@ -29,6 +29,8 @@ END_EVENT_TABLE()
 
 crearCliente::crearCliente(wxWindow* parent,wxWindowID id)
 {
+    wxIntegerValidator<int> ValidarDNI(&nuevoDni,wxNUM_VAL_THOUSANDS_SEPARATOR);
+    ValidarDNI.SetRange(0,99999999);
 	//(*Initialize(crearCliente)
 	wxBoxSizer* BoxSizer1;
 	wxBoxSizer* BoxSizer2;
@@ -44,7 +46,7 @@ crearCliente::crearCliente(wxWindow* parent,wxWindowID id)
 	BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
 	etiquetaNuevoCliente1 = new wxStaticText(this, ID_STATICTEXT1, _("DNI:"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT, _T("ID_STATICTEXT1"));
 	BoxSizer2->Add(etiquetaNuevoCliente1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	TextCtrlNuevoClienteDNI = new wxTextCtrl(this, ID_TEXTCTRLNUEVOCLIENTEDNI, wxEmptyString, wxDefaultPosition, wxSize(140,23), 0, wxDefaultValidator, _T("ID_TEXTCTRLNUEVOCLIENTEDNI"));
+	TextCtrlNuevoClienteDNI = new wxTextCtrl(this, ID_TEXTCTRLNUEVOCLIENTEDNI, wxEmptyString, wxDefaultPosition, wxSize(140,23), 0, ValidarDNI, _T("ID_TEXTCTRLNUEVOCLIENTEDNI"));
 	TextCtrlNuevoClienteDNI->SetMaxLength(8);
 	BoxSizer2->Add(TextCtrlNuevoClienteDNI, 1, wxALL|wxEXPAND, 5);
 	BoxSizer1->Add(BoxSizer2, 1, wxALL|wxEXPAND|wxSHAPED, 1);
@@ -91,6 +93,7 @@ crearCliente::crearCliente(wxWindow* parent,wxWindowID id)
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&crearCliente::OnButtonNuevoClienteGuardarClick);
 	Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&crearCliente::OnInit);
 	//*)
+
 }
 
 

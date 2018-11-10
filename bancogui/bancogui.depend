@@ -17,7 +17,7 @@
 	<vector>
 	"cuenta.hpp"
 
-1541623694 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
+1541852848 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
 	<string>
 	<iostream>
 
@@ -1713,7 +1713,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1541722478 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1541851635 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
@@ -1722,6 +1722,7 @@
 	<wx/panel.h>
 	<wx/sizer.h>
 	<wx/statusbr.h>
+	<wx/textctrl.h>
 	"banco.hpp"
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\listctrl.h
@@ -1968,13 +1969,14 @@
 1541635203 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
 	"cliente.hpp"
 
-1541623694 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
+1541852848 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
 	"cuenta.hpp"
 	<iomanip>
 
-1541608597 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\crearcliente.cpp
+1541853517 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\crearcliente.cpp
 	"crearCliente.h"
 	<wx/msgdlg.h>
+	<wx/valnum.h>
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -2070,13 +2072,14 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1541722478 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1541852995 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	"bancoguiMain.h"
 	<wx/msgdlg.h>
 	"banco.hpp"
 	"crearCliente.h"
 	"editarCliente.h"
 	"DialogoNuevaCuenta.h"
+	<wx/valnum.h>
 	<wx/artprov.h>
 	<wx/bitmap.h>
 	<wx/font.h>
@@ -2287,4 +2290,14 @@
 	"wx/cocoa/NSMenu.h"
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\choice.h
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\valtext.h
+	"wx/defs.h"
+	"wx/validate.h"
+
+1520438138 c:\wxwidgets-3.0.4\include\wx\valnum.h
+	"wx/defs.h"
+	"wx/textentry.h"
+	"wx/validate.h"
+	<limits>
 
