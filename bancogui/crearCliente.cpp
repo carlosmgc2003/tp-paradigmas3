@@ -1,5 +1,6 @@
 #include "crearCliente.h"
 #include <wx/msgdlg.h>
+#include <wx/valtext.h>
 
 //(*InternalHeaders(crearCliente)
 #include <wx/intl.h>

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1541635689 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
+1541722113 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
 	"banco.hpp"
 	"wx/msgdlg.h"
 
@@ -1713,7 +1713,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1541635809 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1541722478 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
@@ -2070,7 +2070,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1541635042 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1541722478 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	"bancoguiMain.h"
 	<wx/msgdlg.h>
 	"banco.hpp"

@@ -217,6 +217,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_LISTACUENTAS,wxEVT_COMMAND_LIST_INSERT_ITEM,(wxObjectEventFunction)&bancoguiFrame::OnListaCuentasInsertItem);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonNuevaCuentaClick);
     Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonCerrarCuentaClick);
+    Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonDepositoClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnAbout);
     //*)
@@ -355,7 +356,7 @@ void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
         nuevo.setDireccion(dialogo->getNuevoDireccion().ToStdString());
         nuevo.setTelefono(dialogo->getNuevoTelefono().ToStdString());
         CrisNaMa.clientesActivos.push_back(nuevo);
-        wxMessageBox(_("Cliente Guardado"),_("Felicitaciones!"));
+        //wxMessageBox(_("Cliente Guardado"),_("Felicitaciones!"));
     }
     ListaClientes->DeleteAllItems();
     ListarClientes(CrisNaMa,* ListaClientes);
@@ -404,7 +405,6 @@ void bancoguiFrame::OnButtonNuevaCuentaClick(wxCommandEvent& event)
     int IdclienteSolicitante = CrisNaMa.clientesActivos[ClienteSeleccionado].getDni();
     nuevoIdCuenta << IdclienteSolicitante;
     nuevoIdCuenta << Cuenta::generadorNumeros;
-    wxMessageBox(nuevoIdCuenta,_("Debug"));
     dialogo->setIdCuenta(nuevoIdCuenta);
     if(dialogo->ShowModal() == wxID_OK){
             Cuenta nuevaCuenta(IdclienteSolicitante,Cuenta::generadorNumeros,dialogo->getTipoCuenta());
@@ -475,3 +475,8 @@ void bancoguiFrame::OnButtonCerrarCuentaClick(wxCommandEvent& event)
     }
 }
 
+
+void bancoguiFrame::OnButtonDepositoClick(wxCommandEvent& event)
+{
+
+}

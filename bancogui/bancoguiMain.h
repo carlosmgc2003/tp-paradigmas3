@@ -53,6 +53,7 @@ class bancoguiFrame: public wxFrame
         void OnListaCuentasItemSelect(wxListEvent& event);
         void OnListaCuentasDeleteAllItems(wxListEvent& event);
         void OnButtonCerrarCuentaClick(wxCommandEvent& event);
+        void OnButtonDepositoClick(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(bancoguiFrame)

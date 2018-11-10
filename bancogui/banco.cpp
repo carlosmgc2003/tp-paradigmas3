@@ -108,7 +108,7 @@ void Banco::leerArchivos(){
                 if(cuentas.eof())
                     break;
             }
-            Cuenta::inicializarGenerador(mayorId);
+            Cuenta::inicializarGenerador(mayorId + 1);
         }
     }
 
@@ -130,7 +130,6 @@ int Banco::contarClientes(){
 }
 
 
-//FIX: que hacer con los benditos saltos de linea al final del archivo
 int Banco::contarCuentas(){
     int i = 0;
     string aux;
