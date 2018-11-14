@@ -36,7 +36,7 @@ int main() {
     //Fin de las operaciones de ABM de clientes
     cout << "Clientes despues:"<< endl;
     mostrarClientesBanco(A);
-    A.escribirClientes();    
+    A.escribirEstadoAArchivos();    
     return 0;
 }
 

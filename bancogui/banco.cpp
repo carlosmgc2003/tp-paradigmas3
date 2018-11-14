@@ -6,20 +6,32 @@
 
 #include "banco.hpp"
 #include "wx/msgdlg.h"
+
+/* Constructor de la Clase BANCO su funcion basicamente es inicializar los archivos
+del programa si es que estos no existe. Para ello utiliza los atributos fstream (clientes
+cuentas y movimientos) del objeto Banco*/
 Banco::Banco(){
+    // Probamos si podemos abrir el archivo clientes.txt
     clientes.open("clientes.txt", fstream::in);
+    // Si el archivo clientes.txt se abre
     if(!clientes.is_open()){
+        //Creamos el archivo clientes, cuentas y movimientos (por la combinacion out y trunc) 
         clientes.open("clientes.txt",fstream::out | fstream::trunc);
         cuentas.open("cuentas.txt",fstream::out | fstream::trunc);
         movimientos.open("movimientos.txt",fstream::out | fstream::trunc);
+        // Cerramos los archivos creados para pasar a ...
         clientes.close();
         cuentas.close();
         movimientos.close();
+        //... el modo de lectura
         clientes.open("clientes.txt", fstream::in);
         cuentas.open("cuentas.txt", fstream::in);
+        // el fstream movimientos pasa al modo append
         movimientos.open("movimientos.txt", fstream::out | fstream::app);
-        wxMessageBox(_("Ejecutando por primera vez Banco CrisNaMa\nEmpiece creando un cliente."),_("Atención"));
+        // Si ocurrio todo esto es la primera vez que abrimos banco por lo tanto mostramos un bonito cartel.
+        wxMessageBox(_("Ejecutando por primera vez Banco CrisNaMa\nEmpiece creando un cliente."),_("Atenciï¿½n"));
     }
+    // Ahora veamos que cuando los archivos EXISTEN, simplemente los abro.
     else{
         cuentas.open("cuentas.txt", fstream::in);
         movimientos.open("movimientos.txt", fstream::out | fstream::app);
@@ -27,6 +39,7 @@ Banco::Banco(){
 
 }
 
+/* Destructor de Banco. Basicamente cierra los archivos abiertos */
 Banco::~Banco(){
     clientes.close();
     cuentas.close();
@@ -34,24 +47,35 @@ Banco::~Banco(){
 }
 
 
-
-void Banco::escribirClientes(){
-    //Escribimos todos los clientes
+/* Es el mmetodo de guardado principal, al que se invoca cada vez que se quiere guaradar cambios en
+el disco. Es realmente la manera en la que persiste el estado del Banco invocado al cerrar la ventana,
+pero tambien de forma arbitraria cuando lo desee el cliente. */
+void Banco::escribirEstadoAArchivos(){
+    //Escribimos todos los clientes, para ello primero cerramos el archivo clientes que habia quedado en modo lectura
     clientes.close();
+    // Lo abrimos en modo truncar o sea, pisamos lo que sea que este en el archivo. Total vamos a guardar lo que esta en memoria
     clientes.open("clientes.txt", fstream::out | fstream::trunc);
+    // Por cada cliente en clientesActivos
     for(int i = 0; i < clientesActivos.size(); i ++){
+        // escribo el cliente i del vector al archivo
         clientes << clientesActivos[i];
+        // Si el cliente NO es el ultimo
         if(i < clientesActivos.size() - 1)
+            // Pongo un enter al final del cliente (esto se hace para evitar un ultimo enter que me arruina el contar clientes)
             clientes << endl;
     }
+    // Cierro el archivo clientes
     clientes.close();
+    // Lo vuelvo a abrir en modo lectura asi el sistema vuelve al estado inicial
     clientes.open("clientes.txt",fstream::in);
-    //Ahora vamos a escribir las cuentas
 
+    //Ahora vamos a escribir las cuentas, cerrarmos el filestream cuentas que esta en modo lectura
     cuentas.close();
+    // Lo abrimos en modo truncar o sea, pisamos lo que sea que este en el archivo. Total vamos a guardar lo que esta en memoria
     cuentas.open("cuentas.txt", fstream::out | fstream::trunc);
+    // Contamos la cantidad total de cuentasTotalesEnMemoria enmemoria, lo necesitamos para saber cuando va a terminar este algoritmo
+    int cuentasTotales = cuentasTotalesEnMemoria();
     //Para cada cliente:
-    int cuentasTotales = cuentasActivas();
     for(int i = 0; i < clientesActivos.size(); i ++){
         //Si el cliente tiene cuentas:
         if(clientesActivos[i].contarCuentasCliente() != 0){
@@ -60,25 +84,25 @@ void Banco::escribirClientes(){
             //cout << "Tiene cuentas activas: " << clientesActivos[i].contarCuentas() << endl;
             for(int j = 0;j < clientesActivos[i].contarCuentasCliente(); j++){
                 //La escribimos en el disco
-                //cout << "Escribimos la cuenta:" << clientesActivos[i][j] << endl;
                 cuentas << clientesActivos[i][j];
+                // Decrementamos el contador de cuentasTotales
                 cuentasTotales --;
+                // Si la cuenta no es la ultima y todavia quedan cuentas en memoria (de cualquier cliente)
                 if(j < clientesActivos[i].contarCuentasCliente() && cuentasTotales > 0)
+                    // Coloco un salto de linea (Enter) al final :P
                     cuentas << endl;
             }
         }
     }
-
+    //Cierro el archivo de cuentas
     cuentas.close();
+    // Lo vuelvo a abrir en modo lectura para volver el sistema al estado inicial.
     cuentas.open("cuentas.txt", fstream::in);
 }
 
-void Banco::escribirCuenta(Cuenta instanciaCuenta){
-    cuentas << instanciaCuenta << endl;
-}
 
 void Banco::leerArchivos(){
-    int cantClientes = contarClientes();
+    int cantClientes = contarClientesDeArchivos();
     if(cantClientes > 0){
         Cliente auxCliente;
         clientes.seekg(clientes.beg);
@@ -88,7 +112,7 @@ void Banco::leerArchivos(){
             if(clientes.eof())
                 break;
         }
-        int cantCuentas = contarCuentas();
+        int cantCuentas = contarCuentasDeArchivos();
         if(cantCuentas > 0){
             cuentas.seekg(cuentas.beg);
             int mayorId = 1;
@@ -114,7 +138,7 @@ void Banco::leerArchivos(){
 
 }
 
-int Banco::contarClientes(){
+int Banco::contarClientesDeArchivos(){
     int i = 0;
     string aux;
     clientes.seekg(clientes.beg);
@@ -130,7 +154,7 @@ int Banco::contarClientes(){
 }
 
 
-int Banco::contarCuentas(){
+int Banco::contarCuentasDeArchivos(){
     int i = 0;
     string aux;
     cuentas.seekg(cuentas.beg);
@@ -145,7 +169,7 @@ int Banco::contarCuentas(){
     return i;
 }
 
-int Banco::cuentasActivas(){
+int Banco::cuentasTotalesEnMemoria(){
     int contador = 0;
     for(int i = 0; i < clientesActivos.size();i ++){
         contador += clientesActivos[i].contarCuentasCliente();

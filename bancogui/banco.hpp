@@ -21,26 +21,24 @@
 #include "cuenta.hpp"
 using namespace std;
 
-class Banco{
-public:
-    Banco();//inicia los archivos o append si ya estan creados.
-    ~Banco();//solo cierra los archivos
-    void leerArchivos();//lee todos los archivos del programa y carga en memoria los clientes y cuentas.
-    int contarClientes();
-    int contarCuentas();
-    void escribirClientes();
-    void escribirCuenta(Cuenta );//Legacy no debe usarse;
-    void escribirMovimiento(Cliente ,Cuenta ,const float);
+class Banco
+{
+  public:
+    // Constructor y destructor de Banco
+    Banco();  //inicia los archivos o append si ya estan creados.
+    ~Banco(); //solo cierra los archivos
+    // Metodos para leer archivos y sus auxiliares contarClientesDeArchivos y contarCuentasDeArchivos
+    void leerArchivos(); //lee todos los archivos del programa y carga en memoria los clientes y cuentas.
+    int contarClientesDeArchivos();
+    int contarCuentasDeArchivos();
+    void escribirEstadoAArchivos();
+    void escribirMovimiento(Cliente, Cuenta, const float);
     vector<Cliente> clientesActivos;
-    int cuentasActivas();
-//private:
-    fstream clientes;//puntero a file donde se guardan los clientes.
-    fstream cuentas;//puntero a file donde se guardan las cuentas.
-    fstream movimientos;//puntero a file donde se llevan los movimientos del banco
-
+    int cuentasTotalesEnMemoria();
+    //private:
+    fstream clientes;    //puntero a file donde se guardan los clientes.
+    fstream cuentas;     //puntero a file donde se guardan las cuentas.
+    fstream movimientos; //puntero a file donde se llevan los movimientos del banco
 };
 
-
-
 #endif /* BANCO_HPP */
-
