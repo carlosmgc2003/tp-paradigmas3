@@ -37,7 +37,7 @@ void Cliente::setApellido(string a){
 
 //Recibe un entero y solo valida que sea mayor a 0
 void Cliente::setDni(int id){
-    dni = id >= 1000000? id : 0;
+    dni = id >= 0? id : 0;
 }
 
 void Cliente::setDireccion(string d){
@@ -75,11 +75,11 @@ string Cliente::getTelefono() const{
 
 
 
-
+/*Metodo candidato a ser eliminado
 void Cliente::agregarCuenta(float deposito){
     Cuenta nueva(dni,deposito);
     cartera.push_back(nueva);
-}
+}*/
 
 void Cliente::agregarCuenta(Cuenta nueva){
     cartera.push_back(nueva);

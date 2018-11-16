@@ -170,7 +170,7 @@
 																	<object class="wxBoxSizer" variable="BoxSizer6" member="no">
 																		<object class="sizeritem">
 																			<object class="wxButton" name="ID_BUTTONDEPOSITARDINERO" variable="ButtonDepositarenCuenta" member="yes">
-																				<label>Depósito</label>
+																				<label>Depositar</label>
 																				<enabled>0</enabled>
 																				<font>
 																					<size>12</size>
@@ -183,7 +183,7 @@
 																		</object>
 																		<object class="sizeritem">
 																			<object class="wxButton" name="ID_BUTTONEXTRAERDINERO" variable="ButtonExtraerdeCuenta" member="yes">
-																				<label>Extracción</label>
+																				<label>Extraer</label>
 																				<enabled>0</enabled>
 																				<font>
 																					<size>12</size>

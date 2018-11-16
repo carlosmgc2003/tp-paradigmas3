@@ -27,15 +27,17 @@ class Banco
     // Constructor y destructor de Banco
     Banco();  //inicia los archivos o append si ya estan creados.
     ~Banco(); //solo cierra los archivos
+
     // Metodos para leer archivos y sus auxiliares contarClientesDeArchivos y contarCuentasDeArchivos
     void leerArchivos(); //lee todos los archivos del programa y carga en memoria los clientes y cuentas.
     int contarClientesDeArchivos();
     int contarCuentasDeArchivos();
     void escribirEstadoAArchivos();
     void escribirMovimiento(Cliente, Cuenta, const float);
-    int cuentasTotalesEnMemoria();
+    int cuentasTotalesEnMemoria() const;
+    void insertarClienteOrdenado(Cliente);
     //private:
-    vector<Cliente> clientesActivos;
+    vector<Cliente> clientesActivos; //Vector donde se alojan en memoria los clientes que tiene el banco
     fstream clientes;    //puntero a file donde se guardan los clientes.
     fstream cuentas;     //puntero a file donde se guardan las cuentas.
     fstream movimientos; //puntero a file donde se llevan los movimientos del banco

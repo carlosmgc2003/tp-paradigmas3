@@ -37,7 +37,7 @@ public:
     string getDireccion() const;
     string getTelefono() const;
     //Metodos propios
-    void agregarCuenta(float);//Crea una cuenta nueva
+    //void agregarCuenta(float);//Crea una cuenta nueva CANDIDATO A SER EELIMINADO
     void agregarCuenta(Cuenta);//Push back una cuenta en el vector cartera
     void eliminarCuenta(int);//Elimina una cuenta y devuelve por pantall el saldo que tenia (extraccion en efectivo)
     friend ostream & operator <<(ostream &, Cliente &);//Sobrecarga de salida para escribir archivos

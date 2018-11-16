@@ -6,6 +6,7 @@
 
 #include "banco.hpp"
 #include "wx/msgdlg.h"
+#include <algorithm>
 
 /* Constructor de la Clase BANCO su funcion basicamente es inicializar los archivos
 del programa si es que estos no existe. Para ello utiliza los atributos fstream (clientes
@@ -15,7 +16,7 @@ Banco::Banco(){
     clientes.open("clientes.txt", fstream::in);
     // Si el archivo clientes.txt se abre
     if(!clientes.is_open()){
-        //Creamos el archivo clientes, cuentas y movimientos (por la combinacion out y trunc) 
+        //Creamos el archivo clientes, cuentas y movimientos (por la combinacion out y trunc)
         clientes.open("clientes.txt",fstream::out | fstream::trunc);
         cuentas.open("cuentas.txt",fstream::out | fstream::trunc);
         movimientos.open("movimientos.txt",fstream::out | fstream::trunc);
@@ -119,7 +120,7 @@ void Banco::leerArchivos(){
             // Leo una linea y la ingreso en el auxiliar
             clientes >> auxCliente;
             // Guardo el cliente en el vector de clientes del banco
-            clientesActivos.push_back(auxCliente);
+            insertarClienteOrdenado(auxCliente);
             // Si se termino el archivo corto el while(para evitar errores)
             if(clientes.eof())
                 break;
@@ -213,7 +214,7 @@ int Banco::contarCuentasDeArchivos(){
 
 /* Metodo que devuelve la cantidad de cuentas totales en memoria recorriendo todo el vector de clientes (cliente
 por cliente). Sirve para saber cuando va a terminar la escritura de cuentas */
-int Banco::cuentasTotalesEnMemoria(){
+int Banco::cuentasTotalesEnMemoria() const{
     // Inicializamos un contador en cero
     int contador = 0;
     // Para cada clienteActivo en el banco
@@ -223,4 +224,14 @@ int Banco::cuentasTotalesEnMemoria(){
     }
     // Devolvemos el valor acumulado en el contador
     return contador;
+}
+
+
+bool ordenarApellidos(Cliente & A,Cliente & B){
+    return (A.getApellido() < B.getApellido());
+}
+
+void Banco::insertarClienteOrdenado(Cliente nuevo){
+    clientesActivos.push_back(nuevo);
+    sort(clientesActivos.begin(),clientesActivos.end(),ordenarApellidos);
 }
