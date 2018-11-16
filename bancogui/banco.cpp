@@ -100,79 +100,127 @@ void Banco::escribirEstadoAArchivos(){
     cuentas.open("cuentas.txt", fstream::in);
 }
 
-
+/* Metodo que al invocarse lee los archivos de clientes y cuentas existentes e intenta cargar en memoria en forma
+de vectores todos ellos. Empieza cargando los clientes, leyendo linea a linea el archivo y agregandolos a un vector
+de cliente dependiente de la instancia de Banco. Una vez finalizado el archivo de cliente se inicia la lectura linea
+a linea del archivo de cuentas, con cada cuenta leida se busca la posicion del cliente a la cual pertenece mediante
+la comparacion del DNI del cliente con el DNI de la cuenta */
 void Banco::leerArchivos(){
+    // Contamos la cantidad de lineas (Clientes) que tiene el archivo de clientes
     int cantClientes = contarClientesDeArchivos();
+    //Si hay lineas (Clientes):
     if(cantClientes > 0){
+        // Creamos una variable Tipo Cliente auxiliar
         Cliente auxCliente;
+        // Posicionamos el cursor de lectura al principio del archivo.
         clientes.seekg(clientes.beg);
+        // Mientras queden lineas por lleer
         while(!clientes.eof()){
+            // Leo una linea y la ingreso en el auxiliar
             clientes >> auxCliente;
+            // Guardo el cliente en el vector de clientes del banco
             clientesActivos.push_back(auxCliente);
+            // Si se termino el archivo corto el while(para evitar errores)
             if(clientes.eof())
                 break;
         }
+        // Contamos la cantidad de lineas (Cuentas) que contiene el archivo de cuentas
         int cantCuentas = contarCuentasDeArchivos();
+        // Si hay cuentas
         if(cantCuentas > 0){
+            // Posicionamos el cursor de lectura en el principio del archivo
             cuentas.seekg(cuentas.beg);
+            // Establecemos la variable auxiliar mayorId, la cual utilizaremos para inicializar el int static generador de numeros
             int mayorId = 1;
+            // Mientras queden lineas por leer
             while(!cuentas.eof()){
+                // Creamos una variable de tipo Cuenta
                 Cuenta auxCuenta;
+                // Leemos una linea del archivo
                 cuentas >> auxCuenta;
+                // Si el numero unico del auxCuenta es mayor que el mayorId
                 if(auxCuenta.getnumeroUnico() > mayorId)
+                    //Guardamos el numero unico en mayorId
                     mayorId = auxCuenta.getnumeroUnico();
-                //cout << "Leida la cuenta: " << auxCuenta << " en posicion: " << cuentas.tellg() <<endl;
+                // Para cada clienteActivo en el banco
                 for(int i = 0; i < clientesActivos.size();i ++){
+                    // Si el dni de la cuenta es igual al dni del cliente comparado
                     if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio()){
+                        // Agregamos la cuenta al vector cuenta de ese cliente
                         clientesActivos[i].agregarCuenta(auxCuenta);
-                        //cout <<"Se agrego cuenta: " << auxCuenta << " a " << clientesActivos[i] << " en posicion " << i << endl;
                         break;
                     }
                 }
+                // Si se termino el archivo cortamos las iteraciones
                 if(cuentas.eof())
                     break;
             }
+            // Con el numero mayorId recabado inicializamos la variable static generadora de numeros unicos
             Cuenta::inicializarGenerador(mayorId + 1);
         }
     }
 
 }
 
+
+/* Metodo que cuenta la cantidad de lineas (Para nosotros clientes) del archivo de clientes */
 int Banco::contarClientesDeArchivos(){
-    int i = 0;
+    // Inicialiamos una variable contador de tipo int
+    int contador = 0;
+    // Creamos una cadena auxiliar para almacenar el contenido de la linea leida del archivo de clientes
     string aux;
+    // Posicionamos el cursor de lectura en el principio del archivo
     clientes.seekg(clientes.beg);
+    // Mientras no se llegue al final del archivo
     while(!clientes.eof()){
+        // Guardamos el contenido de la linea en la cadena auxiliar (esto es para que no caiga en saco roto)
         clientes >> aux;
+        // Filtramos cadenas que sean solo un salto de linea que causarian errores
         if(aux.size() > 1){
-            i ++;
+            contador ++;
         }
+        // Si el archivo termino cortamos las iteraciones
         if(clientes.eof())
             break;
     }
-    return i;
+    // Devolvemos el valor del contador
+    return contador;
 }
 
-
+/* Metodo que cuenta la cantidad de lineas (Para nosotros cuentas) del archivo de cuentas */
 int Banco::contarCuentasDeArchivos(){
-    int i = 0;
+    // Inicialiamos una variable contador de tipo int
+    int contador = 0;
+    // Creamos una cadena auxiliar para almacenar el contenido de la linea leida del archivo de clientes
     string aux;
+    // Posicionamos el cursor de lectura en el principio del archivo
     cuentas.seekg(cuentas.beg);
+    // Mientas no se llegue al final del archivo
     while(!cuentas.eof()){
+        // Guardamos el contenido de la linea en la cadena auxiliar (esto es para que no caiga en saco roto)
         cuentas >> aux;
+        // Filtramos cadenas que sean solo un salto de linea que causarian errores
         if(aux.size() > 1){
-            i++;
+            contador ++;
         }
+        // Si el archivo termino cortamos las iteraciones
         if(cuentas.eof())
             break;
     }
-    return i;
+    // Devolvemos el valor del contador
+    return contador;
 }
 
+/* Metodo que devuelve la cantidad de cuentas totales en memoria recorriendo todo el vector de clientes (cliente
+por cliente). Sirve para saber cuando va a terminar la escritura de cuentas */
 int Banco::cuentasTotalesEnMemoria(){
+    // Inicializamos un contador en cero
     int contador = 0;
+    // Para cada clienteActivo en el banco
     for(int i = 0; i < clientesActivos.size();i ++){
+        // le sumamos al contador el tamaño del vector de cuentas del cliente
         contador += clientesActivos[i].contarCuentasCliente();
     }
+    // Devolvemos el valor acumulado en el contador
     return contador;
 }

@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1541722113 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
+1542288734 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
 	"banco.hpp"
 	"wx/msgdlg.h"
 
-1541600007 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.hpp
+1542289335 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.hpp
 	<string>
 	<fstream>
 	<iostream>
@@ -100,7 +100,7 @@
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\compiler.h
 
-1520438138 c:\wxwidgets-3.0.4\lib\gcc_lib\mswu\wx\setup.h
+1540076678 c:\wxwidgets-3.0.4\lib\gcc_lib\mswu\wx\setup.h
 
 1520438138 c:\wxwidgets-3.0.4\include\wx\msw\wince\libraries.h
 
@@ -1713,7 +1713,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1541867524 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1542208961 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
@@ -2074,7 +2074,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1541858476 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1542244807 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	"bancoguiMain.h"
 	<wx/msgdlg.h>
 	"banco.hpp"

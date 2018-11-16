@@ -33,9 +33,9 @@ class Banco
     int contarCuentasDeArchivos();
     void escribirEstadoAArchivos();
     void escribirMovimiento(Cliente, Cuenta, const float);
-    vector<Cliente> clientesActivos;
     int cuentasTotalesEnMemoria();
     //private:
+    vector<Cliente> clientesActivos;
     fstream clientes;    //puntero a file donde se guardan los clientes.
     fstream cuentas;     //puntero a file donde se guardan las cuentas.
     fstream movimientos; //puntero a file donde se llevan los movimientos del banco
