@@ -75,11 +75,6 @@ string Cliente::getTelefono() const{
 
 
 
-/*Metodo candidato a ser eliminado
-void Cliente::agregarCuenta(float deposito){
-    Cuenta nueva(dni,deposito);
-    cartera.push_back(nueva);
-}*/
 
 void Cliente::agregarCuenta(Cuenta nueva){
     cartera.push_back(nueva);

@@ -6,7 +6,6 @@
 		<size>910,570</size>
 		<maxsize>-1,-1</maxsize>
 		<parent_arg>0</parent_arg>
-		<style>wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxFRAME_TOOL_WINDOW|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxRAISED_BORDER</style>
 		<object class="wxBoxSizer" variable="BoxSizer1" member="no">
 			<object class="sizeritem">
 				<object class="wxPanel" name="ID_PRINCIPAL" variable="Principal" member="yes">
@@ -37,10 +36,9 @@
 								<object class="sizeritem">
 									<object class="wxStaticBoxSizer" variable="StaticBoxSizer2" member="no">
 										<label>Herramientas</label>
-										<orient>wxVERTICAL</orient>
 										<object class="sizeritem">
 											<object class="wxButton" name="ID_BTNCREARCLIENTE" variable="btnCrearCliente" member="yes">
-												<label>Crear Cliente</label>
+												<label>Crear&#x0A; Cliente</label>
 												<focused>1</focused>
 												<font>
 													<size>10</size>
@@ -58,7 +56,7 @@
 										</object>
 										<object class="sizeritem">
 											<object class="wxButton" name="ID_BTNEDITARCLIENTE" variable="BtnEditarCliente" member="yes">
-												<label>Editar Cliente</label>
+												<label>Editar&#x0A; Cliente</label>
 												<enabled>0</enabled>
 												<font>
 													<size>10</size>
@@ -67,6 +65,7 @@
 													<underlined>0</underlined>
 													<family>swiss</family>
 												</font>
+												<tooltip>Permite editar telefono y direccion del cliente</tooltip>
 												<handler function="OnBtnEditarClienteClick" entry="EVT_BUTTON" />
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
@@ -75,7 +74,7 @@
 										</object>
 										<object class="sizeritem">
 											<object class="wxButton" name="ID_BTNELIMINARCLIENTE" variable="BtnEliminarCliente" member="yes">
-												<label>Eliminar Cliente</label>
+												<label>Eliminar&#x0A; Cliente</label>
 												<enabled>0</enabled>
 												<font>
 													<size>10</size>
@@ -84,6 +83,7 @@
 													<underlined>0</underlined>
 													<family>swiss</family>
 												</font>
+												<tooltip>Permite eliminar el cliente seleccionado</tooltip>
 												<handler function="OnBtnEliminarClienteClick" entry="EVT_BUTTON" />
 											</object>
 											<flag>wxALL|wxEXPAND</flag>
@@ -228,7 +228,16 @@
 												</font>
 												<style>wxALIGN_CENTRE</style>
 											</object>
-											<flag>wxALL</flag>
+											<flag>wxALL|wxEXPAND</flag>
+											<border>5</border>
+											<option>1</option>
+										</object>
+										<object class="sizeritem">
+											<object class="wxButton" name="ID_BUTTONCUENTASACTIVAS" variable="ButtonCuentasActivas" member="yes">
+												<label>Cuentas Activas</label>
+												<handler function="OnButtonCuentasActivasClick" entry="EVT_BUTTON" />
+											</object>
+											<flag>wxALL|wxEXPAND</flag>
 											<border>5</border>
 											<option>1</option>
 										</object>

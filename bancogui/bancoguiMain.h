@@ -61,6 +61,7 @@ class bancoguiFrame: public wxFrame
         void OnButtonDepositarenCuentaClick(wxCommandEvent& event);
         void OnButtonExtraerdeCuentaClick(wxCommandEvent& event);
         void OnTimer1Trigger(wxTimerEvent& event);
+        void OnButtonCuentasActivasClick(wxCommandEvent& event);
         //*)
 
         void OnGuardar(wxCommandEvent& event);
@@ -77,6 +78,7 @@ class bancoguiFrame: public wxFrame
         static const long ID_BUTTONDEPOSITARDINERO;
         static const long ID_BUTTONEXTRAERDINERO;
         static const long ID_STATICTEXTTIME;
+        static const long ID_BUTTONCUENTASACTIVAS;
         static const long ID_PRINCIPAL;
         static const long idGuardarEstado;
         static const long idMenuQuit;
@@ -95,6 +97,7 @@ class bancoguiFrame: public wxFrame
         wxButton* BtnEditarCliente;
         wxButton* BtnEliminarCliente;
         wxButton* ButtonCerrarCuenta;
+        wxButton* ButtonCuentasActivas;
         wxButton* ButtonDepositarenCuenta;
         wxButton* ButtonExtraerdeCuenta;
         wxButton* ButtonNuevaCuenta;

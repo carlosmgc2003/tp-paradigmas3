@@ -114,11 +114,14 @@
 		<Unit filename="crearCliente.h" />
 		<Unit filename="cuenta.cpp" />
 		<Unit filename="cuenta.hpp" />
+		<Unit filename="dialogoListadeCuentas.cpp" />
+		<Unit filename="dialogoListadeCuentas.h" />
 		<Unit filename="editarCliente.cpp" />
 		<Unit filename="editarCliente.h" />
 		<Unit filename="wxsmith/DialogoNuevaCuenta.wxs" />
 		<Unit filename="wxsmith/bancoguiframe.wxs" />
 		<Unit filename="wxsmith/crearCliente.wxs" />
+		<Unit filename="wxsmith/dialogoListadeCuentas.wxs" />
 		<Unit filename="wxsmith/editarCliente.wxs" />
 		<Extensions>
 			<code_completion />
@@ -132,6 +135,7 @@
 					<wxDialog wxs="wxsmith/crearCliente.wxs" src="crearCliente.cpp" hdr="crearCliente.h" fwddecl="0" i18n="1" name="crearCliente" language="CPP" />
 					<wxDialog wxs="wxsmith/editarCliente.wxs" src="editarCliente.cpp" hdr="editarCliente.h" fwddecl="0" i18n="1" name="editarCliente" language="CPP" />
 					<wxDialog wxs="wxsmith/DialogoNuevaCuenta.wxs" src="DialogoNuevaCuenta.cpp" hdr="DialogoNuevaCuenta.h" fwddecl="0" i18n="1" name="DialogoNuevaCuenta" language="CPP" />
+					<wxDialog wxs="wxsmith/dialogoListadeCuentas.wxs" src="dialogoListadeCuentas.cpp" hdr="dialogoListadeCuentas.h" fwddecl="0" i18n="1" name="dialogoListadeCuentas" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>
