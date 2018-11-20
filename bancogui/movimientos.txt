@@ -166,3 +166,57 @@
 12:49:00 11/20/18 - Cliente Eliminado: 0,Sucoco,Mococo,Sucada,12314
 13:19:12 11/20/18 - Cerrado programa
 ------------------------------------
+------------------------------------
+17:27:07 11/20/18 - Iniciado programa
+17:27:35 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+17:31:01 11/20/18 - Iniciado programa
+17:31:04 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+18:18:12 11/20/18 - Iniciado programa
+18:18:25 11/20/18 - Depositado: $1500.50 en Cuenta: 270148554
+18:18:36 11/20/18 - Depositado: $10000.00 en Cuenta: 270148553
+18:19:00 11/20/18 - Depositado: $1000.00 en Cuenta: 270148554
+18:19:03 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+18:20:44 11/20/18 - Iniciado programa
+18:20:51 11/20/18 - Depositado: $1010.00 en Cuenta: 270148554
+18:21:12 11/20/18 - Depositado: $1000.00 en Cuenta: 270148554
+18:21:16 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+18:22:17 11/20/18 - Iniciado programa
+18:22:23 11/20/18 - Depositado: $100.00 en Cuenta: 270148554
+18:22:33 11/20/18 - Cliente Eliminado: 99999999,Carlos,SiElmismo,Sucada,1231241
+18:22:42 11/20/18 - Cliente Eliminado: 27014855,Analia,Saavedra,Migueletes_550,1567990440
+18:22:46 11/20/18 - Cliente Eliminado: 5698218,Blanca,Fracassi,Ansenusa3443,123123123
+18:22:50 11/20/18 - Cliente Eliminado: 17000000,Anibal,Cambon,Cuchacucha_128,312312
+18:23:00 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+18:23:04 11/20/18 - Iniciado programa
+18:23:09 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+18:25:52 11/20/18 - Iniciado programa
+18:26:13 11/20/18 - Cliente creado: 32956544,Carlos,Maceira,Migueletes_550,42479928
+18:26:18 11/20/18 - Cuenta creada: 32956544,1,0,0.00
+18:26:26 11/20/18 - Depositado: $15000.00 en Cuenta: 329565441
+18:26:47 11/20/18 - Cliente Eliminado: 32956544,Carlos,Maceira,Migueletes_550,42479928
+18:26:56 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+18:28:22 11/20/18 - Iniciado programa
+18:28:44 11/20/18 - Cliente creado: 32956544,Carlos,Maceira,Migueletes_550,1567990440
+18:28:50 11/20/18 - Cuenta creada: 32956544,1,0,0.00
+18:28:57 11/20/18 - Depositado: $30000.00 en Cuenta: 329565441
+18:29:24 11/20/18 - Cliente Eliminado: 32956544,Carlos,Maceira,Migueletes_550,1567990440
+18:29:28 11/20/18 - Cerrado programa
+------------------------------------
+------------------------------------
+18:31:31 11/20/18 - Iniciado programa
+18:31:52 11/20/18 - Cerrado programa
+------------------------------------

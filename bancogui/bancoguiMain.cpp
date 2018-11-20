@@ -6,15 +6,19 @@
  * Copyright: Team C++ (https://github.com/carlosmgc2003/tp-paradigmas3.git)
  * License:
  **************************************************************/
-
+//Cabecera de la aplicacion principal, la que da inicio a todo
 #include "bancoguiMain.h"
-#include <wx/msgdlg.h>
+//Cabecera de la clase banco
 #include "banco.hpp"
+//Cabeceras de los dialogos asociados a esta ventana principal
 #include "crearCliente.h"
 #include "editarCliente.h"
 #include "DialogoNuevaCuenta.h"
 #include "dialogoListadeCuentas.h"
+//Cabecera para la validacion de los numeros en los textbox
 #include <wx/valnum.h>
+//Cabecera que genera los mensajes de alerta al usuario
+#include <wx/msgdlg.h>
 //(*InternalHeaders(bancoguiFrame)
 #include <wx/artprov.h>
 #include <wx/bitmap.h>
@@ -64,7 +68,6 @@ const long bancoguiFrame::ID_TEXTCTRLCANTDINERO = wxNewId();
 const long bancoguiFrame::ID_BUTTONDEPOSITARDINERO = wxNewId();
 const long bancoguiFrame::ID_BUTTONEXTRAERDINERO = wxNewId();
 const long bancoguiFrame::ID_STATICTEXTTIME = wxNewId();
-const long bancoguiFrame::ID_BUTTONCUENTASACTIVAS = wxNewId();
 const long bancoguiFrame::ID_PRINCIPAL = wxNewId();
 const long bancoguiFrame::idGuardarEstado = wxNewId();
 const long bancoguiFrame::idMenuQuit = wxNewId();
@@ -207,8 +210,6 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StaticTextTimeFont.SetPointSize(20);
     StaticTextTime->SetFont(StaticTextTimeFont);
     BoxSizer7->Add(StaticTextTime, 1, wxALL|wxEXPAND, 5);
-    ButtonCuentasActivas = new wxButton(Principal, ID_BUTTONCUENTASACTIVAS, _("Cuentas Activas"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONCUENTASACTIVAS"));
-    BoxSizer7->Add(ButtonCuentasActivas, 1, wxALL|wxEXPAND, 5);
     BoxSizer3->Add(BoxSizer7, 1, wxALL|wxEXPAND, 0);
     BoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5);
     Principal->SetSizer(BoxSizer2);
@@ -245,7 +246,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    MessageDialogEliminarCliente = new wxMessageDialog(this, _("¿Esta seguro que desea eliminar este cliente\?"), _("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
+    MessageDialogEliminarCliente = new wxMessageDialog(this, _("Esta seguro que desea eliminar este cliente\?"), _("Atencion"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
     MessageDialogEliminarCuenta = new wxMessageDialog(this, _("¿Está seguro de cerrar esta cuenta\?"), _("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
     MessageDialogGuardar = new wxMessageDialog(this, _("Estado del banco guardado"), _("Guardar"), wxOK|wxICON_EXCLAMATION|wxSTAY_ON_TOP, wxDefaultPosition);
     TimerHora.SetOwner(this, ID_TIMERHORA);
@@ -254,6 +255,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Layout();
 
     Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_BEGIN_DRAG,(wxObjectEventFunction)&bancoguiFrame::OnListCtrl1BeginDrag1);
+    Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_DELETE_ALL_ITEMS,(wxObjectEventFunction)&bancoguiFrame::OnListaCuentasDeleteAllItems);
     Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnListaClientesItemSelect);
     Connect(ID_LISTACLIENTES,wxEVT_COMMAND_LIST_INSERT_ITEM,(wxObjectEventFunction)&bancoguiFrame::OnListaClientesInsertItem);
     Connect(ID_BTNCREARCLIENTE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnbtnCrearClienteClick);
@@ -266,7 +268,6 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonCerrarCuentaClick);
     Connect(ID_BUTTONDEPOSITARDINERO,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonDepositarenCuentaClick);
     Connect(ID_BUTTONEXTRAERDINERO,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonExtraerdeCuentaClick);
-    Connect(ID_BUTTONCUENTASACTIVAS,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&bancoguiFrame::OnButtonCuentasActivasClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&bancoguiFrame::OnAbout);
     Connect(ID_TIMERHORA,wxEVT_TIMER,(wxObjectEventFunction)&bancoguiFrame::OnTimer1Trigger);
@@ -363,11 +364,15 @@ void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
     ListarClientes(CrisNaMa,* ListaClientes);
 }
 
-
+/*Este metodo se acciona cuando hacemos click sobre un item de la lista de clientes es decir
+cuando lo pintamos al cliente al clickerarlo*/
 void bancoguiFrame::OnListaClientesItemSelect(wxListEvent& event)
 {
+    //Guardamos el item clickeado en la variable cliente seleccionado
     ClienteSeleccionado = event.GetIndex();
+    //Actualizamos la lista del cuentas con las especificas de ese cliente
     ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado],* ListaCuentas);
+    //Si estaban desactivados, activamos los botones que tienen que ver con la seleccion de cliente
     BtnEditarCliente->Enable();
     BtnEliminarCliente->Enable();
     ButtonNuevaCuenta->Enable();
@@ -376,13 +381,17 @@ void bancoguiFrame::OnListaClientesItemSelect(wxListEvent& event)
 }
 
 
-
+/*Este metodo se acciona cuando hacemos click en el boton eliminar cliente*/
 void bancoguiFrame::OnBtnEliminarClienteClick(wxCommandEvent& event)
 {
+    //Mostramos el mensaje ¿Esta seguro de eliminar? en primer plano. Si recibimos un Sí representado por wxID_YES
     if(MessageDialogEliminarCliente->ShowModal() == wxID_YES){
+        //hallamos la cantidad de dinero total que le queda al cliente depositada en el banco
         float dineroTotal = CrisNaMa.clientesActivos[ClienteSeleccionado].contarDinero();
+        //Copiamos la cantidad en una String para despues mostrarla por pantalla
         wxString cantidad;
         cantidad << dineroTotal;
+        //Si el dinero total es mayor a 0 le pagamos al cliente, si no le tenemos que cobrar
         if(dineroTotal >= 0.0){
             wxString RESPUESTA("Debe pagar al cliente $");
             RESPUESTA.Append(cantidad);
@@ -393,31 +402,58 @@ void bancoguiFrame::OnBtnEliminarClienteClick(wxCommandEvent& event)
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Cobre"));
         }
+        //Registramos la eliminacion en el archivo de movimientos
         CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente Eliminado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << endl;
+        //Borramos el cliente del arreglo (esto recompone automaticamente el arreglo).
         CrisNaMa.clientesActivos.erase(CrisNaMa.clientesActivos.begin() + ClienteSeleccionado);
+        //Actualizamos la lista de clientes para que se exiba el cambio
         ListaClientes->DeleteAllItems();
         ListarClientes(CrisNaMa,* ListaClientes);
+        if(CrisNaMa.clientesActivos.size() == 0){
+            ButtonNuevaCuenta->Disable();
+            ButtonCerrarCuenta->Disable();
+            ButtonExtraerdeCuenta->Disable();
+            ButtonDepositarenCuenta->Disable();
+            TextCtrlCantidadDinero->Disable();
+            ListaCuentas->DeleteAllItems();
+        }
     }
 }
 
+
+/*Metodo que se ejecuta cuando se hace click en el boton nueva cuenta*/
 void bancoguiFrame::OnButtonNuevaCuentaClick(wxCommandEvent& event)
 {
+    //Instanciamos el dialogo de nueva cuenta
     DialogoNuevaCuenta * dialogo = new DialogoNuevaCuenta(this);
+    //String auxiliar para "armar el nuevo id de cuenta" concatenamos el dni al numero del generador de numeros
     wxString nuevoIdCuenta;
     int IdclienteSolicitante = CrisNaMa.clientesActivos[ClienteSeleccionado].getDni();
     nuevoIdCuenta << IdclienteSolicitante;
     nuevoIdCuenta << Cuenta::generadorNumeros;
+    //Le mandamos el nuevo ID al dialogo
     dialogo->setIdCuenta(nuevoIdCuenta);
+    //Se muestra el dialogo en primer plano y espera que salga con un OK representado por wxID_OK
     if(dialogo->ShowModal() == wxID_OK){
+            //Instanciamos la cuenta y le mandamos los datos que hallamos
             Cuenta nuevaCuenta(IdclienteSolicitante,Cuenta::generadorNumeros,dialogo->getTipoCuenta());
+            //Agregamos la cuenta al vector de cuentas del cliente "seleccionado"
             CrisNaMa.clientesActivos[ClienteSeleccionado].agregarCuenta(nuevaCuenta);
-            //wxMessageBox(_("Nueva cuenta creada con �xito"),_("Felicitaciones!"));
+            //Registramos el movimiento en el archivos de movimingtos
+            CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta creada: "<< nuevaCuenta << endl;
+            //Refrescamos la lista de de cuentas del cliente para mostar los cambios
             ListaCuentas->DeleteAllItems();
             ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado],* ListaCuentas);
-            CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta creada: "<< nuevaCuenta << endl;
     }
 }
 
+
+
+/*Estos dos metodos siguientes son para actualizar una leyenda en el barra de estado
+(barra ingerior del programa que muestran la cantidad total de clientes y de cuentas
+ del programa*/
+
+/*Metodo que se ejecuta cuando agregamos un cliente a la lista*/
 void bancoguiFrame::OnListaClientesInsertItem(wxListEvent& event)
 {
     int CantidadClientes = CrisNaMa.clientesActivos.size();
@@ -430,6 +466,7 @@ void bancoguiFrame::OnListaClientesInsertItem(wxListEvent& event)
     StatusBar1->SetLabel(LEYENDA);
 }
 
+/*Metodo que se ejecuta cuando agregamos una cuenta a la lista del cliente*/
 void bancoguiFrame::OnListaCuentasInsertItem(wxListEvent& event)
 {
     int CantidadClientes = CrisNaMa.clientesActivos.size();
@@ -442,6 +479,8 @@ void bancoguiFrame::OnListaCuentasInsertItem(wxListEvent& event)
     StatusBar1->SetLabel(LEYENDA);
 }
 
+/*Metodo que se acciona al hacer click en una cuenta de la lista activa los botones
+necesarios para trabajar con ela cuenta*/
 void bancoguiFrame::OnListaCuentasItemSelect(wxListEvent& event)
 {
     ButtonCerrarCuenta->Enable();
@@ -449,95 +488,154 @@ void bancoguiFrame::OnListaCuentasItemSelect(wxListEvent& event)
     ButtonExtraerdeCuenta->Enable();
     TextCtrlCantidadDinero->Enable();
     CuentaSeleccionada = event.GetIndex();
-
 }
 
+/*Metodo que se acciona al hacer click en una cuenta de la lista desactiva los botones
+que no son necesarios para evitar interacciones incorrectas*/
 void bancoguiFrame::OnListaCuentasDeleteAllItems(wxListEvent& event)
 {
+    if(CrisNaMa.clientesActivos.size() == 0){
+        BtnEditarCliente->Disable();
+        BtnEliminarCliente->Disable();
+    }
     ButtonCerrarCuenta->Disable();
     ButtonDepositarenCuenta->Disable();
     ButtonExtraerdeCuenta->Disable();
     TextCtrlCantidadDinero->Disable();
 }
 
+
+/*Este metodo se ejecuta cuando se hace click en el boton de cerrar la cuenta*/
 void bancoguiFrame::OnButtonCerrarCuentaClick(wxCommandEvent& event)
 {
+    //Se muestra el mensaje de confirmacion en primer plano, si se hace click en si (representado por wxID_YES)
     if(MessageDialogEliminarCuenta->ShowModal() == wxID_YES){
+        //Tomamos el saldo de la cuenta
         float saldoRemanente = CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getSaldo();
+        //Lo guardamos en una wxString
         wxString cantidad;
         cantidad << saldoRemanente;
+        //Si el saldo es mayor a 0
         if(saldoRemanente >= 0.0){
+            //Se instruye al cajero a pagar al cliente
             wxString RESPUESTA("Debe pagar al cliente $");
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Pague"));
         }
         else{
+            //SI no se instruye el cajero a cobrar al cliente
             wxString RESPUESTA("Cobre al cliente la cantidad de $");
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Cobre"));
         }
+        //Tomamos el numero de cuenta eliminadad en forma de estring a solo efecto de imprimirlo en el log
         wxString NroCuentaEliminada;
         NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
         NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
+        //Eliminamos la cuenta del vecto de cuenta del cliente
         CrisNaMa.clientesActivos[ClienteSeleccionado].eliminarCuenta(CuentaSeleccionada);
+        //Registramos la eliminacion en el archivo de movimientos
+        CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta cerrada: "<< NroCuentaEliminada << endl;
+        //Refrescamos la lista de cuentas del cliente para que se reflejen los cambios realizados
         ListaCuentas->DeleteAllItems();
         ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado],* ListaCuentas);
-        CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta cerrada: "<< NroCuentaEliminada << endl;
+
     }
 }
 
 
 
-
+/*Metodo que se acciona cuando hacemos click en el boton depositar cuenta cuando previamente
+se ha colocado un numero en el textbox correspondiente*/
 void bancoguiFrame::OnButtonDepositarenCuentaClick(wxCommandEvent& event)
 {
+    //Tomamos el valor que tiene la caja
     wxString cadenaObtenida = TextCtrlCantidadDinero->GetValue();
+    if(cadenaObtenida.size() == 0){
+        wxMessageBox(_("No puede ser nulo el valor a depositar!"),_("Error"));
+    }
+    //Creamos un auxiliar double para el valor del deposito (tener en cuenta que double es igual a float pero mas preciso
     double deposito;
-    if(!cadenaObtenida.ToDouble(&deposito))
+    //Si la cadena se puede convertir a double (es decir que es un numero valido)
+    if(cadenaObtenida.ToDouble(&deposito)){
+        //Incrementamos el saldo de la cuenta en la cantidad ingresada
+        CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada] += deposito;
+        //Generamos el numero de cuenta depositada para escribir en el log concatenando el dni y el numero unico
+        wxString NroCuentaDepositada;
+        NroCuentaDepositada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
+        NroCuentaDepositada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
+        //Registramos el movimiento en el archivo de movimientos
+        CrisNaMa.movimientos << horayfechaActual << " - " << "Depositado: $"<< cadenaObtenida <<" en Cuenta: "<< NroCuentaDepositada << endl;
+        //Refrescamos la lista para que impacten los cambios realizados
+        ListaCuentas->DeleteAllItems();
+        ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado], * ListaCuentas);
+        //Vaciamos la caja para que quede de nuevo listo para hacer otra operacion
+        TextCtrlCantidadDinero->Clear();
+    }
+    else{
         wxMessageBox(_("No se pudo convertir cadena ingresada!"),_("Error"));
-    CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada] += deposito;
-    wxString NroCuentaDepositada;
-    NroCuentaDepositada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
-    NroCuentaDepositada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
-    CrisNaMa.movimientos << horayfechaActual << " - " << "Depositado: $"<< cadenaObtenida <<" en Cuenta: "<< NroCuentaDepositada << endl;
-    ListaCuentas->DeleteAllItems();
-    ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado], * ListaCuentas);
-    TextCtrlCantidadDinero->Clear();
+    }
+
 }
 
+/*Metodo que se acciona cuando hacemos click en el boton extraer de la cuenta*/
 void bancoguiFrame::OnButtonExtraerdeCuentaClick(wxCommandEvent& event)
 {
+    //Tomamos el valor de la caja
     wxString cadenaObtenida = TextCtrlCantidadDinero->GetValue();
+    if(cadenaObtenida.size() == 0){
+        wxMessageBox(_("No puede ser nulo el valor a extraer!"),_("Error"));
+    }
+    //Creamos una variable double para acumular el valor a extraer
     double extraccion;
-    if(!cadenaObtenida.ToDouble(&extraccion))
+    //Si se puede convertir la cadena
+    if(cadenaObtenida.ToDouble(&extraccion)){
+        //Si tiene fondos suficientes
+        if(CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].autorizarExtraccion(extraccion))
+            //Se realiza la extraccion
+            CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada] -= extraccion;
+        else
+            //Si no se advierte al cajero
+            wxMessageBox(_("No dispone de suficientes fondos para extraer!"),_("Atencion"));
+        //Se refresca la lista de cuentas para reflekar los cambios
+        ListaCuentas->DeleteAllItems();
+        ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado], * ListaCuentas);
+        //Se limpia la caja de texto para que el operador pueda realizar otra transaccion
+        TextCtrlCantidadDinero->Clear();
+        //Generamos el nro de cuenta sobre la cual trabajamos concatenando dni y numero unico
+        wxString NroCuentaExtraida;
+        NroCuentaExtraida << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
+        NroCuentaExtraida << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
+        //Escribimos el movimiento en el archivo de movimientos
+        CrisNaMa.movimientos << horayfechaActual << " - " << "Extraido: $"<< cadenaObtenida <<" en Cuenta: "<< NroCuentaExtraida << endl;
+    }
+    else{
         wxMessageBox(_("No se pudo convertir cadena ingresada!"),_("Error"));
-    if(CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].autorizarExtraccion(extraccion))
-        CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada] -= extraccion;
-    else
-        wxMessageBox(_("No dispone de suficientes fondos para extraer!"),_("Atencion"));
-    ListaCuentas->DeleteAllItems();
-    ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado], * ListaCuentas);
-    TextCtrlCantidadDinero->Clear();
-    wxString NroCuentaExtraida;
-    NroCuentaExtraida << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
-    NroCuentaExtraida << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
-    CrisNaMa.movimientos << horayfechaActual << " - " << "Extraido: $"<< cadenaObtenida <<" en Cuenta: "<< NroCuentaExtraida << endl;
+    }
+
 }
 
+/*Metodo al cual se invoca al hacer click en guardar estado*/
 void bancoguiFrame::OnGuardar(wxCommandEvent& event){
+    //Llamamos al método de la clase banco que escribe los cambios de la memoria en el disco
     CrisNaMa.escribirEstadoAArchivos();
+    //Advertimos al usuario que el metodo se ejecuto correctamente
     MessageDialogGuardar->ShowModal();
+    //Anotamos en el archivo de movimientos que se efectuo el guardado del estado
     CrisNaMa.movimientos << horayfechaActual << " - " <<"Guardado el estado del Banco"<< endl;
 }
 
+/*Reloj timer que lleva en cuenta la hora actual para poder realizar el log*/
 void bancoguiFrame::OnTimer1Trigger(wxTimerEvent& event)
 {
     wxString horaActual = wxDateTime::Now().FormatTime();
     wxString fechaActual = wxDateTime::Today().FormatDate();
     horayfechaActual = horaActual +" "+fechaActual;
+    //Mostramos la hora en la pantalla principal
     StaticTextTime->SetLabel(horayfechaActual);
 }
 
+/*NO IMPLEMENTADO BOTON PARA MOSTRAR TODAS LAS CUENTAS*/
 void bancoguiFrame::OnButtonCuentasActivasClick(wxCommandEvent& event)
 {
     dialogoListadeCuentas * dialogo = new dialogoListadeCuentas(this);
