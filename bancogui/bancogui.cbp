@@ -45,14 +45,13 @@
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-std=c++1y" />
 					<Add directory="C:/wxWidgets-3.0.4/lib/gcc_lib/mswu" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="C:/wxWidgets-3.0.4/lib/gcc_lib/mswu" />
 				</ResourceCompiler>
 				<Linker>
-					<Add option="-s" />
 					<Add library="libwxmsw30u_richtext.a" />
 					<Add library="libwxmsw30u_xrc.a" />
 					<Add library="libwxmsw30u_aui.a" />

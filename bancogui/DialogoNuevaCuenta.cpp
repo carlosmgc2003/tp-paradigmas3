@@ -1,3 +1,6 @@
+// *** ADDED BY HEADER FIXUP ***
+#include <string>
+// *** END ***
 #include "DialogoNuevaCuenta.h"
 
 //(*InternalHeaders(DialogoNuevaCuenta)

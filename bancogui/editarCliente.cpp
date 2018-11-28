@@ -1,3 +1,6 @@
+// *** ADDED BY HEADER FIXUP ***
+#include <string>
+// *** END ***
 #include "editarCliente.h"
 #include "wx/msgdlg.h"
 

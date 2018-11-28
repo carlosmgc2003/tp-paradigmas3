@@ -1,3 +1,6 @@
+// *** ADDED BY HEADER FIXUP ***
+#include <string>
+// *** END ***
 /***************************************************************
  * Name:      bancoguiMain.cpp
  * Purpose:   Code for Application Frame
@@ -123,9 +126,9 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     SetClientSize(wxSize(910,570));
     SetMaxSize(wxSize(-1,-1));
     {
-        wxIcon FrameIcon;
-        FrameIcon.CopyFromBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_DELETE")),wxART_FRAME_ICON));
-        SetIcon(FrameIcon);
+    	wxIcon FrameIcon;
+    	FrameIcon.CopyFromBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_DELETE")),wxART_FRAME_ICON));
+    	SetIcon(FrameIcon);
     }
     BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     Principal = new wxPanel(this, ID_PRINCIPAL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PRINCIPAL"));
@@ -176,8 +179,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     TextCtrlCantidadDinero = new wxTextCtrl(Principal, ID_TEXTCTRLCANTDINERO, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_CENTRE, ValidadorDeDinero, _T("ID_TEXTCTRLCANTDINERO"));
     TextCtrlCantidadDinero->Disable();
     wxFont TextCtrlCantidadDineroFont = wxSystemSettings::GetFont(wxSYS_OEM_FIXED_FONT);
-    if ( !TextCtrlCantidadDineroFont.Ok() )
-        TextCtrlCantidadDineroFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    if ( !TextCtrlCantidadDineroFont.Ok() ) TextCtrlCantidadDineroFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     TextCtrlCantidadDineroFont.SetPointSize(22);
     TextCtrlCantidadDineroFont.SetWeight(wxFONTWEIGHT_NORMAL);
     TextCtrlCantidadDinero->SetFont(TextCtrlCantidadDineroFont);
@@ -201,8 +203,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     BoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
     StaticTextTime = new wxStaticText(Principal, ID_STATICTEXTTIME, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE, _T("ID_STATICTEXTTIME"));
     wxFont StaticTextTimeFont = wxSystemSettings::GetFont(wxSYS_OEM_FIXED_FONT);
-    if ( !StaticTextTimeFont.Ok() )
-        StaticTextTimeFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+    if ( !StaticTextTimeFont.Ok() ) StaticTextTimeFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     StaticTextTimeFont.SetPointSize(20);
     StaticTextTime->SetFont(StaticTextTimeFont);
     BoxSizer7->Add(StaticTextTime, 1, wxALL|wxEXPAND, 5);
@@ -242,8 +243,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    MessageDialogEliminarCliente = new wxMessageDialog(this, _("Esta seguro que desea eliminar este cliente\?"), _("Atencion"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
-    MessageDialogEliminarCuenta = new wxMessageDialog(this, _("¿Está seguro de cerrar esta cuenta\?"), _("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
+    MessageDialogEliminarCliente = new wxMessageDialog(this, wxT("¿Está seguro que desea eliminar este cliente?"), wxT("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
+    MessageDialogEliminarCuenta = new wxMessageDialog(this, wxT("¿Está seguro de cerrar esta cuenta?"), wxT("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
     MessageDialogGuardar = new wxMessageDialog(this, _("Estado del banco guardado"), _("Guardar"), wxOK|wxICON_EXCLAMATION|wxSTAY_ON_TOP, wxDefaultPosition);
     TimerHora.SetOwner(this, ID_TIMERHORA);
     TimerHora.Start(1000, false);
@@ -277,8 +278,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     ListaClientes->InsertColumn(0,"DNI",wxLIST_FORMAT_LEFT,60);
     ListaClientes->InsertColumn(1,"Nombre");
     ListaClientes->InsertColumn(2,"Apellido");
-    ListaClientes->InsertColumn(3,"Dirección",wxLIST_FORMAT_LEFT,200);
-    ListaClientes->InsertColumn(4,_("Teléfono"));
+    ListaClientes->InsertColumn(3,wxT("Dirección"),wxLIST_FORMAT_LEFT,200);
+    ListaClientes->InsertColumn(4,wxT("Teléfono"));
     if(CrisNaMa.clientesActivos.size() > 0)
         ListarClientes(CrisNaMa,* ListaClientes);
     ListaCuentas->InsertColumn(0,"Nro Cuenta");

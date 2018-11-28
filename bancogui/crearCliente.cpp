@@ -1,3 +1,6 @@
+// *** ADDED BY HEADER FIXUP ***
+#include <string>
+// *** END ***
 #include "crearCliente.h"
 #include <wx/msgdlg.h>
 #include <wx/valnum.h>
