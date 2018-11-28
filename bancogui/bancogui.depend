@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1542409559 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
+1543339748 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
 	"banco.hpp"
 	"wx/msgdlg.h"
 	<algorithm>
 
-1542408953 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.hpp
+1543339748 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.hpp
 	<string>
 	<fstream>
 	<iostream>
@@ -12,7 +12,7 @@
 	"cliente.hpp"
 	"cuenta.hpp"
 
-1542407323 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.hpp
+1543339799 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.hpp
 	<iostream>
 	<string>
 	<vector>
@@ -1969,7 +1969,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1542412973 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
+1543339799 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
 	"cliente.hpp"
 
 1541852848 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
@@ -2075,15 +2075,14 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1542748918 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1543413724 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	"bancoguiMain.h"
+	<wx/msgdlg.h>
 	"banco.hpp"
 	"crearCliente.h"
 	"editarCliente.h"
 	"DialogoNuevaCuenta.h"
-	"dialogoListadeCuentas.h"
 	<wx/valnum.h>
-	<wx/msgdlg.h>
 	<wx/artprov.h>
 	<wx/bitmap.h>
 	<wx/font.h>

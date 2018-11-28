@@ -6,21 +6,17 @@
 #include "cliente.hpp"
 
 //Constructor de cliente recibe un string n y otro a los pasa a los set de apellido y nombre y un entero dni
-Cliente::Cliente(){
+Cliente::Cliente()
+{
     return;
 }
 
-Cliente::Cliente(string n,string a,int id, string d, string t){
-    setNombre(n);
-    setApellido(a);
-    setDni(id);
-    setDireccion(d);
-    setTelefono(t);
-}
+
 
 //Setters
 //Funcion set del nombre recibe un string, si es mayor a 20 caracteres lo recorta si no lo pasa como esta
-void Cliente::setNombre(string n){
+void Cliente::setNombre(string n)
+{
     if(n.size() > 20)
         n.resize(20);
     nombre = n;
@@ -28,7 +24,8 @@ void Cliente::setNombre(string n){
 
 
 //Funcion set de l apellido recibe un string, si es mayor a 20 caracteres lo recorta, si no lo pasa como esta.
-void Cliente::setApellido(string a){
+void Cliente::setApellido(string a)
+{
     if(a.size() > 20)
         a.resize(20);
     apellido = a;
@@ -36,55 +33,63 @@ void Cliente::setApellido(string a){
 
 
 //Recibe un entero y solo valida que sea mayor a 0
-void Cliente::setDni(int id){
+void Cliente::setDni(int id)
+{
     dni = id >= 0? id : 0;
 }
 
-void Cliente::setDireccion(string d){
+void Cliente::setDireccion(string d)
+{
     if(d.size() > 50)
         d.resize(50);
     direccion = d;
 }
 
-void Cliente::setTelefono(string t){
+void Cliente::setTelefono(string t)
+{
     if(t.size() > 15)
         t.resize(15);
     telefono = t;
 }
 //Funciones get
-int Cliente::getDni() const{
+int Cliente::getDni() const
+{
     return dni;
 }
 
-string Cliente::getNombre() const{
+string Cliente::getNombre() const
+{
     return nombre;
 }
 
-string Cliente::getApellido() const{
+string Cliente::getApellido() const
+{
     return apellido;
 }
 
-string Cliente::getDireccion() const{
+string Cliente::getDireccion() const
+{
     return direccion;
 }
 
-string Cliente::getTelefono() const{
+string Cliente::getTelefono() const
+{
     return telefono;
 }
 //Fin de funciones get
 
-
-
-
-void Cliente::agregarCuenta(Cuenta nueva){
+void Cliente::agregarCuenta(Cuenta nueva)
+{
     cartera.push_back(nueva);
 }
 
-void Cliente::eliminarCuenta(int id){
+void Cliente::eliminarCuenta(int id)
+{
     cartera.erase(cartera.begin() + id);
 }
 
-ostream & operator << (ostream & salida, Cliente & instanciaCliente){
+ostream & operator << (ostream & salida, Cliente & instanciaCliente)
+{
     salida << instanciaCliente.getDni();
     salida << ",";
     salida << instanciaCliente.getNombre();
@@ -97,7 +102,8 @@ ostream & operator << (ostream & salida, Cliente & instanciaCliente){
     return salida;
 }
 
-istream & operator >> (istream & entrada, Cliente & instanciaCliente){
+istream & operator >> (istream & entrada, Cliente & instanciaCliente)
+{
     int numero;
     string aux, nombre, apellido, direccion, telefono;
     entrada >> aux;
@@ -123,18 +129,23 @@ istream & operator >> (istream & entrada, Cliente & instanciaCliente){
     return entrada;
 }
 
-Cuenta & Cliente::operator [](const int i){
+Cuenta & Cliente::operator [](const int i)
+{
     return cartera[i];
 }
 
-int Cliente::contarCuentasCliente() const{
+int Cliente::contarCuentasCliente() const
+{
     return cartera.size();
 }
 
-float Cliente::contarDinero() const{
+float Cliente::contarDinero() const
+{
     float dineroTotal = 0.0;
-    if(contarCuentasCliente() > 0){
-        for(int i = 0; i < contarCuentasCliente(); i ++){
+    if(contarCuentasCliente() > 0)
+    {
+        for(int i = 0; i < contarCuentasCliente(); i ++)
+        {
             dineroTotal += cartera[i].getSaldo();
         }
     }

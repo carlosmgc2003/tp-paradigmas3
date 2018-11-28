@@ -12,34 +12,34 @@
 
 class dialogoListadeCuentas: public wxDialog
 {
-	public:
+public:
 
-		dialogoListadeCuentas(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
-		virtual ~dialogoListadeCuentas();
-		Banco * banco;
+    dialogoListadeCuentas(wxWindow* parent,wxWindowID id=wxID_ANY,const wxPoint& pos=wxDefaultPosition,const wxSize& size=wxDefaultSize);
+    virtual ~dialogoListadeCuentas();
+    Banco * banco;
 
-		//(*Declarations(dialogoListadeCuentas)
-		wxButton* ButtonDialogoListadeCuentasCerrar;
-		wxListCtrl* ListCtrlListaDeCuentas;
-		wxPanel* Panel1;
-		//*)
+    //(*Declarations(dialogoListadeCuentas)
+    wxButton* ButtonDialogoListadeCuentasCerrar;
+    wxListCtrl* ListCtrlListaDeCuentas;
+    wxPanel* Panel1;
+    //*)
 
-	protected:
+protected:
 
-		//(*Identifiers(dialogoListadeCuentas)
-		static const long ID_LISTCTRLLISTADECUENTAS;
-		static const long ID_BUTTONDIALOGOLISTADECUENTASCERRAR;
-		static const long ID_PANEL1;
-		//*)
+    //(*Identifiers(dialogoListadeCuentas)
+    static const long ID_LISTCTRLLISTADECUENTAS;
+    static const long ID_BUTTONDIALOGOLISTADECUENTASCERRAR;
+    static const long ID_PANEL1;
+    //*)
 
-	private:
+private:
 
-		//(*Handlers(dialogoListadeCuentas)
-		void OnListCtrl1BeginDrag(wxListEvent& event);
-		void OnButton1Click(wxCommandEvent& event);
-		//*)
+    //(*Handlers(dialogoListadeCuentas)
+    void OnListCtrl1BeginDrag(wxListEvent& event);
+    void OnButton1Click(wxCommandEvent& event);
+    //*)
 
-		DECLARE_EVENT_TABLE()
+    DECLARE_EVENT_TABLE()
 };
 
 #endif

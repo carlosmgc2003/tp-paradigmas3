@@ -19,7 +19,8 @@
 using namespace std;
 enum TIPO {CA,CC};
 
-class Cuenta{
+class Cuenta
+{
 public:
     //Constructores
     Cuenta(int,int,int);

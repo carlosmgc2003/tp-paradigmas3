@@ -12,7 +12,8 @@ using namespace std;
 
 
 
-Cuenta::Cuenta(int id,int tipo,float s){
+Cuenta::Cuenta(int id,int tipo,float s)
+{
     nuevaCuenta = TRUE;
     tipoCuenta = tipo;
     saldo = s >= 0.0? s : 0.0;
@@ -22,14 +23,16 @@ Cuenta::Cuenta(int id,int tipo,float s){
     generadorNumeros ++;
 }
 
-Cuenta::Cuenta(int id,int tipo){
+Cuenta::Cuenta(int id,int tipo)
+{
     tipoCuenta = tipo;
     saldo = 0.0;
     nuevaCuenta = TRUE;
     generadorNumeros ++;
 }
 
-Cuenta::Cuenta(int id,int NumUni,int tipo){
+Cuenta::Cuenta(int id,int NumUni,int tipo)
+{
     tipoCuenta = tipo;
     dniDuenio = id;
     numeroUnico = NumUni;
@@ -37,45 +40,55 @@ Cuenta::Cuenta(int id,int NumUni,int tipo){
     setCuentaIniciada();
     generadorNumeros ++;
 }
-Cuenta::Cuenta(){
+Cuenta::Cuenta()
+{
     nuevaCuenta = TRUE;
 
 }
 
-Cuenta::~Cuenta(){
+Cuenta::~Cuenta()
+{
     return;
 }
 
 //Getters
-float Cuenta::getSaldo() const{
+float Cuenta::getSaldo() const
+{
     return saldo;
 }
 
-int Cuenta::getdniDuenio() const{
+int Cuenta::getdniDuenio() const
+{
     return dniDuenio;
 }
 
-int Cuenta::gettipoCuenta() const{
+int Cuenta::gettipoCuenta() const
+{
     return tipoCuenta;
 }
 
-int Cuenta::getnumeroUnico() const{
+int Cuenta::getnumeroUnico() const
+{
     return numeroUnico;
 }
 //Fin de Getter
 
 //Sobrecargas de operadores para debito y credito
-void Cuenta::operator +=(float credito){
+void Cuenta::operator +=(float credito)
+{
     saldo += credito;
 }
 
-void Cuenta::acreditar(float credito){
+void Cuenta::acreditar(float credito)
+{
     if(credito >= 0.0)
         saldo += credito;
 }
 
-void Cuenta::debitar(float debito){
-    if(debito >= 0.0){
+void Cuenta::debitar(float debito)
+{
+    if(debito >= 0.0)
+    {
         if(tipoCuenta == CA)
             saldo = (saldo - debito) >= 0? (saldo - debito): saldo;
         else
@@ -83,8 +96,10 @@ void Cuenta::debitar(float debito){
     }
 }
 
-void Cuenta::operator -=(float debito){
-    if(debito >= 0.0){
+void Cuenta::operator -=(float debito)
+{
+    if(debito >= 0.0)
+    {
         if(tipoCuenta == CA)
             saldo = (saldo - debito) >= 0? (saldo - debito): saldo;
         else
@@ -94,32 +109,38 @@ void Cuenta::operator -=(float debito){
 //Fin de sobrecarga de operadores y credito y debito
 
 //Setters
-void Cuenta::setdniDuenio(int id){
+void Cuenta::setdniDuenio(int id)
+{
     if(nuevaCuenta == TRUE)
-    dniDuenio = id;
+        dniDuenio = id;
 }
 
-void Cuenta::setSaldo(float s){
+void Cuenta::setSaldo(float s)
+{
     if(nuevaCuenta == TRUE)
-    saldo = s;
+        saldo = s;
 }
 
-void Cuenta::setCuentaIniciada(){
+void Cuenta::setCuentaIniciada()
+{
     nuevaCuenta = FALSE;
 }
 
-void Cuenta::setnumeroUnico(int num){
+void Cuenta::setnumeroUnico(int num)
+{
     numeroUnico = num;
 }
 
-void Cuenta::settipoCuenta(int tipo){
+void Cuenta::settipoCuenta(int tipo)
+{
     if(tipo == CA)
         tipoCuenta = CA;
     else
         tipoCuenta = CC;
 }
 
-ostream & operator << (ostream & salida, Cuenta & cuenta){
+ostream & operator << (ostream & salida, Cuenta & cuenta)
+{
     salida << cuenta.getdniDuenio();
     salida <<",";
     salida << cuenta.getnumeroUnico();
@@ -130,7 +151,8 @@ ostream & operator << (ostream & salida, Cuenta & cuenta){
     return salida;
 }
 
-istream & operator >> (istream & entrada, Cuenta & cuenta){
+istream & operator >> (istream & entrada, Cuenta & cuenta)
+{
     int numDniDuenio, numUnico;
     int tipo;
     float numeroParaSaldo;
@@ -165,12 +187,15 @@ istream & operator >> (istream & entrada, Cuenta & cuenta){
     return entrada;
 }
 
-void Cuenta::inicializarGenerador(int mayor){
+void Cuenta::inicializarGenerador(int mayor)
+{
     generadorNumeros = mayor;
 }
 
-bool Cuenta::autorizarExtraccion(float cantidad){
-    if(tipoCuenta == 0){
+bool Cuenta::autorizarExtraccion(float cantidad)
+{
+    if(tipoCuenta == 0)
+    {
         if(saldo - cantidad >= 0)
             return TRUE;
         else

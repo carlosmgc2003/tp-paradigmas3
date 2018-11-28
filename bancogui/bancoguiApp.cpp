@@ -25,9 +25,9 @@ bool bancoguiApp::OnInit()
     wxInitAllImageHandlers();
     if ( wxsOK )
     {
-    	bancoguiFrame* Frame = new bancoguiFrame(0);
-    	Frame->Show();
-    	SetTopWindow(Frame);
+        bancoguiFrame* Frame = new bancoguiFrame(0);
+        Frame->Show();
+        SetTopWindow(Frame);
     }
     //*)
     return wxsOK;

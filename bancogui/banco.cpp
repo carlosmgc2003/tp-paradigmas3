@@ -11,11 +11,13 @@
 /* Constructor de la Clase BANCO su funcion basicamente es inicializar los archivos
 del programa si es que estos no existe. Para ello utiliza los atributos fstream (clientes
 cuentas y movimientos) del objeto Banco*/
-Banco::Banco(){
+Banco::Banco()
+{
     // Probamos si podemos abrir el archivo clientes.txt
     clientes.open("clientes.txt", fstream::in);
     // Si el archivo clientes.txt se abre
-    if(!clientes.is_open()){
+    if(!clientes.is_open())
+    {
         //Creamos el archivo clientes, cuentas y movimientos (por la combinacion out y trunc)
         clientes.open("clientes.txt",fstream::out | fstream::trunc);
         cuentas.open("cuentas.txt",fstream::out | fstream::trunc);
@@ -33,7 +35,8 @@ Banco::Banco(){
         wxMessageBox(_("Ejecutando por primera vez Banco CrisNaMa\nEmpiece creando un cliente."),_("Atenci�n"));
     }
     // Ahora veamos que cuando los archivos EXISTEN, simplemente los abro.
-    else{
+    else
+    {
         cuentas.open("cuentas.txt", fstream::in);
         movimientos.open("movimientos.txt", fstream::out | fstream::app);
     }
@@ -41,7 +44,8 @@ Banco::Banco(){
 }
 
 /* Destructor de Banco. Basicamente cierra los archivos abiertos */
-Banco::~Banco(){
+Banco::~Banco()
+{
     clientes.close();
     cuentas.close();
     movimientos.close();
@@ -51,13 +55,15 @@ Banco::~Banco(){
 /* Es el mmetodo de guardado principal, al que se invoca cada vez que se quiere guaradar cambios en
 el disco. Es realmente la manera en la que persiste el estado del Banco invocado al cerrar la ventana,
 pero tambien de forma arbitraria cuando lo desee el cliente. */
-void Banco::escribirEstadoAArchivos(){
+void Banco::escribirEstadoAArchivos()
+{
     //Escribimos todos los clientes, para ello primero cerramos el archivo clientes que habia quedado en modo lectura
     clientes.close();
     // Lo abrimos en modo truncar o sea, pisamos lo que sea que este en el archivo. Total vamos a guardar lo que esta en memoria
     clientes.open("clientes.txt", fstream::out | fstream::trunc);
     // Por cada cliente en clientesActivos
-    for(int i = 0; i < clientesActivos.size(); i ++){
+    for(int i = 0; i < clientesActivos.size(); i ++)
+    {
         // escribo el cliente i del vector al archivo
         clientes << clientesActivos[i];
         // Si el cliente NO es el ultimo
@@ -77,13 +83,16 @@ void Banco::escribirEstadoAArchivos(){
     // Contamos la cantidad total de cuentasTotalesEnMemoria enmemoria, lo necesitamos para saber cuando va a terminar este algoritmo
     int cuentasTotales = cuentasTotalesEnMemoria();
     //Para cada cliente:
-    for(int i = 0; i < clientesActivos.size(); i ++){
+    for(int i = 0; i < clientesActivos.size(); i ++)
+    {
         //Si el cliente tiene cuentas:
-        if(clientesActivos[i].contarCuentasCliente() != 0){
+        if(clientesActivos[i].contarCuentasCliente() != 0)
+        {
             //cout << "Escribiendo cuentas para: " << clientesActivos[i] << endl;
             //Recorremos cada cuenta
             //cout << "Tiene cuentas activas: " << clientesActivos[i].contarCuentas() << endl;
-            for(int j = 0;j < clientesActivos[i].contarCuentasCliente(); j++){
+            for(int j = 0; j < clientesActivos[i].contarCuentasCliente(); j++)
+            {
                 //La escribimos en el disco
                 cuentas << clientesActivos[i][j];
                 // Decrementamos el contador de cuentasTotales
@@ -106,17 +115,20 @@ de vectores todos ellos. Empieza cargando los clientes, leyendo linea a linea el
 de cliente dependiente de la instancia de Banco. Una vez finalizado el archivo de cliente se inicia la lectura linea
 a linea del archivo de cuentas, con cada cuenta leida se busca la posicion del cliente a la cual pertenece mediante
 la comparacion del DNI del cliente con el DNI de la cuenta */
-void Banco::leerArchivos(){
+void Banco::leerArchivos()
+{
     // Contamos la cantidad de lineas (Clientes) que tiene el archivo de clientes
     int cantClientes = contarClientesDeArchivos();
     //Si hay lineas (Clientes):
-    if(cantClientes > 0){
+    if(cantClientes > 0)
+    {
         // Creamos una variable Tipo Cliente auxiliar
         Cliente auxCliente;
         // Posicionamos el cursor de lectura al principio del archivo.
         clientes.seekg(clientes.beg);
         // Mientras queden lineas por lleer
-        while(!clientes.eof()){
+        while(!clientes.eof())
+        {
             // Leo una linea y la ingreso en el auxiliar
             clientes >> auxCliente;
             // Guardo el cliente en el vector de clientes del banco
@@ -128,13 +140,15 @@ void Banco::leerArchivos(){
         // Contamos la cantidad de lineas (Cuentas) que contiene el archivo de cuentas
         int cantCuentas = contarCuentasDeArchivos();
         // Si hay cuentas
-        if(cantCuentas > 0){
+        if(cantCuentas > 0)
+        {
             // Posicionamos el cursor de lectura en el principio del archivo
             cuentas.seekg(cuentas.beg);
             // Establecemos la variable auxiliar mayorId, la cual utilizaremos para inicializar el int static generador de numeros
             int mayorId = 1;
             // Mientras queden lineas por leer
-            while(!cuentas.eof()){
+            while(!cuentas.eof())
+            {
                 // Creamos una variable de tipo Cuenta
                 Cuenta auxCuenta;
                 // Leemos una linea del archivo
@@ -144,9 +158,11 @@ void Banco::leerArchivos(){
                     //Guardamos el numero unico en mayorId
                     mayorId = auxCuenta.getnumeroUnico();
                 // Para cada clienteActivo en el banco
-                for(int i = 0; i < clientesActivos.size();i ++){
+                for(int i = 0; i < clientesActivos.size(); i ++)
+                {
                     // Si el dni de la cuenta es igual al dni del cliente comparado
-                    if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio()){
+                    if(clientesActivos[i].getDni() == auxCuenta.getdniDuenio())
+                    {
                         // Agregamos la cuenta al vector cuenta de ese cliente
                         clientesActivos[i].agregarCuenta(auxCuenta);
                         break;
@@ -165,7 +181,8 @@ void Banco::leerArchivos(){
 
 
 /* Metodo que cuenta la cantidad de lineas (Para nosotros clientes) del archivo de clientes */
-int Banco::contarClientesDeArchivos(){
+int Banco::contarClientesDeArchivos()
+{
     // Inicialiamos una variable contador de tipo int
     int contador = 0;
     // Creamos una cadena auxiliar para almacenar el contenido de la linea leida del archivo de clientes
@@ -173,11 +190,13 @@ int Banco::contarClientesDeArchivos(){
     // Posicionamos el cursor de lectura en el principio del archivo
     clientes.seekg(clientes.beg);
     // Mientras no se llegue al final del archivo
-    while(!clientes.eof()){
+    while(!clientes.eof())
+    {
         // Guardamos el contenido de la linea en la cadena auxiliar (esto es para que no caiga en saco roto)
         clientes >> aux;
         // Filtramos cadenas que sean solo un salto de linea que causarian errores
-        if(aux.size() > 1){
+        if(aux.size() > 1)
+        {
             contador ++;
         }
         // Si el archivo termino cortamos las iteraciones
@@ -189,7 +208,8 @@ int Banco::contarClientesDeArchivos(){
 }
 
 /* Metodo que cuenta la cantidad de lineas (Para nosotros cuentas) del archivo de cuentas */
-int Banco::contarCuentasDeArchivos(){
+int Banco::contarCuentasDeArchivos()
+{
     // Inicialiamos una variable contador de tipo int
     int contador = 0;
     // Creamos una cadena auxiliar para almacenar el contenido de la linea leida del archivo de clientes
@@ -197,11 +217,13 @@ int Banco::contarCuentasDeArchivos(){
     // Posicionamos el cursor de lectura en el principio del archivo
     cuentas.seekg(cuentas.beg);
     // Mientas no se llegue al final del archivo
-    while(!cuentas.eof()){
+    while(!cuentas.eof())
+    {
         // Guardamos el contenido de la linea en la cadena auxiliar (esto es para que no caiga en saco roto)
         cuentas >> aux;
         // Filtramos cadenas que sean solo un salto de linea que causarian errores
-        if(aux.size() > 1){
+        if(aux.size() > 1)
+        {
             contador ++;
         }
         // Si el archivo termino cortamos las iteraciones
@@ -214,11 +236,13 @@ int Banco::contarCuentasDeArchivos(){
 
 /* Metodo que devuelve la cantidad de cuentas totales en memoria recorriendo todo el vector de clientes (cliente
 por cliente). Sirve para saber cuando va a terminar la escritura de cuentas */
-int Banco::cuentasTotalesEnMemoria() const{
+int Banco::cuentasTotalesEnMemoria() const
+{
     // Inicializamos un contador en cero
     int contador = 0;
     // Para cada clienteActivo en el banco
-    for(int i = 0; i < clientesActivos.size();i ++){
+    for(int i = 0; i < clientesActivos.size(); i ++)
+    {
         // le sumamos al contador el tamaño del vector de cuentas del cliente
         contador += clientesActivos[i].contarCuentasCliente();
     }
@@ -227,11 +251,13 @@ int Banco::cuentasTotalesEnMemoria() const{
 }
 
 
-bool ordenarApellidos(Cliente & A,Cliente & B){
+bool ordenarApellidos(Cliente & A,Cliente & B)
+{
     return (A.getApellido() < B.getApellido());
 }
 
-void Banco::insertarClienteOrdenado(Cliente nuevo){
+void Banco::insertarClienteOrdenado(Cliente nuevo)
+{
     clientesActivos.push_back(nuevo);
     sort(clientesActivos.begin(),clientesActivos.end(),ordenarApellidos);
 }
