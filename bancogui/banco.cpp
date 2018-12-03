@@ -250,12 +250,14 @@ int Banco::cuentasTotalesEnMemoria() const
     return contador;
 }
 
-
+//Uso de la libreria estandar Alghoritm de C++
+//Creamos una funcion booleana que compare los apellidos de dos clientes.
 bool ordenarApellidos(Cliente & A,Cliente & B)
 {
     return (A.getApellido() < B.getApellido());
 }
 
+//Creamos el metodo insertarClienteOrdenado que ordena el vector de clientes con cada push back
 void Banco::insertarClienteOrdenado(Cliente nuevo)
 {
     clientesActivos.push_back(nuevo);
