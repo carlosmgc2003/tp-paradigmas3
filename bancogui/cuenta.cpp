@@ -12,16 +12,6 @@ using namespace std;
 
 
 
-Cuenta::Cuenta(int id,int tipo,float s)
-{
-    nuevaCuenta = TRUE;
-    tipoCuenta = tipo;
-    saldo = s >= 0.0? s : 0.0;
-    setdniDuenio(id);
-    setCuentaIniciada();
-    numeroUnico = generadorNumeros;
-    generadorNumeros ++;
-}
 
 Cuenta::Cuenta(int id,int tipo)
 {
@@ -43,7 +33,6 @@ Cuenta::Cuenta(int id,int NumUni,int tipo)
 Cuenta::Cuenta()
 {
     nuevaCuenta = TRUE;
-
 }
 
 Cuenta::~Cuenta()
