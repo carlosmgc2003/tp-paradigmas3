@@ -20,7 +20,7 @@
 	<vector>
 	"cuenta.hpp"
 
-1543414961 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
+1543836694 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.hpp
 	<istream>
 	<string>
 	<iostream>
@@ -1972,10 +1972,10 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1543414756 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
+1543836498 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cliente.cpp
 	"cliente.hpp"
 
-1543414756 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
+1543836694 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\cuenta.cpp
 	"cuenta.hpp"
 	<iomanip>
 
@@ -2079,7 +2079,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1543415167 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1543416140 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	<string>
 	"bancoguiMain.h"
 	<wx/msgdlg.h>

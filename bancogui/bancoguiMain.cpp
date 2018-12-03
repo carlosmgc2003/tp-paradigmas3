@@ -303,7 +303,7 @@ void bancoguiFrame::OnQuit(wxCommandEvent& event)
 
 void bancoguiFrame::OnAbout(wxCommandEvent& event)
 {
-    wxString msg("CT Nahuel SALAZAR\nTP Cristian FRANCO\nTP Carlos MACEIRA\nFacultad de Ingeniería de Ejército - 2018");
+    wxString msg(wxT("CT Nahuel SALAZAR\nTP Cristian FRANCO\nTP Carlos MACEIRA\nFacultad de Ingeniería de Ejército - 2018"));
     wxMessageBox(msg, _("Banco"));
 }
 
