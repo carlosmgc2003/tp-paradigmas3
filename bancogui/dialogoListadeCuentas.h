@@ -12,6 +12,8 @@
 #include "banco.hpp"
 void ListarCuentasTodas(Cliente & cliente,wxListCtrl & Lista);
 void ListarCuentasCero(Cliente & cliente,wxListCtrl & Lista);
+void ListarCuentasNegativo(Cliente & cliente,wxListCtrl & Lista);
+void ListarCuentasPositivo(Cliente & cliente,wxListCtrl & Lista);
 class dialogoListadeCuentas: public wxDialog
 {
 public:

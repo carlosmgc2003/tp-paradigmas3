@@ -201,7 +201,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     BoxSizer4->Add(StaticBoxSizer5, 1, wxALL|wxEXPAND, 5);
     StaticBoxSizer3->Add(BoxSizer4, 1, wxALL|wxEXPAND, 0);
     BoxSizer3->Add(StaticBoxSizer3, 1, wxALL|wxEXPAND, 1);
-    BoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
+    BoxSizer7 = new wxBoxSizer(wxVERTICAL);
     StaticTextTime = new wxStaticText(Principal, ID_STATICTEXTTIME, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE, _T("ID_STATICTEXTTIME"));
     wxFont StaticTextTimeFont = wxSystemSettings::GetFont(wxSYS_OEM_FIXED_FONT);
     if ( !StaticTextTimeFont.Ok() ) StaticTextTimeFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
@@ -236,7 +236,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Menu4 = new wxMenu();
     MenuItem6 = new wxMenuItem(Menu4, id_MenuMostrarReporteCuentas, _("Cuentas..."), _("Muestra un reporte de las cuentas activas de banco."), wxITEM_NORMAL);
     Menu4->Append(MenuItem6);
-    MenuBar1->Append(Menu4, _("Reportes"));
+    MenuBar1->Append(Menu4, _("Listas"));
     Menu2 = new wxMenu();
     MenuItem2 = new wxMenuItem(Menu2, idMenuAbout, _("Acerca de Banco\tF1"), _("Mostrar informacion acerca de esta aplicación"), wxITEM_NORMAL);
     Menu2->Append(MenuItem2);
@@ -248,8 +248,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    MessageDialogEliminarCliente = new wxMessageDialog(this, _("Esta seguro que desea eliminar este cliente\?"), _("Atencion"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
-    MessageDialogEliminarCuenta = new wxMessageDialog(this, _("¿Está seguro de cerrar esta cuenta\?"), _("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
+    MessageDialogEliminarCliente = new wxMessageDialog(this, wxT("Está seguro que desea eliminar este cliente\?"), wxT("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
+    MessageDialogEliminarCuenta = new wxMessageDialog(this, wxT("¿Está seguro de cerrar esta cuenta\?"), wxT("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
     MessageDialogGuardar = new wxMessageDialog(this, _("Estado del banco guardado"), _("Guardar"), wxOK|wxICON_EXCLAMATION|wxSTAY_ON_TOP, wxDefaultPosition);
     TimerHora.SetOwner(this, ID_TIMERHORA);
     TimerHora.Start(1000, false);
@@ -313,89 +313,7 @@ void bancoguiFrame::OnAbout(wxCommandEvent& event)
     wxMessageBox(msg, _("Banco"));
 }
 
-void bancoguiFrame::OnListCtrl1BeginDrag(wxListEvent& event)
-{
 
-}
-
-void bancoguiFrame::OnListCtrl1BeginDrag1(wxListEvent& event)
-{
-
-}
-void ListarClientes(Banco & Ban,wxListCtrl & Lista)
-{
-    if(Ban.clientesActivos.size() > 0)
-    {
-        for(int i = 0; i < Ban.clientesActivos.size(); i ++)
-        {
-            int itemIndex = i;
-            //Conversion int to wxString del DNI
-            wxString DNI;
-            DNI << Ban.clientesActivos[i].getDni();
-            Lista.InsertItem(itemIndex,_("col1ItemText"));
-            Lista.SetItem(itemIndex,0,DNI);
-
-            wxString NOMBRE(Ban.clientesActivos[i].getNombre());
-            eliminarGuiones(NOMBRE);
-            Lista.SetItem(itemIndex,1,NOMBRE);
-
-            wxString APELLIDO(Ban.clientesActivos[i].getApellido());
-            eliminarGuiones(APELLIDO);
-            Lista.SetItem(itemIndex,2,APELLIDO);
-
-            wxString DIRECCION(Ban.clientesActivos[i].getDireccion());
-            eliminarGuiones(DIRECCION);
-            Lista.SetItem(itemIndex,3,DIRECCION);
-
-            wxString TELEFONO(Ban.clientesActivos[i].getTelefono());
-            Lista.SetItem(itemIndex,4,TELEFONO);
-        }
-    }
-    return;
-}
-
-void ListarCuentas(Cliente & cliente,wxListCtrl & Lista)
-{
-    if(cliente.contarCuentasCliente() > 0)
-    {
-        Lista.DeleteAllItems();
-        for(int i = 0; i < cliente.contarCuentasCliente(); i++)
-        {
-            wxString IDCUENTA;
-            IDCUENTA << cliente[i].getdniDuenio();
-            wxString auxiliar;
-            auxiliar << cliente[i].getnumeroUnico();
-            IDCUENTA.append(auxiliar);
-            wxString SALDO;
-            SALDO << cliente[i].getSaldo();
-            SALDO.resize(SALDO.Find(".") + 3 );
-            Lista.InsertItem(i,_("Cuenta"));
-            Lista.SetItem(i,0,IDCUENTA);
-            if(cliente[i].gettipoCuenta() == 0)
-            {
-                Lista.SetItem(i,1,_("CA"));
-            }
-            else
-                Lista.SetItem(i,1,_("CC"));
-            Lista.SetItem(i,2,SALDO);
-        }
-    }
-    else
-        Lista.DeleteAllItems();
-
-}
-
-void eliminarGuiones (wxString & cadena)
-{
-    if(cadena.find("_") != wxNOT_FOUND)
-        cadena.Replace("_"," ");
-    return;
-}
-
-
-void bancoguiFrame::OnButton1Click(wxCommandEvent& event)
-{
-}
 
 void bancoguiFrame::OnBtnEditarClienteClick(wxCommandEvent& event)
 {
@@ -445,9 +363,6 @@ void bancoguiFrame::OnListaClientesItemSelect(wxListEvent& event)
     MenuItem5->Enable();
 }
 
-void bancoguiFrame::OnButton1Click1(wxCommandEvent& event)
-{
-}
 
 void bancoguiFrame::OnBtnEliminarClienteClick(wxCommandEvent& event)
 {
@@ -456,20 +371,24 @@ void bancoguiFrame::OnBtnEliminarClienteClick(wxCommandEvent& event)
         float dineroTotal = CrisNaMa.clientesActivos[ClienteSeleccionado].contarDinero();
         wxString cantidad;
         cantidad << dineroTotal;
+        cantidad.resize(cantidad.Find(".") + 3 );
         if(dineroTotal >= 0.0)
         {
             wxString RESPUESTA("Debe pagar al cliente $");
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Pague"));
+            CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente Eliminado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << "Pagado: $"<< cantidad << endl;
         }
         else
         {
             wxString RESPUESTA("Cobre al cliente la cantidad de $");
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Cobre"));
+            CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente Eliminado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << "Cobrado: $"<< cantidad << endl;
         }
-        CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente Eliminado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << endl;
         CrisNaMa.clientesActivos.erase(CrisNaMa.clientesActivos.begin() + ClienteSeleccionado);
+        BtnEditarCliente->Disable();
+        BtnEliminarCliente->Disable();
         ListaClientes->DeleteAllItems();
         ListarClientes(CrisNaMa,* ListaClientes);
     }
@@ -543,25 +462,27 @@ void bancoguiFrame::OnButtonCerrarCuentaClick(wxCommandEvent& event)
         float saldoRemanente = CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getSaldo();
         wxString cantidad;
         cantidad << saldoRemanente;
+        cantidad.resize(cantidad.Find(".") + 3 );
+        wxString NroCuentaEliminada;
+        NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
+        NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
         if(saldoRemanente >= 0.0)
         {
             wxString RESPUESTA("Debe pagar al cliente $");
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Pague"));
+            CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta cerrada: "<< NroCuentaEliminada << " pagado: $"<<cantidad<< endl;
         }
         else
         {
             wxString RESPUESTA("Cobre al cliente la cantidad de $");
             RESPUESTA.Append(cantidad);
             wxMessageBox(RESPUESTA,_("Cobre"));
+            CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta cerrada: "<< NroCuentaEliminada << " cobrado: $"<<cantidad<< endl;
         }
-        wxString NroCuentaEliminada;
-        NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getdniDuenio();
-        NroCuentaEliminada << CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].getnumeroUnico();
         CrisNaMa.clientesActivos[ClienteSeleccionado].eliminarCuenta(CuentaSeleccionada);
         ListaCuentas->DeleteAllItems();
         ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado],* ListaCuentas);
-        CrisNaMa.movimientos << horayfechaActual << " - " << "Cuenta cerrada: "<< NroCuentaEliminada << endl;
     }
 }
 
@@ -593,7 +514,7 @@ void bancoguiFrame::OnButtonExtraerdeCuentaClick(wxCommandEvent& event)
     if(CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada].autorizarExtraccion(extraccion))
         CrisNaMa.clientesActivos[ClienteSeleccionado][CuentaSeleccionada] -= extraccion;
     else
-        wxMessageBox(_("No dispone de suficientes fondos para extraer!"),_("Atenci�n"));
+        wxMessageBox(_("No dispone de suficientes fondos para extraer!"),wxT("Atención"));
     ListaCuentas->DeleteAllItems();
     ListarCuentas(CrisNaMa.clientesActivos[ClienteSeleccionado], * ListaCuentas);
     TextCtrlCantidadDinero->Clear();
@@ -624,3 +545,81 @@ void bancoguiFrame::OnClickMenuReporteCuentas(wxCommandEvent & event)
     dialogoListadeCuentas * dialogo = new dialogoListadeCuentas(this,&CrisNaMa);
     dialogo->ShowModal();
 }
+
+
+//Funciones (Fuera de POO)
+void ListarClientes(Banco & Ban,wxListCtrl & Lista)
+{
+    if(Ban.clientesActivos.size() > 0)
+    {
+        for(int i = 0; i < Ban.clientesActivos.size(); i ++)
+        {
+            int itemIndex = i;
+            //Conversion int to wxString del DNI
+            wxString DNI;
+            DNI << Ban.clientesActivos[i].getDni();
+            Lista.InsertItem(itemIndex,_("col1ItemText"));
+            Lista.SetItem(itemIndex,0,DNI);
+
+            wxString NOMBRE(Ban.clientesActivos[i].getNombre());
+            eliminarGuiones(NOMBRE);
+            Lista.SetItem(itemIndex,1,NOMBRE);
+
+            wxString APELLIDO(Ban.clientesActivos[i].getApellido());
+            eliminarGuiones(APELLIDO);
+            Lista.SetItem(itemIndex,2,APELLIDO);
+
+            wxString DIRECCION(Ban.clientesActivos[i].getDireccion());
+            eliminarGuiones(DIRECCION);
+            Lista.SetItem(itemIndex,3,DIRECCION);
+
+            wxString TELEFONO(Ban.clientesActivos[i].getTelefono());
+            Lista.SetItem(itemIndex,4,TELEFONO);
+        }
+    }
+    return;
+}
+
+void ListarCuentas(Cliente & cliente,wxListCtrl & Lista)
+{
+    if(cliente.contarCuentasCliente() > 0)
+    {
+        Lista.DeleteAllItems();
+        for(int i = 0; i < cliente.contarCuentasCliente(); i++)
+        {
+            wxString IDCUENTA;
+            IDCUENTA << cliente[i].getdniDuenio();
+            wxString auxiliar;
+            auxiliar << cliente[i].getnumeroUnico();
+            IDCUENTA.append(auxiliar);
+            wxString SALDO;
+            SALDO << cliente[i].getSaldo();
+            SALDO.resize(SALDO.Find(".") + 3 );
+            Lista.InsertItem(i,_("Cuenta"));
+            Lista.SetItem(i,0,IDCUENTA);
+            if(cliente[i].gettipoCuenta() == 0)
+            {
+                Lista.SetItem(i,1,_("CA"));
+            }
+            else
+                Lista.SetItem(i,1,_("CC"));
+            Lista.SetItem(i,2,SALDO);
+        }
+    }
+    else
+        Lista.DeleteAllItems();
+
+}
+
+void eliminarGuiones (wxString & cadena)
+{
+    if(cadena.find("_") != wxNOT_FOUND)
+        cadena.Replace("_"," ");
+    return;
+}
+
+//Metodos no usados, no eliminar
+void bancoguiFrame::OnButton1Click1(wxCommandEvent& event){}
+void bancoguiFrame::OnListCtrl1BeginDrag(wxListEvent& event){}
+void bancoguiFrame::OnListCtrl1BeginDrag1(wxListEvent& event){}
+void bancoguiFrame::OnButton1Click(wxCommandEvent& event){}

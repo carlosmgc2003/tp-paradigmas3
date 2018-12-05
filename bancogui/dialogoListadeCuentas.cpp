@@ -98,9 +98,13 @@ void dialogoListadeCuentas::OnChoiceListadeCuentasSelect(wxCommandEvent& event)
         break;
     case 2:
         ListCtrlListaDeCuentas->DeleteAllItems();
+        for(int i = 0;i < bancoPtr->clientesActivos.size(); i ++)
+            ListarCuentasNegativo(bancoPtr->clientesActivos[i],* ListCtrlListaDeCuentas);
         break;
     case 3:
         ListCtrlListaDeCuentas->DeleteAllItems();
+        for(int i = 0;i < bancoPtr->clientesActivos.size(); i ++)
+            ListarCuentasPositivo(bancoPtr->clientesActivos[i],* ListCtrlListaDeCuentas);
         break;
     default:
         break;
@@ -137,27 +141,92 @@ void ListarCuentasCero(Cliente & cliente,wxListCtrl & Lista)
 {
     if(cliente.contarCuentasCliente() > 0)
     {
+        int indiceLista = 0;
         for(int i = 0; i < cliente.contarCuentasCliente(); i++)
         {
+            wxString IDCUENTA;
+            IDCUENTA << cliente[i].getdniDuenio();
+            wxString auxiliar;
+            auxiliar << cliente[i].getnumeroUnico();
+            IDCUENTA.append(auxiliar);
+            wxString SALDO;
+            SALDO << cliente[i].getSaldo();
+            SALDO.resize(SALDO.Find(".") + 3 );
             if(cliente[i].getSaldo() == 0.0)
             {
-                wxString IDCUENTA;
-                IDCUENTA << cliente[i].getdniDuenio();
-                wxString auxiliar;
-                auxiliar << cliente[i].getnumeroUnico();
-                IDCUENTA.append(auxiliar);
-                wxString SALDO;
-                SALDO << cliente[i].getSaldo();
-                SALDO.resize(SALDO.Find(".") + 3 );
-                Lista.InsertItem(i,_("Cuenta"));
-                Lista.SetItem(i,0,IDCUENTA);
+                Lista.InsertItem(indiceLista,_("Cuenta"));
+                Lista.SetItem(indiceLista,0,IDCUENTA);
                 if(cliente[i].gettipoCuenta() == 0)
                 {
-                    Lista.SetItem(i,1,_("CA"));
+                    Lista.SetItem(indiceLista,1,_("CA"));
                 }
                 else
-                    Lista.SetItem(i,1,_("CC"));
-                Lista.SetItem(i,2,SALDO);
+                    Lista.SetItem(indiceLista,1,_("CC"));
+                Lista.SetItem(indiceLista,2,SALDO);
+                indiceLista ++;
+            }
+        }
+    }
+}
+
+void ListarCuentasNegativo(Cliente & cliente,wxListCtrl & Lista)
+{
+    if(cliente.contarCuentasCliente() > 0)
+    {
+        int indiceLista = 0;
+        for(int i = 0; i < cliente.contarCuentasCliente(); i++)
+        {
+            wxString IDCUENTA;
+            IDCUENTA << cliente[i].getdniDuenio();
+            wxString auxiliar;
+            auxiliar << cliente[i].getnumeroUnico();
+            IDCUENTA.append(auxiliar);
+            wxString SALDO;
+            SALDO << cliente[i].getSaldo();
+            SALDO.resize(SALDO.Find(".") + 3 );
+            if(cliente[i].getSaldo() < 0.0)
+            {
+                Lista.InsertItem(indiceLista,_("Cuenta"));
+                Lista.SetItem(indiceLista,0,IDCUENTA);
+                if(cliente[i].gettipoCuenta() == 0)
+                {
+                    Lista.SetItem(indiceLista,1,_("CA"));
+                }
+                else
+                    Lista.SetItem(indiceLista,1,_("CC"));
+                Lista.SetItem(indiceLista,2,SALDO);
+                indiceLista ++;
+            }
+        }
+    }
+}
+void ListarCuentasPositivo(Cliente & cliente,wxListCtrl & Lista)
+{
+    if(cliente.contarCuentasCliente() > 0)
+    {
+        int indiceLista = 0;
+        for(int i = 0; i < cliente.contarCuentasCliente(); i++)
+        {
+            wxString IDCUENTA;
+            IDCUENTA << cliente[i].getdniDuenio();
+            wxString auxiliar;
+            auxiliar << cliente[i].getnumeroUnico();
+            IDCUENTA.append(auxiliar);
+            wxString SALDO;
+            SALDO << cliente[i].getSaldo();
+            SALDO.resize(SALDO.Find(".") + 3 );
+            if(cliente[i].getSaldo() > 0.0)
+            {
+                Lista.InsertItem(indiceLista,_("Cuenta"));
+                Lista.SetItem(indiceLista,0,IDCUENTA);
+                if(cliente[i].gettipoCuenta() == 0)
+                {
+                    Lista.SetItem(indiceLista,1,_("CA"));
+                }
+                else
+                    Lista.SetItem(indiceLista,1,_("CC"));
+                Lista.SetItem(indiceLista,2,SALDO);
+                indiceLista ++;
             }
         }
     }

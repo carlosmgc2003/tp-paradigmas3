@@ -15,7 +15,7 @@ Banco::Banco()
 {
     // Probamos si podemos abrir el archivo clientes.txt
     clientes.open("clientes.txt", fstream::in);
-    // Si el archivo clientes.txt se abre
+    // Si el archivo clientes.txt no se abre
     if(!clientes.is_open())
     {
         //Creamos el archivo clientes, cuentas y movimientos (por la combinacion out y trunc)
@@ -32,7 +32,7 @@ Banco::Banco()
         // el fstream movimientos pasa al modo append
         movimientos.open("movimientos.txt", fstream::out | fstream::app);
         // Si ocurrio todo esto es la primera vez que abrimos banco por lo tanto mostramos un bonito cartel.
-        wxMessageBox(_("Ejecutando por primera vez Banco CrisNaMa\nEmpiece creando un cliente."),_("Atenci�n"));
+        wxMessageBox(wxT("Ejecutando por primera vez Banco CrisNaMa\nEmpiece creando un cliente."),wxT("Atención"));
     }
     // Ahora veamos que cuando los archivos EXISTEN, simplemente los abro.
     else

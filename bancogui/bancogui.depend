@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1543414756 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
+1543999098 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\banco.cpp
 	"banco.hpp"
 	"wx/msgdlg.h"
 	<algorithm>
@@ -1717,7 +1717,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1543961934 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
+1544002379 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.h
 	<wx/button.h>
 	<wx/frame.h>
 	<wx/listctrl.h>
@@ -2079,7 +2079,7 @@
 1520438138 c:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
 
-1543961934 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
+1544002487 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\bancoguimain.cpp
 	<string>
 	"bancoguiMain.h"
 	<wx/msgdlg.h>
@@ -2423,13 +2423,14 @@
 	<wx/intl.h>
 	<wx/string.h>
 
-1543953780 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\dialogolistadecuentas.cpp
+1544002379 source:c:\users\carlos\documents\github\tp-paradigmas3\bancogui\dialogolistadecuentas.cpp
 	<string>
+	"bancoguiMain.h"
 	"dialogoListadeCuentas.h"
 	<wx/intl.h>
 	<wx/string.h>
 
-1543962597 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\dialogolistadecuentas.h
+1544002558 c:\users\carlos\documents\github\tp-paradigmas3\bancogui\dialogolistadecuentas.h
 	<wx/button.h>
 	<wx/choice.h>
 	<wx/dialog.h>

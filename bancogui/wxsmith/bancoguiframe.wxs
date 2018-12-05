@@ -220,6 +220,7 @@
 								</object>
 								<object class="sizeritem">
 									<object class="wxBoxSizer" variable="BoxSizer7" member="no">
+										<orient>wxVERTICAL</orient>
 										<object class="sizeritem">
 											<object class="wxStaticText" name="ID_STATICTEXTTIME" variable="StaticTextTime" member="yes">
 												<label></label>
@@ -279,7 +280,7 @@
 				</object>
 			</object>
 			<object class="wxMenu" variable="Menu4" member="yes">
-				<label>Reportes</label>
+				<label>Listas</label>
 				<object class="wxMenuItem" name="id_MenuMostrarReporteCuentas" variable="MenuItem6" member="yes">
 					<label>Cuentas...</label>
 					<help>Muestra un reporte de las cuentas activas de banco.</help>
