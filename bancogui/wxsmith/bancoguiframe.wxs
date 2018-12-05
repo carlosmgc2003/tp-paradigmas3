@@ -234,7 +234,7 @@
 											<option>1</option>
 										</object>
 									</object>
-									<flag>wxALL|wxEXPAND</flag>
+									<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxSHAPED</flag>
 									<option>1</option>
 								</object>
 							</object>
@@ -276,6 +276,13 @@
 				<object class="wxMenuItem" name="id_menueliminarCliente" variable="MenuItem5" member="yes">
 					<label>&amp;Eliminar cliente</label>
 					<enabled>0</enabled>
+				</object>
+			</object>
+			<object class="wxMenu" variable="Menu4" member="yes">
+				<label>Reportes</label>
+				<object class="wxMenuItem" name="id_MenuMostrarReporteCuentas" variable="MenuItem6" member="yes">
+					<label>Cuentas...</label>
+					<help>Muestra un reporte de las cuentas activas de banco.</help>
 				</object>
 			</object>
 			<object class="wxMenu" variable="Menu2" member="no">

@@ -26,6 +26,8 @@
 
 #include "banco.hpp"
 
+void ListarCuentas(Cliente &, wxListCtrl &);
+
 class bancoguiFrame: public wxFrame
 {
 public:
@@ -65,6 +67,7 @@ private:
     //*)
 
     void OnGuardar(wxCommandEvent& event);
+    void OnClickMenuReporteCuentas(wxCommandEvent& event);
 
     //(*Identifiers(bancoguiFrame)
     static const long ID_LISTACLIENTES;
@@ -84,6 +87,7 @@ private:
     static const long id_menuCrearCliente;
     static const long id_menueditarCliente;
     static const long id_menueliminarCliente;
+    static const long id_MenuMostrarReporteCuentas;
     static const long idMenuAbout;
     static const long ID_STATUSBAR1;
     static const long ID_MESSAGEDIALOG1;
@@ -103,10 +107,12 @@ private:
     wxListCtrl* ListaClientes;
     wxListCtrl* ListaCuentas;
     wxMenu* Menu3;
+    wxMenu* Menu4;
     wxMenuItem* MenuCrearCliente;
     wxMenuItem* MenuItem3;
     wxMenuItem* MenuItem4;
     wxMenuItem* MenuItem5;
+    wxMenuItem* MenuItem6;
     wxMessageDialog* MessageDialogEliminarCliente;
     wxMessageDialog* MessageDialogEliminarCuenta;
     wxMessageDialog* MessageDialogGuardar;
@@ -120,5 +126,6 @@ private:
     wxString horayfechaActual;
     DECLARE_EVENT_TABLE()
 };
+
 
 #endif // BANCOGUIMAIN_H

@@ -17,6 +17,7 @@
 #include "editarCliente.h"
 #include "DialogoNuevaCuenta.h"
 #include <wx/valnum.h>
+#include "dialogoListadeCuentas.h"
 //(*InternalHeaders(bancoguiFrame)
 #include <wx/artprov.h>
 #include <wx/bitmap.h>
@@ -74,6 +75,7 @@ const long bancoguiFrame::idMenuQuit = wxNewId();
 const long bancoguiFrame::id_menuCrearCliente = wxNewId();
 const long bancoguiFrame::id_menueditarCliente = wxNewId();
 const long bancoguiFrame::id_menueliminarCliente = wxNewId();
+const long bancoguiFrame::id_MenuMostrarReporteCuentas = wxNewId();
 const long bancoguiFrame::idMenuAbout = wxNewId();
 const long bancoguiFrame::ID_STATUSBAR1 = wxNewId();
 const long bancoguiFrame::ID_MESSAGEDIALOG1 = wxNewId();
@@ -88,7 +90,6 @@ BEGIN_EVENT_TABLE(bancoguiFrame,wxFrame)
 END_EVENT_TABLE()
 
 void ListarClientes(Banco &,wxListCtrl &);
-void ListarCuentas(Cliente &, wxListCtrl &);
 void eliminarGuiones(wxString &);
 
 int Cuenta::generadorNumeros = 1;
@@ -207,7 +208,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StaticTextTimeFont.SetPointSize(20);
     StaticTextTime->SetFont(StaticTextTimeFont);
     BoxSizer7->Add(StaticTextTime, 1, wxALL|wxEXPAND, 5);
-    BoxSizer3->Add(BoxSizer7, 1, wxALL|wxEXPAND, 0);
+    BoxSizer3->Add(BoxSizer7, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxSHAPED, 0);
     BoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5);
     Principal->SetSizer(BoxSizer2);
     BoxSizer2->Fit(Principal);
@@ -232,6 +233,10 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Menu3->Append(MenuItem5);
     MenuItem5->Enable(false);
     MenuBar1->Append(Menu3, _("Cli&entes"));
+    Menu4 = new wxMenu();
+    MenuItem6 = new wxMenuItem(Menu4, id_MenuMostrarReporteCuentas, _("Cuentas..."), _("Muestra un reporte de las cuentas activas de banco."), wxITEM_NORMAL);
+    Menu4->Append(MenuItem6);
+    MenuBar1->Append(Menu4, _("Reportes"));
     Menu2 = new wxMenu();
     MenuItem2 = new wxMenuItem(Menu2, idMenuAbout, _("Acerca de Banco\tF1"), _("Mostrar informacion acerca de esta aplicación"), wxITEM_NORMAL);
     Menu2->Append(MenuItem2);
@@ -243,8 +248,8 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    MessageDialogEliminarCliente = new wxMessageDialog(this, wxT("¿Está seguro que desea eliminar este cliente?"), wxT("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
-    MessageDialogEliminarCuenta = new wxMessageDialog(this, wxT("¿Está seguro de cerrar esta cuenta?"), wxT("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
+    MessageDialogEliminarCliente = new wxMessageDialog(this, _("Esta seguro que desea eliminar este cliente\?"), _("Atencion"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION|wxSTAY_ON_TOP, wxDefaultPosition);
+    MessageDialogEliminarCuenta = new wxMessageDialog(this, _("¿Está seguro de cerrar esta cuenta\?"), _("Atención"), wxYES_NO|wxNO_DEFAULT|wxICON_QUESTION, wxDefaultPosition);
     MessageDialogGuardar = new wxMessageDialog(this, _("Estado del banco guardado"), _("Guardar"), wxOK|wxICON_EXCLAMATION|wxSTAY_ON_TOP, wxDefaultPosition);
     TimerHora.SetOwner(this, ID_TIMERHORA);
     TimerHora.Start(1000, false);
@@ -274,6 +279,7 @@ bancoguiFrame::bancoguiFrame(wxWindow* parent,wxWindowID id)
     Connect(id_menueditarCliente,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnBtnEditarClienteClick);
     Connect(id_menueliminarCliente,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnBtnEliminarClienteClick);
     Connect(idGuardarEstado,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnGuardar);
+    Connect(id_MenuMostrarReporteCuentas,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction) &bancoguiFrame::OnClickMenuReporteCuentas);
 
     ListaClientes->InsertColumn(0,"DNI",wxLIST_FORMAT_LEFT,60);
     ListaClientes->InsertColumn(1,"Nombre");
@@ -403,11 +409,10 @@ void bancoguiFrame::OnBtnEditarClienteClick(wxCommandEvent& event)
     {
         CrisNaMa.clientesActivos[ClienteSeleccionado].setDireccion(dialogo->getDialogoDireccion().ToStdString());
         CrisNaMa.clientesActivos[ClienteSeleccionado].setTelefono(dialogo->getDialogoTelefono().ToStdString());
-        //wxMessageBox(_("Cambios Guardados"),_("Felicitaciones!"));
+        CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente editado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << endl;
+        ListaClientes->DeleteAllItems();
+        ListarClientes(CrisNaMa,* ListaClientes);
     }
-    CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente editado: "<< CrisNaMa.clientesActivos[ClienteSeleccionado] << endl;
-    ListaClientes->DeleteAllItems();
-    ListarClientes(CrisNaMa,* ListaClientes);
 }
 
 void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
@@ -422,11 +427,10 @@ void bancoguiFrame::OnbtnCrearClienteClick(wxCommandEvent& event)
         nuevo.setDireccion(dialogo->getNuevoDireccion().ToStdString());
         nuevo.setTelefono(dialogo->getNuevoTelefono().ToStdString());
         CrisNaMa.insertarClienteOrdenado(nuevo);
-        //wxMessageBox(_("Cliente Guardado"),_("Felicitaciones!"));
+        CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente creado: "<< nuevo << endl;
+        ListaClientes->DeleteAllItems();
+        ListarClientes(CrisNaMa,* ListaClientes);
     }
-    CrisNaMa.movimientos << horayfechaActual << " - " << "Cliente creado: "<< nuevo << endl;
-    ListaClientes->DeleteAllItems();
-    ListarClientes(CrisNaMa,* ListaClientes);
 }
 
 
@@ -612,4 +616,11 @@ void bancoguiFrame::OnTimer1Trigger(wxTimerEvent& event)
     wxString fechaActual = wxDateTime::Today().FormatDate();
     horayfechaActual = horaActual +" "+fechaActual;
     StaticTextTime->SetLabel(horayfechaActual);
+}
+
+
+void bancoguiFrame::OnClickMenuReporteCuentas(wxCommandEvent & event)
+{
+    dialogoListadeCuentas * dialogo = new dialogoListadeCuentas(this,&CrisNaMa);
+    dialogo->ShowModal();
 }
