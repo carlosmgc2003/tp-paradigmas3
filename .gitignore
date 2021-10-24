@@ -1,2 +1,6 @@
 /nbproject/
 *.json
+bancogui\bin\
+bancogui\obj\
+.vscode
+bancogui\*.txt
